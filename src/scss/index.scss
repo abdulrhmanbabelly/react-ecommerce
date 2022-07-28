@@ -1,0 +1,76 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Anek Tamil', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    overflow-x: hidden
+}
+
+
+
+.MuiPaper-elevation ul > div {
+    form {
+        margin-bottom: 1vw;
+        .MuiOutlinedInput-root {
+            margin-bottom: 1vw;
+        }
+    }
+    padding: 2vw;
+}
+
+
+
+
+.categorySlider {
+    width: 95vw;
+    margin: auto;
+}
+@media (max-width:854px) {
+    .categorySlider {
+        width: 95vw;
+        margin: auto;
+    }
+    .filter {
+        box-shadow: none !important;
+        padding: 2vw !important;
+        border-bottom: 1px solid #ccc;
+    }
+    .store .product > div {
+        margin: auto;
+        box-shadow: none !important;
+        border-bottom: 1px solid #ccc;
+        img { 
+            width: 30vw !important;
+            margin: auto;
+        }
+    }
+    .singleProduct {
+        padding-bottom: 5vw !important;
+        .image {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            img {
+                width:30% !important
+            }
+        }
+        & > .col-md-6:nth-of-type(2) {
+            padding: 2vw;
+            button {
+                margin-right: 1vw;
+            }
+        }
+
+    }
+    .signIn-0-2-2, .signUp-0-2-2 {
+        margin: 2vw auto !important;
+        padding: 2vw !important;
+        box-shadow: none !important;
+    }
+}
+
