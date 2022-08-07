@@ -1,27 +1,16 @@
-import { useEffect, useState } from "react"
-import { getUsers } from "../api/user";
+import { useQuery } from "@apollo/client";
+import { useState } from "react"
+import { GET_USERS } from "../gql/user";
 
 let useUsers = () => {
 
+    let { loading, error, data } = useQuery(GET_USERS);
+
     let [users, setUsers] = useState([]);
 
-    let [loading, setLoading] = useState(true);
+    if (!loading && !error && !users[0]) setUsers(data.users);
 
-    useEffect(() => {
-        (
-            async () => {
-
-                if (loading) {
-                    let data = await getUsers();
-                    setUsers(data);
-                    setLoading(false);
-                }
-
-            }
-        )();
-    });
-
-    return { users, setUsers, loading };
+    return { users, setUsers, loading, error };
 
 }
 

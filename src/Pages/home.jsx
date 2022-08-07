@@ -1,7 +1,5 @@
 import React from 'react';
-import Slider from 'react-slick';
-import CategorySlider from '../Components/common/categorySlider';
-import Footer from '../Components/common/footer';
+import { Footer, CategorySlider } from '../Components';
 import { useCategories } from '../hooks';
 import { Grid } from '@mui/material';
 import { useHomeStyles } from '../styles';
@@ -9,7 +7,7 @@ import Carousel from "nuka-carousel";
 
 let Home = () => {
 
-  let categories = useCategories();
+  let { categories } = useCategories();
   let classes = useHomeStyles();
 
   return (

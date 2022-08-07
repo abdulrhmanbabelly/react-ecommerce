@@ -1,9 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import AdminCategoriesTable from './Tables/adminCategoriesTable';
-import AdminProductsTable from './Tables/adminProductsTable';
-import AdminUsersTable from './Tables/adminUsersTable';
-import AdminCartsTable from './Tables/adminCartsTable';
+import { AdminCartsTable, AdminUsersTable, AdminCategoriesTable, AdminProductsTable } from '../';
 
 let AdminRoutes = () => {
     

@@ -1,30 +1,39 @@
 import { CSVLink } from "react-csv";
-import AdminProduct from "../adminProduct";
-import React, { useState } from 'react';
-import ProductsFliter from "../../Filters/productsFilter";
-import AddProduct from "../addProduct";
+import React from 'react';
+import { AddProduct, AdminProduct, ProductsFilter } from "../../";
 import excelProductsData from "../../../helpers/excelDataForming/excelProductsData";
 import { useCategories, useProducts } from "../../../hooks";
-import { Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow } from "@mui/material";
-import Paper from '@mui/material/Paper';
+import { Paper, CircularProgress, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow, Button, Grid } from "@mui/material";
 
 let AdminProductsTable = () => {
 
-    let { products, setProducts } = useProducts();
-    let categories = useCategories();
+    let { loading, error, products, setProducts } = useProducts();
+    let { categories } = useCategories();
     let excelData = excelProductsData(products);
+
+    if (loading) return <CircularProgress/>
+    if (error) return <h2>error</h2>
+
 
     return (
         <>
-        <ProductsFliter 
+        <ProductsFilter 
         setProducts={setProducts}
         categories = {categories}
-        button={
-        <CSVLink
-            data={excelData}>
-            export to excel
-        </CSVLink>} />
-        <AddProduct categories={categories}/>
+         />
+        <Grid container spacing={2}>
+            <Grid item>
+                <Button>
+                    <CSVLink
+                        data={excelData}>
+                        export to excel
+                    </CSVLink>
+                </Button>
+            </Grid>  
+            <Grid item>
+                <AddProduct categories={categories}/>
+            </Grid>
+         </Grid>
         <Table component={Paper}>
             <TableHead>
                 <TableRow>

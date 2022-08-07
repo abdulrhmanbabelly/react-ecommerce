@@ -1,27 +1,36 @@
-import { useEffect, useState } from "react"
-import { getUser } from "../api/user";
+import { useState } from "react"
+import { useQuery } from '@apollo/client';
+import { GET_USER } from "../gql/user";
 
 let useUser = (id) => {
 
-    let [user, setUser] = useState();
-
-    let [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        (
-            async () => {
-
-                if (loading) {
-                    let data = await getUser(id);
-                    setUser(data);
-                    setLoading(false);
-                }
-
+    let [user, setUser] = useState({
+        username : '...',
+        name : {
+            firstname : '...',
+            lastname : '...'
+        },
+        address  : {
+            city: '...',
+            street: '...',
+            number: '...',
+            zipcode: '...',
+            geolocation : {
+                lat: '...',
+                long: '...',
             }
-        )();
+        }
     });
 
-    return { user, loading };
+    let { loading, error, data } = useQuery(GET_USER, {
+        variables : {
+            id : id
+        }
+    })
+
+    if (!loading && !error && user.username === '...') setUser(data.user);
+
+    return { user, loading, error };
 
 }
 

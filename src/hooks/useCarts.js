@@ -1,33 +1,16 @@
-import { useEffect, useState } from "react";
-import { getCarts } from "../api/cart";
+import { useQuery } from "@apollo/client";
+import { useState } from "react";
+import { GET_CARTS } from "../gql/cart";
 
 let useCarts = () => {
 
+    let { loading, error, data } = useQuery(GET_CARTS);
+
     let [carts, setCarts] = useState([]);
-    let [loading, setLoading] = useState(true);
+   
+    if (!loading && !error && !carts[0]) setCarts(data.carts);
 
-    useEffect(() => {
-
-        (
-            async () => {
-
-                try {
-
-                    if (loading) { setCarts(await getCarts()); setLoading(false); }
-        
-
-                } catch (e) {
-
-                    console.log(e);
-
-                }
-
-            }
-        )();
-
-    });
-
-    return { loading, carts, setCarts };
+    return { loading, error, carts, setCarts, data };
 
 }
 

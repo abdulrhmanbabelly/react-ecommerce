@@ -1,14 +1,17 @@
 import { CSVLink } from "react-csv";
 import React from 'react';
-import AdminCategory from "../adminCategory";
+import { AdminCategory } from "../../";
 import { useCategories } from "../../../hooks";
-import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import Paper from '@mui/material/Paper';
+import { Paper, Button, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 let AdminCategoriesTable = () => {
 
-    let categories = useCategories();
-    
+    let { loading, error, categories } = useCategories();
+
+    if (loading) return <CircularProgress />
+    if (error) return <h2>error</h2>
+
+
     return (
         <>
         <Button>

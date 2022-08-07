@@ -1,33 +1,30 @@
-import { useEffect } from "react";
-import { CSVLink } from "react-csv";
-import AdminUser from "../adminUser";
 import React from 'react';
-import UsersFilter from "../../Filters/usersFilter";
+import { CSVLink } from "react-csv";
+import { AdminUser, UsersFilter } from "../../";
 import excelUsersData from "../../../helpers/excelDataForming/excelUsersData";
 import { useUsers } from "../../../hooks";
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import Paper from '@mui/material/Paper';
+import { Paper, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 let AdminUsersTable = () => {
     
-    let { loading, users, setUsers } = useUsers();
+    let { loading, users, setUsers, error } = useUsers();
 
     let excelData = excelUsersData(users);
     
-    if (loading) return <h2 className='text-info'>loading...</h2>
+    if (loading) return <CircularProgress />
+    if (error) return <h2 className='text-info'>error...</h2>
 
     
     return (
         <>
-        <UsersFilter button = {
-            <CSVLink
-                data={excelData}>
-                export to excel
-            </CSVLink>
-        } 
+        <UsersFilter
             setUsers = {setUsers}
             users = {users}
         />
+        <CSVLink
+            data={excelData}>
+            export to excel
+        </CSVLink>
         <Table component={Paper}>
             <TableHead>
                 <TableRow>

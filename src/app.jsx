@@ -1,6 +1,6 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom'
 import React from 'react';
-import NavigationBar from './Components/common/navbar';
+import { NavigationBar } from './Components';
 import { 
     Home,
     AdminDashboard,

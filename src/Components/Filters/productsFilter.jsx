@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import "nouislider/distribute/nouislider.scss";
 import productsFilter from '../../helpers/productsFilter';
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Select, Slider, TextField } from '@mui/material';
+import { useCategories } from '../../hooks';
 
 
 
 let ProductsFliter = (props) => {
 
-    let { setProducts, button, categories } = props;
+    let { setProducts } = props;
+    
+    let { categories } = useCategories();
     
     let [searchBy, setSearchBy] = useState('title');
     let [category, setCategory] = useState('all');
@@ -66,12 +68,6 @@ let ProductsFliter = (props) => {
         <Button onClick={() => {
             productsFilter(setProducts);
         }}>filter</Button>
-        { 
-            button && 
-            <Button>
-                {button}
-            </Button>
-        }
     </form>
     )
 

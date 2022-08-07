@@ -1,31 +1,34 @@
-import { useEffect, useState } from "react";
-import { getUserCarts } from "../api/cart";
+import { useQuery } from "@apollo/client";
+import { useState } from "react";
+import { GET_USER_CART } from "../gql/cart";
+import copyObj from "../helpers/copyObj";
 
 let useUserCarts = (userId) => {
 
-    let [carts, setCarts] = useState([]);
-
-    useEffect(() => {
-
-        (
-            async () => {
-
-                try {
-
-                    if (!carts[0]) setCarts(await getUserCarts(userId));
-
-                } catch (e) {
-
-                    console.log(e);
-
-                }
-
-            }
-        )();
-
+    let { loading, error, data } = useQuery(GET_USER_CART,
+    {
+        notifyOnNetworkStatusChange : true,
+        variables : {
+            userId
+        }
     });
 
-    return { carts, setCarts };
+    let [cartsState, setCarts] = useState([]);
+
+    let newCarts = [];
+
+    if (!loading && !error && !cartsState[0]) {
+        data.carts.forEach((cart) => {
+            if (cart.userId === userId) {
+                newCarts.push(cart);
+            }
+        });
+        setCarts(newCarts);
+    }
+
+    let carts = copyObj(cartsState);
+    
+    return { carts, setCarts, loading, error };
 
 }
 

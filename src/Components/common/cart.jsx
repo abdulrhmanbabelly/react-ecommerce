@@ -1,36 +1,33 @@
 import React, { useState } from 'react';
-import CartProduct from '../Products/cartProduct';
-import { deleteCart } from '../../api/cart';
-import { createUseStyles, useTheme } from 'react-jss';
 import { Delete, CreditCard, Facebook, ArrowRight, WhatsApp, Instagram } from '@mui/icons-material';
 import { Box, Button, Card, FormGroup, Grid, IconButton, TextField } from '@mui/material';
-import Popup from './Popup';
-
-let useStyles = createUseStyles((theme) => ({
-    cart : { backgroundGridor: theme.background, Gridor : theme.foreground }
-}));
-
+import { Popup, CartProduct } from '../';
+import { DELETE_CART } from '../../gql/cart';
+import { useMutation } from '@apollo/client';
 let Cart = (props) => {
 
     let { products, date, id } = props.cart; 
     let { carts, cart, setCarts } = props;
-    let theme = useTheme();
-    let classes = useStyles(theme);
     let [popup, setPopup] = useState(null);
+    let [deleteCart] = useMutation(DELETE_CART, {
+         variables : {
+            id : id
+         }
+    });
 
     let fn = () => {
         carts.splice(carts.indexOf(cart), 1);
         setCarts(carts.map((cart) => cart));
     }
+    
     let handleDelete = async () => {
-        let res = await deleteCart(cart.id);
-        setPopup(<Popup content={`deleted cart ${res.id}`} type="error" title="Done Deleting Cart" setPopup={setPopup} fn={fn}/>);
-
+        deleteCart();
+        setPopup(<Popup content={`deleted cart ${id}`} type="error" title="Done Deleting Cart" setPopup={setPopup} fn={fn}/>);
     }
 
     return (
     <>
-    <Card className={classes.cart + " cart"}>
+    <Card className="cart">
         <Box>
         <div className='d-flex justify-content-between'>
             <h4>Date : {date.substring(0, 10)}</h4>

@@ -1,19 +1,12 @@
-import { Box, Button, Divider, FormGroup, TextField } from '@mui/material';
+import { Box, Button, Divider, FormGroup, TextField, Slide, Typography, IconButton, Toolbar, AppBar, List, Dialog, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
-import { updateCart } from '../../api/cart';
 import { useUserCarts } from '../../hooks';
-import Cart from '../common/cart';
-import AddNewCart from './addNewCart';
-import Dialog from '@mui/material/Dialog';
-import List from '@mui/material/List';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
-import Popup from '../common/Popup';
-import useCartsStyles from '../../styles/carts';
+import { Popup, AddNewCart, Cart } from '../';
+import { useCartsStyles } from '../../styles';
+import { useMutation } from '@apollo/client';
+import { UPDATE_CART } from '../../gql';
+import copyObj from '../../helpers/copyObj';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -23,9 +16,11 @@ let AddToCart = (props) => {
 
     let { productId, productTitle } = props;
     const [open, setOpen] = useState(false);
-    let { carts, setCarts } = useUserCarts(1);
+    let { carts, setCarts, loading, error } = useUserCarts(1);
     let [popup, setPopup] = useState('');
     let classes = useCartsStyles();
+    let [addToCart] = useMutation(UPDATE_CART);
+
 
     let handleAddToCart = async (cart) => {
         let found = false;
@@ -37,7 +32,12 @@ let AddToCart = (props) => {
             }
         }
         if (!found) cart.products.push({ productId : Number(productId), quantity : Number(document.getElementById(`quantity${cart.id}`).value)});
-        await updateCart(cart);
+        await addToCart({
+            variables : {
+                input : cart,
+                id : cart.id
+            }
+        });
         setPopup(<Popup content={`added product ${productTitle}`} type="success" title="Done Updating Cart" setPopup={setPopup}/>);
         setCarts(carts.map((cart) => cart));
     }
@@ -49,6 +49,9 @@ let AddToCart = (props) => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    if (loading) return <CircularProgress />
+    if (error) return <h2>error</h2>
 
     return (
     <>

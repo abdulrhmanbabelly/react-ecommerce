@@ -1,26 +1,12 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-bootstrap';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { Store, PeopleAlt, Category, ShoppingCart, Cloud } from '@mui/icons-material';
-import CssBaseline from '@mui/material/CssBaseline';
-import { Divider, Drawer, IconButton, Toolbar } from '@mui/material';
+import { AppBar, CssBaseline, ListItemText, ListItemIcon, ListItemButton, List, ListItem, Box, Divider, Drawer, IconButton, Toolbar } from '@mui/material';
+import { Store, PeopleAlt, Category, ShoppingCart, Cloud, ChevronRight, ChevronLeft, Menu } from '@mui/icons-material';
 import { styled, useTheme } from '@mui/material/styles';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import MenuIcon from '@mui/icons-material/Menu';
-import AdminRoutes from '../Components/Admin/adminRoutes';
+import { AdminRoutes } from '../Components';
 import { useAdminDashboardStyles } from '../styles';
 import { toggleTheme } from '../contexts/mode';
 
 const drawerWidth = 180;
-
-
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -29,42 +15,38 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar,
   justifyContent: 'flex-end',
 }));
-
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginLeft: `-${drawerWidth}px`,
+  ...(open && {
     transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  }));
-
-  const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-  })(({ theme, open }) => ({
+    marginLeft: 0,
+  }),
+}));
+const CustomAppBar = styled(AppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
     transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    ...(open && {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: `${drawerWidth}px`,
-      transition: theme.transitions.create(['margin', 'width'], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  }));
-  
- 
+  }),
+}));
 
 let AdminDashboard = (props) => {
   
@@ -91,7 +73,7 @@ let AdminDashboard = (props) => {
   return (
     <Box sx={{ display: 'flex' }} className={classes.adminDashboard}>
       <CssBaseline />
-        <AppBar open={open}>
+        <CustomAppBar open={open}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -100,7 +82,7 @@ let AdminDashboard = (props) => {
             edge="start"
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
-            <MenuIcon onClick={handleDrawerOpen} />
+            <Menu />
           </IconButton>
           <IconButton
             color="inherit"
@@ -113,7 +95,7 @@ let AdminDashboard = (props) => {
             <Cloud />
           </IconButton>
         </Toolbar>
-        </AppBar>
+        </CustomAppBar>
       <Drawer
         sx={{
           width: drawerWidth,
@@ -129,7 +111,7 @@ let AdminDashboard = (props) => {
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
           </IconButton>
         </DrawerHeader>
         <Divider />

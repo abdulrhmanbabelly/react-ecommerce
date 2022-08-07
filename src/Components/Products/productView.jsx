@@ -1,23 +1,10 @@
 import React, { useState } from 'react';
-import { useTheme } from 'react-jss';
-import { Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import { IconButton, CardActions, Typography, Avatar, Collapse, CardContent, CardMedia, CardHeader, Card, Grid } from '@mui/material';
 import { red, green, yellow } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { MoreVert, ExpandMore, Share, Favorite } from '@mui/icons-material';
 
-const ExpandMore = styled((props) => {
+const ExpandMoreButton = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
@@ -37,7 +24,6 @@ let ProductView = (props) => {
 
   let { image, title, description, price, id } = props.product;
   let { rate, count } = props.product.rating;    
-  let theme = useTheme();
 
   return (
     <Grid item sm={props.sm} md={props.md} xs={12} style={{ margin : "1vw auto" }} className='product'>
@@ -50,7 +36,7 @@ let ProductView = (props) => {
             }
             action={
             <IconButton aria-label="settings">
-                <MoreVertIcon />
+                <MoreVert />
             </IconButton>
             }
             title={title}
@@ -71,19 +57,19 @@ let ProductView = (props) => {
         </CardContent>
         <CardActions disableSpacing>
             <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
+            <Favorite />
             </IconButton>
             <IconButton aria-label="share">
-            <ShareIcon />
+            <Share />
             </IconButton>
-            <ExpandMore
+            <ExpandMoreButton
             expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
             >
-            <ExpandMoreIcon />
-            </ExpandMore>
+            <ExpandMore />
+            </ExpandMoreButton>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>

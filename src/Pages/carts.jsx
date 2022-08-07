@@ -1,17 +1,16 @@
 import { Grid } from '@mui/material';
 import React from 'react';
-import { useTheme } from 'react-jss';
-import Cart from '../Components/common/cart';
-import Footer from '../Components/common/footer';
-import AddNewCart from '../Components/Products/addNewCart';
+import { AddNewCart, Cart, Footer } from '../Components';
 import { useUserCarts } from '../hooks';
-import useCartsStyles from '../styles/carts';
-
+import { useCartsStyles } from '../styles';
 
 let Carts = () => {
 
-    let { carts, setCarts } = useUserCarts(1);
+    let { carts, setCarts, loading, error } = useUserCarts(1);
+
     let classes = useCartsStyles();
+    if (loading) return (<h2>loading</h2>);
+    if (error) return (<h2>error</h2>);
 
     return (
         <>

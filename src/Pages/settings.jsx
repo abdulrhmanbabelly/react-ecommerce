@@ -1,39 +1,63 @@
+import { useMutation } from '@apollo/client';
 import { Button, CircularProgress, FormGroup, Grid, TextField } from '@mui/material';
-import React from 'react';
-import { deleteUser, updateUser } from '../api/user';
+import React, { useState } from 'react';
+import { Popup } from '../Components';
+import { DELETE_USER, UPDATE_USER } from '../gql';
 import { useUser } from '../hooks';
 import { useSignUpStyles } from '../styles';
 
 let Settings = () => {
 
-    let { loading, user } = useUser(1);
+    let { loading, error, user } = useUser(1);
     let classes = useSignUpStyles();
-
+    let [updateUser] = useMutation(UPDATE_USER);
+    let [deleteUser] = useMutation(DELETE_USER);
+    let [popup, setPopup] = useState(null);
     if (loading) return <CircularProgress />
- 
+    if (error) return <h2>error</h2>
+
     let handleUpdate = async (e) => {
         e.preventDefault();
-        let data = await updateUser(
-            document.getElementById('email').value,
-            document.getElementById('username').value,
-            document.getElementById('firstname').value,
-            document.getElementById('lastname').value,
-            document.getElementById('city').value,
-            document.getElementById('street').value,
-            document.getElementById('number').value,
-            document.getElementById('zipcode').value,
-            document.getElementById('lat').value,
-            document.getElementById('long').value,
-            document.getElementById('phone').value,
-            document.getElementById('password').value,
-            1
+        await updateUser(
+            {
+                variables :{
+                    input : {
+                       email : document.getElementById('email').value,
+                       username:  document.getElementById('username').value,
+                       name : {
+                        firstname: document.getElementById('firstname').value,
+                        lastname : document.getElementById('lastname').value,
+                       },
+                       address : {
+                        city: document.getElementById('city').value,
+                        street: document.getElementById('street').value,
+                        number: document.getElementById('number').value,
+                        zipcode: document.getElementById('zipcode').value,
+                        geolocation : {
+                            lat: document.getElementById('lat').value,
+                            long: document.getElementById('long').value,
+                        }
+                       },
+                       phone: document.getElementById('phone').value,
+                       password: document.getElementById('password').value,
+                    },
+                    id : 1
+                }
+            }
         );
-        alert(data.id);
+        setPopup(<Popup content={`updated your account`} type="success"/>)
     };
 
-    let handleDelete = async () => {
-        let res = await deleteUser(1);
-        alert(res.id)
+    let handleDelete = async (e) => {
+        e.preventDefault()
+        await deleteUser(
+            {
+                variables : {
+                    id : 1
+                }
+            }
+         );
+        setPopup(<Popup content={`deleted your account`} type="error"/>)
     };
 
     return (
@@ -110,6 +134,7 @@ let Settings = () => {
         <Button type="submit" onClick={handleDelete}>
             delete
         </Button>
+        {popup}
     </form>
     )
 }

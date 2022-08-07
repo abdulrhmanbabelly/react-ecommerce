@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
-import { addProduct } from "../../api/products";
-import { Box, Button, FormGroup, FormLabel, MenuItem, Select, Slider, TextField, FormControl, InputLabel } from "@mui/material";
-import Dialog from '@mui/material/Dialog';
-import List from '@mui/material/List';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import { Dialog, List, AppBar, Toolbar, IconButton, Typography, Slide, Box, Button, FormGroup, FormLabel, MenuItem, Select, Slider, TextField, FormControl, InputLabel } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
-import Popup from '../common/Popup';
+import { Popup } from '../';
+import { ADD_PRODUCT } from '../../gql/products';
+import { useMutation } from '@apollo/client';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -22,6 +16,7 @@ let AddProduct = (props) => {
     let [category, setCategory] = useState('');
     let [price, setPrice] = useState(0);
     let [popup, setPopup] = useState('');
+    let [addProduct, { loading }] = useMutation(ADD_PRODUCT);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -33,12 +28,20 @@ let AddProduct = (props) => {
 
     let handleAddProduct = async () => {
         let res = await addProduct(
-        document.getElementById('title').value,
-        price,
-        document.getElementById('description').value,
-        category
+            {
+                variables : {
+                    input : {
+                        title : document.getElementById('title').value,
+                        price : price,
+                        descrition : document.getElementById('description').value,
+                        category : category,
+                        image: 'https://i.pravatar.cc',
+                    }
+                }
+            }
+
         );
-        if (res) setPopup(<Popup content={`added product ${res.title}`} type={"success"} title="Done Adding product" setPopup={setPopup}/>);
+        if (!loading) setPopup(<Popup content={`added product ${res.title}`} type={"success"} title="Done Adding product" setPopup={setPopup}/>);
     }
 
     let handleCategoryChange = (e) => {
@@ -85,7 +88,7 @@ let AddProduct = (props) => {
                     <FormGroup>
                         <FormLabel>Price :</FormLabel>
                         <FormControl>
-                            <Slider min={0} max={10000} valueLabelDisplay defaultValue={price} onChange={handlePriceChange}/>
+                            <Slider min={0} max={10000} valueLabelDisplay="auto" defaultValue={price} onChange={handlePriceChange}/>
                         </FormControl>
                     </FormGroup>
                     <FormGroup>

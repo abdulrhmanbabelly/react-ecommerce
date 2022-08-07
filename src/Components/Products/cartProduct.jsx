@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { updateCart } from "../../api/cart";
+import React, { useEffect } from "react";
 import { useSingleProduct } from "../../hooks";
 import { Delete } from '@mui/icons-material';
 import { Box, Card, CircularProgress, IconButton, TextField } from "@mui/material";
+import { useMutation } from "@apollo/client";
+import { UPDATE_CART } from "../../gql";
 
 let CartProduct = (props) => {
 
     let { productId, quantity } = props.product;
     let { cart, setCarts, carts } = props;
     let { product, loading } = useSingleProduct(productId);
-
+    let [updateCart] = useMutation(UPDATE_CART);
     useEffect(() => {
 
         if (!loading) {
@@ -36,13 +37,24 @@ let CartProduct = (props) => {
             }
         }
         carts[cartIndex].products[productIndex].quantity = Number(e.target.value);
-        await updateCart(cart);
+        await updateCart({
+            variables : {
+                input : cart,
+                id : cart.id
+            }
+        });
         setCarts(carts.map((cart) => cart));
     }
 
     let handleDeleteProduct = async () => {
-        cart.products.splice(cart.products.indexOf(props.product), 1);
-        let res = await updateCart(cart);
+
+        cart.products.splice(cart.products.indexOf(props.product), 1)
+        updateCart({
+            variables : {
+                id : cart.id,
+                input : cart
+            }
+        })
         setCarts(carts.map((cart) => cart));
     };
 

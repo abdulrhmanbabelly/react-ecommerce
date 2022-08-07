@@ -1,14 +1,9 @@
-import { Button, Checkbox, Grid, TextField, FormControlLabel } from '@mui/material';
 import React from 'react';
-import { signIn } from '../api/user';
-import Avatar from '@mui/material/Avatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Button, Checkbox, Grid, TextField, FormControlLabel } from '@mui/material';
+import { Container, Typography, Box, Link, CssBaseline, Avatar } from '@mui/material';
+import { useMutation } from '@apollo/client';
+import { SIGN_IN } from '../gql';
 
 function Copyright(props) {
   return (
@@ -25,14 +20,20 @@ function Copyright(props) {
 
 let SignIn = () => {
 
+  let [signIn] = useMutation(SIGN_IN);
+
     let handleSubmit = async (e) => {
 
         e.preventDefault();
 
-        await signIn(
-            document.getElementById('username').value,
-            document.getElementById('password').value
-        );
+        await signIn({
+          variables : {
+            input : {
+              username : document.getElementById('username').value,
+              password : document.getElementById('password').value  
+            }
+          }
+        });
 
     }
 

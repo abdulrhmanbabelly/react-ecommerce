@@ -1,31 +1,16 @@
-import { useEffect, useState } from "react"
-import { getCatagories } from "../api/catagories";
-
+import { useState } from "react"
+import { useQuery } from '@apollo/client';
+import { GET_CATEGORIES } from "../gql/catagories";
 
 let useCategories = () => {
 
+    let { loading, error, data } = useQuery(GET_CATEGORIES)
     let [categories, setCategories] = useState([]);
 
-    useEffect(() => {
 
-        (
-            async () => {
-                try {
+    if (!loading && !error && !categories[0]) { setCategories(data.categories); }
 
-                    let data = await getCatagories();
-                    if (!categories[0]) setCategories(data)
-
-                } catch (e) {
-
-                    console.log(e)
-
-                }
-            }
-        )();
-
-    })
-
-    return categories;
+    return { loading, error, categories };
 
 }
 

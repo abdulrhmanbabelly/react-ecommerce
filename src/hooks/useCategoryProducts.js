@@ -1,36 +1,16 @@
-import { useEffect, useState } from "react"
-import { getCatagoryProducts } from "../api/catagories";
+import { useState } from "react"
+import { useQuery } from '@apollo/client';
+import { GET_CATEGORY_PRODUCTS } from "../gql/catagories";
 
 let useCategoryProducts = (category) => {
 
     let [categoryProducts, setCategoryProducts] = useState([]);
-    let [loading, setLoading] = useState(true);
+    
+    let { loading, error, data } = useQuery(GET_CATEGORY_PRODUCTS, { variables : { category } });
 
-    useEffect(() => {
+    if (!loading && !error && !categoryProducts[0]) setCategoryProducts(data.categoriesProducts);
 
-        (
-            async () => {
-
-                try {
-
-                    if (loading) { 
-                        let data = await getCatagoryProducts(category);
-                        setCategoryProducts(data);
-                        setLoading(false);
-                    };
-
-                } catch (e) {
-
-                    console.log(e);
-
-                }
-
-            }
-        )();
-
-    }, []);
-
-    return { loading, categoryProducts };
+    return { loading, error, categoryProducts };
 
 }
 

@@ -1,11 +1,10 @@
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Slider, TextField } from "@mui/material";
 import React, { useState } from "react";
-import printRange from "../../helpers/printRange";
 import usersFilter from "../../helpers/usersFilter";
 
 let UsersFilter = (props) => {
 
-    let { button, setUsers } = props;
+    let { setUsers } = props;
     let [selectValue, setSelectValue] = useState('id');
 
     let handleChange = (e) => { setSelectValue(e.target.value) }
@@ -45,9 +44,6 @@ let UsersFilter = (props) => {
                 usersFilter(setUsers);
             }}>
                 filter
-            </Button>
-            <Button>
-                {button}
             </Button>
         </form>
     )

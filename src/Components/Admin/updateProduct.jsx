@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
-import { updateProduct } from "../../api/products";
-import { Box, Button, FormGroup, FormLabel, MenuItem, Select, Slider, TextField, FormControl } from "@mui/material";
-import Dialog from '@mui/material/Dialog';
-import List from '@mui/material/List';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import { Dialog, List, AppBar, Toolbar, IconButton, Typography, Slide, Box, Button, FormGroup, FormLabel, MenuItem, Select, Slider, TextField, FormControl } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
-import Popup from '../common/Popup';
+import { Popup } from '../';
+import { useMutation } from '@apollo/client';
+import { UPDATE_PRODUCT } from '../../gql';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -24,6 +18,7 @@ let UpdateProduct = (props) => {
     let [price, setPrice] = useState(props.product.price);
     const [open, setOpen] = useState(false);
     let [popup, setPopup] = useState('');
+    let [updateProduct, { loading, error }] = useMutation(UPDATE_PRODUCT);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -34,14 +29,20 @@ let UpdateProduct = (props) => {
     };
 
     let handleUpdate = async () => {
-        let res = await updateProduct(
-        document.getElementById('title').value,
-        price,
-        document.getElementById('description').value,
-        category,
-        id
-        );
-        if (res) setPopup(<Popup content={`updated product ${title} to be ${res.title}`} type="success" title="Done Updating Product" setPopup={setPopup}/>)
+        let newTitle = document.getElementById('title').value;
+        await updateProduct({
+            variables : {
+                input : {
+                    title : newTitle,
+                    price : price,
+                    description : document.getElementById('description').value,
+                    category : category,
+                },
+                id : id
+            }
+        });
+        if (error) setPopup(<Popup content={`did not updated product ${title} to be ${newTitle}`} type="error" title="error Updating Product" setPopup={setPopup}/>)
+        if (!loading) setPopup(<Popup content={`updated product ${title} to be ${newTitle}`} type="success" title="Done Updating Product" setPopup={setPopup}/>)
     }
 
     let handleCategoryChange = (e) => {
@@ -89,7 +90,7 @@ let UpdateProduct = (props) => {
                     <FormGroup>
                         <FormLabel>Price :</FormLabel>
                         <FormControl>
-                            <Slider min={0} max={10000} valueLabelDisplay defaultValue={price} onChange={handlePriceChange}/>
+                            <Slider min={0} max={10000} valueLabelDisplay="auto" defaultValue={price} onChange={handlePriceChange}/>
                         </FormControl>
                     </FormGroup>
                     <FormGroup>

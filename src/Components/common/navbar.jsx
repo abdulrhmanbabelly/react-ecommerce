@@ -2,15 +2,10 @@ import React, { useState } from 'react';
 import { toggleTheme } from "../../contexts/mode";
 import { AppBar, Box, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, Grid } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import { Cloud, ShoppingCart } from '@mui/icons-material';
-import StoreIcon from '@mui/icons-material/Store';
-import LoginIcon from '@mui/icons-material/Login';
+import { AccountCircle, Search, More, Cloud, ShoppingCart, Store, Login } from '@mui/icons-material';
 import { useHeaderStyles } from '../../styles';
 
-const Search = styled('div')(({ theme }) => ({
+const SearchInput = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -133,7 +128,7 @@ let NavigationBar = (props) => {
                 size="large"
                 color="inherit"
                 >
-                    <StoreIcon />
+                    <Store />
                 </IconButton>
                 <p>store</p>
             </MenuItem>
@@ -179,15 +174,15 @@ let NavigationBar = (props) => {
             >
                <a href="/">E-commerce</a>
             </Typography>
-            <Search>
+            <SearchInput>
                 <SearchIconWrapper>
-                <SearchIcon />
+                <Search />
                 </SearchIconWrapper>
                 <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 />
-            </Search>
+            </SearchInput>
             <Box sx={{ flexGrow: 2 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                 <IconButton 
@@ -206,7 +201,7 @@ let NavigationBar = (props) => {
                 <IconButton
                 size="large"
                 >
-                    <a href="/store"><StoreIcon /></a>    
+                    <a href="/store"><Store /></a>    
                 </IconButton>
                 <IconButton
                 size="large"
@@ -229,7 +224,7 @@ let NavigationBar = (props) => {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
                 >
-                <MoreIcon />
+                <More />
                 </IconButton>
             </Box>
 

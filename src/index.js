@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import ReactDOM from 'react-dom/client';
 import App from "./app";
 import './scss/index.scss';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from "@mui/material";
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { RestLink } from 'apollo-link-rest';
 
+const fakestoreapi = new RestLink({ uri : "https://fakestoreapi.com/" })
+const client = new ApolloClient({
+    link: fakestoreapi,
+    cache: new InMemoryCache(),
+  });
 
 let Index = () => {
 
@@ -31,10 +36,12 @@ let Index = () => {
     
 
     return (
-        <ThemeProvider theme={(darkMode) ? darkTheme : lightTheme}>
-            <CssBaseline />
-            <App mode = {mode} />
-        </ThemeProvider>
+        <ApolloProvider client={client}>
+            <ThemeProvider theme={(darkMode) ? darkTheme : lightTheme}>
+                <CssBaseline />
+                <App mode = {mode} />
+            </ThemeProvider>
+        </ApolloProvider>
     )
 }
 

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
-import { getProduct } from "../api/products";
-
+import { useState } from "react"
+import { GET_PRODUCT } from "../gql/products";
+import { useQuery } from '@apollo/client';
 
 let useSingleProduct = (id) => {
 
@@ -11,31 +11,16 @@ let useSingleProduct = (id) => {
             count : '...'
         }
     });
-    let [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        (
-            async () => {
-                try {
+    let { loading, error, data } = useQuery(GET_PRODUCT, {
+        variables : {
+            id : id
+        }
+    });
 
-                    if (loading) {
+    if (!loading && !error && product.title === '...') setProduct(data.product);
 
-                        let data = await getProduct(id);
-                        setProduct(data);
-                        setLoading(false);
-                    
-                    }
-
-                } catch (e) {
-
-                    console.log(e);
-
-                }
-            }
-        )();
-    })
-
-    return { product, loading };
+    return { product, loading, error };
 
 }
 

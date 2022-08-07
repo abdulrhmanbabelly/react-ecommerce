@@ -7,7 +7,7 @@ import cartsFilter from "../../helpers/cartsFilter";
 
 let CartsFilter = (props) => {
 
-    let { button, setCarts } = props;
+    let { setCarts } = props;
     let [selectValue, setSelectValue] = useState('id');
     let [startDate, setStartDate] = useState(new Date());
     let [endDate, setEndDate] = useState(new Date());
@@ -64,9 +64,6 @@ let CartsFilter = (props) => {
                 cartsFilter(setCarts)
             }}>
                 filter
-            </Button>
-            <Button>
-                {button}
             </Button>
         </form>
     )

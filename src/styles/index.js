@@ -7,3 +7,4 @@ export { default as useStoreStyles } from './store';
 export { default as useSingleProductStyles } from './singleProduct';
 export { default as useHeaderStyles } from './header';
 export { default as useCategorySliderStyles } from './categorySlider';
+export { default as useCartsStyles } from './carts';
