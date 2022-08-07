@@ -1,9 +1,9 @@
 import { CSVLink } from "react-csv";
 import React from 'react';
 import { AddProduct, AdminProduct, ProductsFilter } from "../../";
-import excelProductsData from "../../../helpers/excelDataForming/excelProductsData";
 import { useCategories, useProducts } from "../../../hooks";
 import { Paper, CircularProgress, Table, TableBody, TableCell, tableCellClasses, TableHead, TableRow, Button, Grid } from "@mui/material";
+import { excelProductsData } from "../../../functions";
 
 let AdminProductsTable = () => {
 

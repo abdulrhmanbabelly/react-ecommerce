@@ -1,7 +1,7 @@
 import React from 'react';
 import { CSVLink } from "react-csv";
 import { AdminUser, UsersFilter } from "../../";
-import excelUsersData from "../../../helpers/excelDataForming/excelUsersData";
+import { excelUsersData } from "../../../functions";
 import { useUsers } from "../../../hooks";
 import { Paper, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 

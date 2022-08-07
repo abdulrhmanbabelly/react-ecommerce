@@ -2,7 +2,7 @@ import { CSVLink } from "react-csv";
 import React from 'react';
 import { CartsFilter, AdminCart } from "../../";
 import { useCarts } from "../../../hooks";
-import excelCartsData from "../../../helpers/excelDataForming/excelCartsData";
+import { excelCartsData } from "../../../functions";
 import { Paper, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow, Button } from "@mui/material";
 
 let AdminCartsTable = () => {

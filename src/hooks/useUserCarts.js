@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
 import { GET_USER_CART } from "../gql/cart";
-import copyObj from "../helpers/copyObj";
+import { copyObj } from "../functions";
 
 let useUserCarts = (userId) => {
 

@@ -6,7 +6,7 @@ import { Popup, AddNewCart, Cart } from '../';
 import { useCartsStyles } from '../../styles';
 import { useMutation } from '@apollo/client';
 import { UPDATE_CART } from '../../gql';
-import copyObj from '../../helpers/copyObj';
+import { copyObj } from '../../functions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;

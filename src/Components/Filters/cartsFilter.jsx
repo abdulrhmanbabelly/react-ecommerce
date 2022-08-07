@@ -3,7 +3,7 @@ import { DatePicker } from "@mui/x-date-pickers-pro";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import React, { useState } from "react";
-import cartsFilter from "../../helpers/cartsFilter";
+import { cartsFilter } from "../../functions";
 
 let CartsFilter = (props) => {
 

@@ -1,6 +1,6 @@
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Slider, TextField } from "@mui/material";
 import React, { useState } from "react";
-import usersFilter from "../../helpers/usersFilter";
+import { usersFilter } from "../../functions";
 
 let UsersFilter = (props) => {
 

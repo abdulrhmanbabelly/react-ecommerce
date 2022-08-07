@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import productsFilter from '../../helpers/productsFilter';
+import { productsFilter } from '../../functions';
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Select, Slider, TextField } from '@mui/material';
 import { useCategories } from '../../hooks';
 

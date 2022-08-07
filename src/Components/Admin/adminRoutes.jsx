@@ -1,6 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { AdminCartsTable, AdminUsersTable, AdminCategoriesTable, AdminProductsTable } from '../';
+const AdminCartsTable = React.lazy(() => import('./Tables/adminCartsTable'));
+const AdminUsersTable = React.lazy(() => import('./Tables/adminUsersTable'));
+const AdminCategoriesTable = React.lazy(() => import('./Tables/adminCategoriesTable'));
+const AdminProductsTable = React.lazy(() => import('./Tables/adminProductsTable'));
 
 let AdminRoutes = () => {
     
