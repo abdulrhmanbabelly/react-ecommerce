@@ -2,17 +2,11 @@ import React, { useState } from "react";
 import ReactDOM from 'react-dom/client';
 import App from "./app";
 import './scss/index.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from "@mui/material";
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
-import { RestLink } from 'apollo-link-rest';
-
-const fakestoreapi = new RestLink({ uri : "https://fakestoreapi.com/" })
-const client = new ApolloClient({
-    link: fakestoreapi,
-    cache: new InMemoryCache(),
-  });
+import { ApolloProvider } from '@apollo/client';
+import { BrowserRouter } from "react-router-dom";
+import client from "./config/apolloClient";
 
 let Index = () => {
 
@@ -39,7 +33,9 @@ let Index = () => {
         <ApolloProvider client={client}>
             <ThemeProvider theme={(darkMode) ? darkTheme : lightTheme}>
                 <CssBaseline />
-                <App mode = {mode} />
+                <BrowserRouter>
+                    <App mode = {mode} />
+                </BrowserRouter>
             </ThemeProvider>
         </ApolloProvider>
     )
@@ -49,5 +45,4 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Index />
 );
-
 

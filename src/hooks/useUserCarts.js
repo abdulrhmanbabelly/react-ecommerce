@@ -1,7 +1,6 @@
 import { useQuery } from "@apollo/client";
-import { useState } from "react";
-import { GET_USER_CART } from "../gql/cart";
 import { copyObj } from "../functions";
+import { GET_USER_CART } from "../gql/cart";
 
 let useUserCarts = (userId) => {
 
@@ -13,22 +12,13 @@ let useUserCarts = (userId) => {
         }
     });
 
-    let [cartsState, setCarts] = useState([]);
+    let carts = [];
 
-    let newCarts = [];
-
-    if (!loading && !error && !cartsState[0]) {
-        data.carts.forEach((cart) => {
-            if (cart.userId === userId) {
-                newCarts.push(cart);
-            }
-        });
-        setCarts(newCarts);
+    if (!loading && !error) {
+        carts = copyObj(data.carts);
     }
-
-    let carts = copyObj(cartsState);
     
-    return { carts, setCarts, loading, error };
+    return { carts, loading, error };
 
 }
 

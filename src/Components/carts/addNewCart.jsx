@@ -1,14 +1,13 @@
-import { useMutation } from '@apollo/client';
-import { Button, Card } from '@mui/material';
+import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import { Popup } from '../';
-import { ADD_NEW_CART } from '../../gql';
+import { useAddNewCart } from '../../hooks';
 
-let AddNewCart = (props) => {
+let AddNewCart = () => {
 
-    let { carts, setCarts } = props;
     let [popup, setPopup] = useState('');
-    let [addNewCart] = useMutation(ADD_NEW_CART);
+    let { addNewCart } = useAddNewCart();
+    
     let handleAddNewCart = async () => {
         let date = new Date();
         let cart = {
@@ -16,7 +15,6 @@ let AddNewCart = (props) => {
             products : [],
             date: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
         };
-        carts.push(cart);
         await addNewCart({
             variables : {
                 input : {
@@ -27,7 +25,6 @@ let AddNewCart = (props) => {
             }
         });
         setPopup(<Popup title="created Cart" type="success" content={`added new Cart`} setPopup={setPopup}/>);
-        setCarts(carts.map((cart) => cart));
     }
 
     return (

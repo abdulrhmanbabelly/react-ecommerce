@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
-import { useSingleProduct } from "../../hooks";
+import { useCartProduct, useUpdateCart } from "../../hooks";
 import { Delete } from '@mui/icons-material';
 import { Box, Card, CircularProgress, IconButton, TextField } from "@mui/material";
-import { useMutation } from "@apollo/client";
-import { UPDATE_CART } from "../../gql";
 
 let CartProduct = (props) => {
 
     let { productId, quantity } = props.product;
-    let { cart, setCarts, carts } = props;
-    let { product, loading } = useSingleProduct(productId);
-    let [updateCart] = useMutation(UPDATE_CART);
+    let { cart } = props;
+    let { product, loading } = useCartProduct(productId);
+    let { updateCart } = useUpdateCart();
+
     useEffect(() => {
 
         if (!loading) {
@@ -22,40 +21,30 @@ let CartProduct = (props) => {
     });
       
     let handleChangeCount = async (e) => {
-        let cartIndex;
-        for (let i = 0; i < carts.length; i++) {
-            if (cart.id == carts[i].id) {
-                cartIndex = i;
-                break;
-            }
-        }
         let productIndex;
-        for (let i = 0; i < carts[cartIndex].products.length; i++) {
-            if (productId == carts[cartIndex].products[i].productId) {
+        for (let i = 0; i < cart.products.length; i++) {
+            if (productId == cart.products[i].productId) {
                 productIndex = i;
                 break;
             }
         }
-        carts[cartIndex].products[productIndex].quantity = Number(e.target.value);
+        cart.products[productIndex].quantity = Number(e.target.value);
         await updateCart({
             variables : {
                 input : cart,
                 id : cart.id
             }
         });
-        setCarts(carts.map((cart) => cart));
     }
 
     let handleDeleteProduct = async () => {
-
-        cart.products.splice(cart.products.indexOf(props.product), 1)
+        cart.products.splice(cart.products.indexOf(props.product), 1);
         updateCart({
             variables : {
                 id : cart.id,
                 input : cart
             }
         })
-        setCarts(carts.map((cart) => cart));
     };
 
     if (loading) return <CircularProgress />;

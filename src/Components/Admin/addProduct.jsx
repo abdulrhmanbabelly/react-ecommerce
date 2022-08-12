@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Dialog, List, AppBar, Toolbar, IconButton, Typography, Slide, Box, Button, FormGroup, FormLabel, MenuItem, Select, Slider, TextField, FormControl, InputLabel } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { Popup } from '../';
-import { ADD_PRODUCT } from '../../gql/products';
-import { useMutation } from '@apollo/client';
+import { useAddProduct } from '../../hooks';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -16,7 +15,7 @@ let AddProduct = (props) => {
     let [category, setCategory] = useState('');
     let [price, setPrice] = useState(0);
     let [popup, setPopup] = useState('');
-    let [addProduct, { loading }] = useMutation(ADD_PRODUCT);
+    let { addProduct } = useAddProduct();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -27,21 +26,21 @@ let AddProduct = (props) => {
     };
 
     let handleAddProduct = async () => {
-        let res = await addProduct(
+        await addProduct(
             {
                 variables : {
                     input : {
                         title : document.getElementById('title').value,
                         price : price,
-                        descrition : document.getElementById('description').value,
+                        description : document.getElementById('description').value,
                         category : category,
                         image: 'https://i.pravatar.cc',
-                    }
+                    },
                 }
             }
 
         );
-        if (!loading) setPopup(<Popup content={`added product ${res.title}`} type={"success"} title="Done Adding product" setPopup={setPopup}/>);
+        setPopup(<Popup content={`added product`} type={"success"} title="Done Adding product" setPopup={setPopup}/>);
     }
 
     let handleCategoryChange = (e) => {
@@ -95,8 +94,7 @@ let AddProduct = (props) => {
                         <FormControl>
                             <InputLabel id="category-label">Category</InputLabel>
                             <Select labelId='category-label' label="Category" value={category} onChange={handleCategoryChange} variant='outlined'>
-                                <MenuItem value="all">all</MenuItem>
-                                {categories.map((category) => <MenuItem key={Math.random() * 10000} value={category}>{category}</MenuItem>)}
+                                {categories.map((category, i) => <MenuItem key={i} value={category}>{category}</MenuItem>)}
                             </Select>
                         </FormControl>
                     </FormGroup>

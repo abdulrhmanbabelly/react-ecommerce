@@ -1,7 +1,7 @@
 import { CSVLink } from "react-csv";
 import React from 'react';
-import { AdminCategory } from "../../";
-import { useCategories } from "../../../hooks";
+import { AdminCategory } from "../../Components";
+import { useCategories } from "../../hooks";
 import { Paper, Button, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 
 let AdminCategoriesTable = () => {

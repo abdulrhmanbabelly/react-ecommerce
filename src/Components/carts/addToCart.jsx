@@ -1,12 +1,9 @@
 import { Box, Button, Divider, FormGroup, TextField, Slide, Typography, IconButton, Toolbar, AppBar, List, Dialog, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
-import { useUserCarts } from '../../hooks';
+import { useUpdateCart, useUserCarts } from '../../hooks';
 import CloseIcon from '@mui/icons-material/Close';
 import { Popup, AddNewCart, Cart } from '../';
 import { useCartsStyles } from '../../styles';
-import { useMutation } from '@apollo/client';
-import { UPDATE_CART } from '../../gql';
-import { copyObj } from '../../functions';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -16,10 +13,10 @@ let AddToCart = (props) => {
 
     let { productId, productTitle } = props;
     const [open, setOpen] = useState(false);
-    let { carts, setCarts, loading, error } = useUserCarts(1);
+    let { carts, loading, error } = useUserCarts(1);
     let [popup, setPopup] = useState('');
     let classes = useCartsStyles();
-    let [addToCart] = useMutation(UPDATE_CART);
+    let { updateCart } = useUpdateCart();
 
 
     let handleAddToCart = async (cart) => {
@@ -32,14 +29,13 @@ let AddToCart = (props) => {
             }
         }
         if (!found) cart.products.push({ productId : Number(productId), quantity : Number(document.getElementById(`quantity${cart.id}`).value)});
-        await addToCart({
+        await updateCart({
             variables : {
                 input : cart,
                 id : cart.id
             }
         });
         setPopup(<Popup content={`added product ${productTitle}`} type="success" title="Done Updating Cart" setPopup={setPopup}/>);
-        setCarts(carts.map((cart) => cart));
     }
 
     const handleClickOpen = () => {
@@ -89,8 +85,6 @@ let AddToCart = (props) => {
                             <div key={Math.random() * 100000}>
                             <Cart 
                                 cart={cart}
-                                carts={carts}
-                                setCarts={setCarts} 
                                 />
                                 <form className='addToCartForm'>
                                     <FormGroup>
@@ -107,7 +101,7 @@ let AddToCart = (props) => {
                             </div>
                         )})
                     }
-                    <AddNewCart setCarts={setCarts} carts={carts} />
+                    <AddNewCart carts={carts} />
                     <Divider/>
                     <Button color="secondary" variant='contained' style={{
                         margin : "1vw",

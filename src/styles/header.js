@@ -9,11 +9,16 @@ let useHeaderStyles = createUseStyles((theme) => ({
             marginLeft: ".4vw !important",
         },
         "& a" : {
-            color:  "#fff",
-            textDecoration: "none",
+            color : "#fff !important",
+            textDecoration: "none !important",
+            display : "flex",
+            alignItems : "center",
             "&:hover" : {
                 color: "#fff"
             }
+        },
+        "& li a" : {
+            color:  "rgba(0, 0, 0, 0.87) !important",
         }
     }
 }));

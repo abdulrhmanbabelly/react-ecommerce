@@ -1,19 +1,20 @@
 import { useMutation } from '@apollo/client';
 import { Button, CircularProgress, FormGroup, Grid, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import { Popup } from '../Components';
-import { DELETE_USER, UPDATE_USER } from '../gql';
+import { Loading, Popup } from '../Components';
+import { DELETE_USER, GET_USER, UPDATE_USER } from '../gql';
 import { useUser } from '../hooks';
 import { useSignUpStyles } from '../styles';
 
-let Settings = () => {
+let EditAccount = () => {
 
     let { loading, error, user } = useUser(1);
     let classes = useSignUpStyles();
     let [updateUser] = useMutation(UPDATE_USER);
     let [deleteUser] = useMutation(DELETE_USER);
     let [popup, setPopup] = useState(null);
-    if (loading) return <CircularProgress />
+
+    if (loading) return <Loading />
     if (error) return <h2>error</h2>
 
     let handleUpdate = async (e) => {
@@ -45,7 +46,7 @@ let Settings = () => {
                 }
             }
         );
-        setPopup(<Popup content={`updated your account`} type="success"/>)
+        setPopup(<Popup content={`updated your account`} type="success" setPopup={setPopup}/>)
     };
 
     let handleDelete = async (e) => {
@@ -139,4 +140,4 @@ let Settings = () => {
     )
 }
 
-export default Settings;
+export default EditAccount;

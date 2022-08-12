@@ -1,4 +1,4 @@
-
+// this func is used to make a copy of carts to be able to manipulate it
 let copyObj = (obj) => {
     
     let newObj = JSON.stringify(obj);

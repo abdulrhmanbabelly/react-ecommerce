@@ -11,7 +11,7 @@ let Popup = (props) => {
 
   const handleClose = () => {
     setOpen(false);
-    setTimeout(() => { setPopup('');  if (props.fn) props.fn(); } , 100);
+    setTimeout(() => { setPopup('');  if (props.then) props.then(); } , 100);
   };
 
   let renderContent = () => {
@@ -34,9 +34,7 @@ let Popup = (props) => {
       >
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
                 {renderContent()}
-          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>ok</Button>

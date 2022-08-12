@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { toggleTheme } from "../../contexts/mode";
-import { AppBar, Box, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, Grid } from '@mui/material';
+import { AppBar, Box, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-import { AccountCircle, Search, More, Cloud, ShoppingCart, Store, Login } from '@mui/icons-material';
+import { AccountCircle, Search, Cloud, ShoppingCart, Store, MoreVert } from '@mui/icons-material';
 import { useHeaderStyles } from '../../styles';
+import { toggleTheme } from '../../functions';
 
 const SearchInput = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -89,9 +89,9 @@ let NavigationBar = (props) => {
         open={isMenuOpen}
         onClose={handleMenuClose}
         >
-        <MenuItem onClick={handleMenuClose}><a href="/settings">account</a></MenuItem>
-        <MenuItem onClick={handleMenuClose}><a href="/signIn">Sign-in</a></MenuItem>
-        <MenuItem onClick={handleMenuClose}><a href="/signUp">Sign-up</a></MenuItem>
+            <MenuItem onClick={handleMenuClose}><a href="/editAccount">account</a></MenuItem>
+            <MenuItem onClick={handleMenuClose}><a href="/signIn">Sign-in</a></MenuItem>
+            <MenuItem onClick={handleMenuClose}><a href="/signUp">Sign-up</a></MenuItem>
         </Menu>
     );
 
@@ -103,6 +103,7 @@ let NavigationBar = (props) => {
             vertical: 'top',
             horizontal: 'right',
         }}
+        className={classes.header}
         id={mobileMenuId}
         keepMounted
         transformOrigin={{
@@ -112,17 +113,14 @@ let NavigationBar = (props) => {
         open={isMobileMenuOpen}
         onClose={handleMobileMenuClose}
         >
-        <a href="/carts" className='text-decoration-none'>
-        <MenuItem>
-            <IconButton size="large" color="inherit">
-            <Badge color="error">
-                <ShoppingCart />
-            </Badge>
-            </IconButton>
-            <p>Carts</p>
-        </MenuItem>
-        </a>
-        <a href="/store" className='text-decoration-none'>
+            <MenuItem>
+                <IconButton size="large" color="inherit">
+                    <Badge color="error">
+                        <ShoppingCart />
+                    </Badge>
+                </IconButton>
+                <a href="/carts">Carts</a>
+            </MenuItem> 
             <MenuItem>
                 <IconButton
                 size="large"
@@ -130,35 +128,34 @@ let NavigationBar = (props) => {
                 >
                     <Store />
                 </IconButton>
-                <p>store</p>
+                <a href="/store">store</a>
             </MenuItem>
-        </a>
-        <MenuItem onClick={handleProfileMenuOpen}>
-            <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="primary-search-account-menu"
-            aria-haspopup="true"
-            color="inherit"
-            >
-            <AccountCircle />
-            </IconButton>
-            <p>Profile</p>
-        </MenuItem>
-        <MenuItem onClick={() => {
-                toggleTheme(darkMode, setDarkMode);
-            }}>
-            <IconButton 
-            size="large"
-            aria-label="account of current user"
-            aria-controls="primary-search-account-menu"
-            aria-haspopup="true"
-            color="inherit"
-            >
-            <Cloud />
-            </IconButton>
-            <p>Dark mode</p>
-        </MenuItem>
+            <MenuItem onClick={handleProfileMenuOpen}>
+                <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="primary-search-account-menu"
+                aria-haspopup="true"
+                color="inherit"
+                >
+                    <AccountCircle />
+                </IconButton>
+                Profile
+            </MenuItem>
+            <MenuItem onClick={() => {
+                    toggleTheme(darkMode, setDarkMode);
+                }}>
+                <IconButton 
+                size="large"
+                aria-label="account of current user"
+                aria-controls="primary-search-account-menu"
+                aria-haspopup="true"
+                color="inherit"
+                >
+                    <Cloud />
+                </IconButton>
+                Dark mode
+            </MenuItem>
         </Menu>
     );
 
@@ -215,19 +212,18 @@ let NavigationBar = (props) => {
                     <AccountCircle />   
                 </IconButton>
             </Box>
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-                >
-                <More />
-                </IconButton>
-            </Box>
-
+                <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                    <IconButton
+                    size="large"
+                    aria-label="show more"
+                    aria-controls={mobileMenuId}
+                    aria-haspopup="true"
+                    onClick={handleMobileMenuOpen}
+                    color="inherit"
+                    >
+                    <MoreVert />
+                    </IconButton>
+                </Box>
             </Toolbar>
         </AppBar>
         {renderMobileMenu}

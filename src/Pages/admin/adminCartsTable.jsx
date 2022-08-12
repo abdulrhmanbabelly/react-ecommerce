@@ -1,13 +1,13 @@
 import { CSVLink } from "react-csv";
 import React from 'react';
-import { CartsFilter, AdminCart } from "../../";
-import { useCarts } from "../../../hooks";
-import { excelCartsData } from "../../../functions";
+import { CartsFilter, AdminCart } from "../../Components";
+import { useCarts } from "../../hooks";
+import { excelCartsData } from "../../functions";
 import { Paper, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow, Button } from "@mui/material";
 
 let AdminCartsTable = () => {
 
-    let { loading, carts, setCarts, error } = useCarts();
+    let { loading, carts, error } = useCarts();
     let { excelData, products } = excelCartsData(carts);
     
     if (loading) return <CircularProgress />;
@@ -17,7 +17,6 @@ let AdminCartsTable = () => {
         <>
         <CartsFilter
             carts={carts}
-            setCarts={setCarts}
         />
         <Button>
             <CSVLink

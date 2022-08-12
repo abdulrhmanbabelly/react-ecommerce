@@ -1,8 +1,7 @@
-import { useMutation } from '@apollo/client';
 import { Box, Button, TableCell, TableRow } from '@mui/material';
 import React, { useState } from 'react';
 import { Popup, UpdateProduct } from '../';
-import { DELETE_PRODUCT } from '../../gql';
+import { useDeleteProduct } from '../../hooks';
 
 let AdminProduct = (props) => {
 
@@ -10,15 +9,17 @@ let AdminProduct = (props) => {
     let { rate, count } = rating;
     let { categories } = props;    
     let [popup, setPopup] = useState('');
-    let [deleteProduct] = useMutation(DELETE_PRODUCT);
+    let { deleteProduct } = useDeleteProduct(id);
 
     let handleDeleteProduct = async () => {
-        await deleteProduct({
-            variables : {
-                id : id
-            }
-        });
-        setPopup(<Popup type="error" title="Done Deleting Product" content={`deleted product ${title}`} setPopup={setPopup}/>);
+        setPopup(<Popup type="error" title="Done Deleting Product" content={`deleted product ${title}`} setPopup={setPopup} then={async() => {
+            await deleteProduct({
+                variables : {
+                    id : id
+                }
+            });
+        }}/>);
+
     } 
 
     return (

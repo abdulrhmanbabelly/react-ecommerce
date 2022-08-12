@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Dialog, List, AppBar, Toolbar, IconButton, Typography, Slide, Box, Button, FormGroup, FormLabel, MenuItem, Select, Slider, TextField, FormControl } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { Popup } from '../';
-import { useMutation } from '@apollo/client';
-import { UPDATE_PRODUCT } from '../../gql';
+import { useUpdateProduct } from '../../hooks';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -12,13 +11,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 let UpdateProduct = (props) => {
 
 
-    let { title, description, id } = props.product;
+    let { title, description, id, rating } = props.product;
     let { categories } = props;
     let [category, setCategory] = useState(props.product.category);
     let [price, setPrice] = useState(props.product.price);
     const [open, setOpen] = useState(false);
     let [popup, setPopup] = useState('');
-    let [updateProduct, { loading, error }] = useMutation(UPDATE_PRODUCT);
+    let { updateProduct } = useUpdateProduct(rating)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -41,8 +40,7 @@ let UpdateProduct = (props) => {
                 id : id
             }
         });
-        if (error) setPopup(<Popup content={`did not updated product ${title} to be ${newTitle}`} type="error" title="error Updating Product" setPopup={setPopup}/>)
-        if (!loading) setPopup(<Popup content={`updated product ${title} to be ${newTitle}`} type="success" title="Done Updating Product" setPopup={setPopup}/>)
+        setPopup(<Popup content={`updated product ${title} to be ${newTitle}`} type="success" title="Done Updating Product" setPopup={setPopup}/>)
     }
 
     let handleCategoryChange = (e) => {

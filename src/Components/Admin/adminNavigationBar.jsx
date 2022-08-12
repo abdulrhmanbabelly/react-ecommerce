@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { AppBar, CssBaseline, ListItemText, ListItemIcon, ListItemButton, List, ListItem, Box, Divider, Drawer, IconButton, Toolbar } from '@mui/material';
 import { Store, PeopleAlt, Category, ShoppingCart, Cloud, ChevronRight, ChevronLeft, Menu } from '@mui/icons-material';
 import { styled, useTheme } from '@mui/material/styles';
-import { AdminRoutes } from '../Components';
-import { useAdminDashboardStyles } from '../styles';
-import { toggleTheme } from '../contexts/mode';
+import { useAdminDashboardStyles } from '../../styles';
+import { toggleTheme } from '../../functions';
 
 const drawerWidth = 180;
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -48,7 +47,7 @@ const CustomAppBar = styled(AppBar, {
   }),
 }));
 
-let AdminDashboard = (props) => {
+let AdminNavigationBar = (props) => {
   
   let { darkMode, setDarkMode } = props.mode;
 
@@ -150,13 +149,15 @@ let AdminDashboard = (props) => {
             </ListItem>
         </List>
       </Drawer>
-      <Main open={open} className='adminDashboard'>
-        <AdminRoutes />
-      </Main>
+      <Main open={open} className='adminDashboard' style={{
+        marginTop : "64px"
+      }}>
+          {props.routes}
+      </Main>   
     </Box>
   );
 }
 
 
 
-export default AdminDashboard;
+export default AdminNavigationBar;

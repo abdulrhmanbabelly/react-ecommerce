@@ -1,9 +1,11 @@
 
 const path = require("path");
 const webpack = require("webpack");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.js',
   mode: "development",
   module: {
     rules: [
@@ -38,13 +40,13 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist/"),
     publicPath: '/dist',
-    filename: "bundle.js"
+    filename: "[name].bundle.js",
+    chunkFilename: "[name].bundle.js"
   },
   devServer: {
     static: path.join(__dirname, "public/"),
     port: 3000,
     historyApiFallback: true,
-
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  plugins: [new CompressionPlugin(), new webpack.HotModuleReplacementPlugin()]
 };

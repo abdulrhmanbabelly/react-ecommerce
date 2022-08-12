@@ -1,16 +1,16 @@
 import React from 'react';
-import { ProductsFilter, Footer, ProductView } from '../Components';
+import { ProductsFilter, Footer, ProductView, Loading } from '../Components';
 import { useProducts } from '../hooks';
 import { useStoreStyles } from '../styles';
-import { Card, CircularProgress, Grid } from '@mui/material';
+import { Card, Grid } from '@mui/material';
 
 let Store = () => {
 
-    let { loading, error, products, setProducts } = useProducts();
+    let { loading, error, products } = useProducts();
     
     let classes = useStoreStyles();
 
-    if (loading) return <CircularProgress />
+    if (loading) return <Loading />
     if (error) return <h2>error</h2>
 
 
@@ -18,7 +18,7 @@ let Store = () => {
         <Grid container className={classes.store + " store"}>
             <Grid item md={3} xs={12} className="filter-wrapper">
                 <Card className='filter'>
-                    <ProductsFilter setProducts={setProducts} />
+                    <ProductsFilter />
                 </Card>
             </Grid>
             <Grid item md={9} xs={12} className="products">

@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import { Delete, CreditCard, Facebook, ArrowRight, WhatsApp, Instagram } from '@mui/icons-material';
 import { Box, Button, Card, FormGroup, Grid, IconButton, TextField } from '@mui/material';
-import { Popup, CartProduct } from '../';
-import { DELETE_CART } from '../../gql/cart';
-import { useMutation } from '@apollo/client';
+import { Popup, CartProduct } from '..';
+import { useDeleteCart } from '../../hooks';
+
 let Cart = (props) => {
-
-    let { products, date, id } = props.cart; 
-    let { carts, cart, setCarts } = props;
+    let { cart } = props;
+    let { products, date, id } = cart; 
     let [popup, setPopup] = useState(null);
-    let [deleteCart] = useMutation(DELETE_CART, {
-         variables : {
-            id : id
-         }
-    });
+    let { deleteCart } = useDeleteCart(id);
 
-    let fn = () => {
-        carts.splice(carts.indexOf(cart), 1);
-        setCarts(carts.map((cart) => cart));
-    }
-    
-    let handleDelete = async () => {
-        deleteCart();
-        setPopup(<Popup content={`deleted cart ${id}`} type="error" title="Done Deleting Cart" setPopup={setPopup} fn={fn}/>);
+    let handleDelete = () => {
+        setPopup(<Popup content={`deleted cart ${id}`} type="error"
+        title="Done Deleting Cart"
+        setPopup={setPopup}
+        then={
+            async () => {
+            await deleteCart({
+                variables : {
+                   id : id
+                }
+           })}
+        }
+        />);
     }
 
     return (
@@ -43,8 +43,6 @@ let Cart = (props) => {
                     key = {Math.random() * 100000}
                     product = {product}
                     cart = {cart}
-                    setCarts = {setCarts}
-                    carts = {carts}
                 />
                 )}   
                 </Grid>

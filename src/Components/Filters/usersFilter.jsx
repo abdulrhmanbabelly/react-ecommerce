@@ -1,20 +1,64 @@
+import { useLazyQuery } from "@apollo/client";
 import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel, MenuItem, Select, Slider, TextField } from "@mui/material";
 import React, { useState } from "react";
-import { usersFilter } from "../../functions";
+import { filterUsers } from "../../functions";
+import { gql } from "@apollo/client";
+let UsersFilter = () => {
 
-let UsersFilter = (props) => {
+    let [searchBy, setSearchBy] = useState('id');
+    let [limit, setLimit] = useState(5);
+    let [getUsers, {data}] = useLazyQuery(gql`
+    query getUsers($path : String) {
+            sortedUsers(path : $path) @rest(type : "user", path : "users{args.path}") {
+                id
+                email
+                username
+                password
+                name {
+                    firstname
+                    lastname
+                }
+                address {
+                    city
+                    street
+                    number
+                    zipcode
+                    geolocation {
+                        lat
+                        long
+                    }
+                }
+                phone
+            }
+        }
+    `);
 
-    let { setUsers } = props;
-    let [selectValue, setSelectValue] = useState('id');
+    let handleFilter = async () => {
 
-    let handleChange = (e) => { setSelectValue(e.target.value) }
+        let search = document.getElementById('search').value;
+        let desc = document.getElementById('desc').checked;
+        
+        await getUsers({
+            variables : {
+                path : `/?${( desc ? 'sort=desc' : 'sort=asc')}&limit=${limit}`
+            }
+        });
+
+        if(data?.sortedUsers) {
+            filterUsers({
+                searchBy : searchBy,
+                search : search
+            }, data)
+        }
+
+    }
 
     return (
         <form className="filter">
             <FormGroup>
                 <FormControl>
                     <InputLabel id="selectLabel">search by</InputLabel>
-                    <Select id='selectBox' labelId="selectLabel" label="search by" value={selectValue} onChange={handleChange}>
+                    <Select id='selectBox' labelId="selectLabel" label="search by" value={searchBy} onChange={e => setSearchBy(e.target.value)}>
                         <MenuItem value="id">id</MenuItem> 
                         <MenuItem value="email">email</MenuItem>
                         <MenuItem value="username">username</MenuItem>
@@ -35,14 +79,12 @@ let UsersFilter = (props) => {
                 <TextField id='search' placeholder="search" variant="outlined" label="search"/>
             </FormGroup>
             <FormGroup>
-                <Slider id='limit' defaultValue={10} valueLabelDisplay/>
+                <Slider key={Math.random()} id='limit' defaultValue={limit} onChange={e => setLimit(e.target.value)} valueLabelDisplay="auto"/>
             </FormGroup>
             <FormGroup>
-                <FormControlLabel control={<Checkbox value='desc'/>} label='sort Desc'/>
+                <FormControlLabel control={<Checkbox value='desc' id='desc'/>} label='sort Desc'/>
             </FormGroup>
-            <Button onClick={() => {
-                usersFilter(setUsers);
-            }}>
+            <Button onClick={handleFilter}>
                 filter
             </Button>
         </form>

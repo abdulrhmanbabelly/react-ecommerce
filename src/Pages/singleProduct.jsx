@@ -1,7 +1,7 @@
 import { Button, CircularProgress, Divider, Grid, List, ListItem, ListItemText } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { AddToCart, Footer, CategorySlider } from "../Components";
+import { AddToCart, Footer, CategorySlider, Loading } from "../Components";
 import { useSingleProduct } from "../hooks";
 import { useSingleProductStyles } from "../styles";
 
@@ -12,7 +12,7 @@ let SingleProduct = () => {
     let classes = useSingleProductStyles();
     let { product, loading, error } = useSingleProduct(id);
 
-    if (loading) return <CircularProgress />;
+    if (loading) return <Loading />;
     if (error) return <h2>error</h2>;
 
     return (
