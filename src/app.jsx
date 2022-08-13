@@ -21,7 +21,7 @@ let App = (props) => {
     let location = useLocation();
 
     return (
-    <React.Suspense fallback={<Loading />}>
+    <React.Suspense fallback={<Loading width={100} height={100}/>}>
         {location.pathname.indexOf('adminDashboard') === -1 && <NavigationBar mode={props.mode} />}
         <Grid container className="routes">
             <Routes>

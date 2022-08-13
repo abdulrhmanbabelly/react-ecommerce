@@ -6,7 +6,7 @@ let useCategorySliderStyles = createUseStyles((theme) => ({
             margin: 'auto',
             boxShadow: 'none !important',
             '& img' : { 
-                width: '20vw !important',
+                width: '50% !important',
                 margin: 'auto',
             }
         }

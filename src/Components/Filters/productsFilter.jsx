@@ -3,6 +3,8 @@ import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, 
 import { useCategories } from '../../hooks';
 import { filterProducts } from '../../functions';
 import { gql, useLazyQuery } from '@apollo/client';
+import { Modal } from '../';
+import { FilterAlt } from '@mui/icons-material';
 
 let ProductsFliter = () => {
     
@@ -13,6 +15,7 @@ let ProductsFliter = () => {
     let [priceValue, setPriceValue] = useState([0,10000]);
     let [rateValue, setRateValue] = useState([0,5]);
     let [countValue, setCountValue] = useState([0,1000]);
+
 
     let [getProducts, { data }] = useLazyQuery(gql`
         query getProducts($path : String) {
@@ -60,7 +63,9 @@ let ProductsFliter = () => {
         setCategory(event.target.value);
     };
 
+
     return (
+    <Modal content={
     <form>
         <FormGroup>
             <FormControl>
@@ -112,8 +117,11 @@ let ProductsFliter = () => {
         <FormGroup className='m-2'>
             <FormControlLabel control={<Checkbox value='desc' id="desc"/>} label='sort Desc'/>
         </FormGroup>
-        <Button onClick={handleFilter}>filter</Button>
     </form>
+    } headerContent='filter products' 
+        openIcon={<FilterAlt />}
+        closeButtonContent='fliter'
+        closeFunc={handleFilter}  />
     )
 
 }

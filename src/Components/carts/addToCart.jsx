@@ -1,21 +1,19 @@
-import { Box, Button, Divider, FormGroup, TextField, Slide, Typography, IconButton, Toolbar, AppBar, List, Dialog, CircularProgress } from '@mui/material';
+import { Box, Button, Divider, FormGroup, TextField, Slide, Typography, IconButton, Toolbar, AppBar, List, Dialog, CircularProgress, useTheme } from '@mui/material';
 import React, { useState } from 'react';
 import { useUpdateCart, useUserCarts } from '../../hooks';
 import CloseIcon from '@mui/icons-material/Close';
 import { Popup, AddNewCart, Cart } from '../';
 import { useCartsStyles } from '../../styles';
+import { Modal } from '../';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 let AddToCart = (props) => {
 
+    let theme = useTheme();
     let { productId, productTitle } = props;
-    const [open, setOpen] = useState(false);
     let { carts, loading, error } = useUserCarts(1);
     let [popup, setPopup] = useState('');
-    let classes = useCartsStyles();
+    let classes = useCartsStyles(theme);
     let { updateCart } = useUpdateCart();
 
 
@@ -38,80 +36,45 @@ let AddToCart = (props) => {
         setPopup(<Popup content={`added product ${productTitle}`} type="success" title="Done Updating Cart" setPopup={setPopup}/>);
     }
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     if (loading) return <CircularProgress />
     if (error) return <h2>error</h2>
 
     return (
     <>
-        <Button variant="contained" color='warning' onClick={handleClickOpen}>
-            Add To Cart
-        </Button>
-        <Dialog
-            fullScreen
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Transition}
-        >
-            <AppBar sx={{ position: 'relative' }}>
-            <Toolbar>
-                <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                Add To Cart
-                </Typography>
-                <IconButton
-                edge="start"
-                color="inherit"
-                onClick={handleClose}
-                aria-label="close"
-                >
-                    <CloseIcon />
-                </IconButton>
-            </Toolbar>
-            </AppBar>
-            <List className='carts'>
-                <Box className={classes.carts}>
-                    <h2 style={{ padding : "1vw", marginBottom : 0 }}>Select Cart</h2>
-                    <Divider />
-                    {
-                        carts.map((cart) => {
-                            return (
-                            <div key={Math.random() * 100000}>
-                            <Cart 
-                                cart={cart}
-                                />
-                                <form className='addToCartForm'>
-                                    <FormGroup>
-                                        <TextField type='number' id={`quantity${cart.id}`} label='quantity' variant='filled'/>     
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Button variant='contained' onClick={() => {
-                                            handleAddToCart(cart)
-                                        }}>
-                                            Add to cart
-                                        </Button>
-                                    </FormGroup>
-                                </form>
-                            </div>
-                        )})
-                    }
-                    <AddNewCart carts={carts} />
-                    <Divider/>
-                    <Button color="secondary" variant='contained' style={{
-                        margin : "1vw",
-                        float : "right"
-                    }} onClick={handleClose}>
-                    Close
-                    </Button>
-                </Box>
-            </List>
-        </Dialog>
+        <Modal 
+            content={
+            <div className={classes.carts}>
+                {
+                carts.map((cart) => {
+                    return (
+                    <div key={Math.random() * 100000}>
+                        <Cart 
+                            cart={cart}
+                        />
+                        <form className='addToCartForm'>
+                            <FormGroup>
+                                <TextField type='number' id={`quantity${cart.id}`} label='quantity' variant='filled'/>     
+                            </FormGroup>
+                            <FormGroup>
+                                <Button variant='contained' onClick={() => {
+                                    handleAddToCart(cart)
+                                }}>
+                                    Add to cart
+                                </Button>
+                            </FormGroup>
+                        </form>
+                    </div>
+                    )})
+                }
+                <AddNewCart carts={carts} />
+            </div>
+            }
+            openButtonContent='add to cart'
+            closeButtonContent='close'
+            headerContent='add to cart'
+            openButtonColor='warning'
+        />
         {popup}
     </>
     );

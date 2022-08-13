@@ -3,7 +3,7 @@ import { CSVLink } from "react-csv";
 import { AdminUser, UsersFilter } from "../../Components";
 import { excelUsersData } from "../../functions";
 import { useUsers } from "../../hooks";
-import { Paper, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow, Button, Grid } from "@mui/material";
+import { Paper, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow, Button, Grid, Link } from "@mui/material";
 
 let AdminUsersTable = () => {
     
@@ -17,16 +17,22 @@ let AdminUsersTable = () => {
     
     return (
         <>
-        <UsersFilter
-            users = {users}
-        />
-        <Button>
-            <CSVLink
-                data={excelData}>
-                export to excel
-            </CSVLink>
-        </Button>
-        <Grid component={Paper}>
+        <Grid container mb={1}>
+            <Grid item>
+                <Button>
+                    <CSVLink color='inherit'
+                        data={excelData}>
+                            export to excel
+                    </CSVLink>
+                </Button>
+            </Grid>
+            <Grid item>
+                <UsersFilter
+                    users = {users}
+                />
+            </Grid>
+        </Grid>
+        <Grid component={Paper} style={{ overflowX : 'scroll', width : '80vw' }}>
             <Table>
                 <TableHead>
                     <TableRow>

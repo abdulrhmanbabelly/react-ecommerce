@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { ProductView } from "../";
 import { useCategoryProducts } from "../../hooks";
 import { Grid } from "@mui/material";
 import Carousel from "nuka-carousel";
 import { useCategorySliderStyles } from "../../styles";
+import { ProductViewVertical, Loading } from "../";
+
 
 let CategorySlider = (props) => {
 
@@ -23,7 +24,7 @@ let CategorySlider = (props) => {
         }
     ) 
 
-    if (loading) return <h2 className="text-info">loading...</h2>;
+    if (loading) return <Loading width={100} height={20}/>;
     if (error) return <h2 className="text-info">error...</h2>;
 
     return (
@@ -33,7 +34,7 @@ let CategorySlider = (props) => {
         <Carousel slidesToShow={slidesToShow}> 
                 {
                     categoryProducts.map((product, i) =>
-                    <ProductView key={i} product={product} sm={12} md={12}/>)
+                    <ProductViewVertical key={i} product={product} sm={12} md={12}/>)
                 }
         </Carousel>
     </Grid>

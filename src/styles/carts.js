@@ -1,6 +1,6 @@
 import { createUseStyles } from "react-jss";
 
-let useCartsStyles = createUseStyles((theme) => ({
+let useCartsStyles = createUseStyles({
     carts : {
         "& .cart" : {
             padding: "2vw",
@@ -16,23 +16,35 @@ let useCartsStyles = createUseStyles((theme) => ({
             },
             "& .cartProduct" : {
                 margin: "1vw",
-                padding: "1vw"
+                padding: "1vw",
+                "& img" : {
+                    width : "50%"
+                }
             },
             "& .paycard" : {
-                color: "#fff",
                 padding: "2vw",
-                "& .checkoutButton" : {
+                color : '#fff !important',
+                "& input, ::placeholder, label" : {
+                    color : '#fff !important',
+                },
+                "& fieldset" : {
+                    border : '.1px solid #fff !important',
+                },
+                background : (props) => `${props.palette.mode === 'light' ? '#1976d2' : '#121212' }`,
+                    "& .checkoutButton" : {
                     width: "100% !important",
                     display: "flex",
-                    justifyContent: "space-between"
+                    justifyContent: "space-between",
+                    "& .check" : {
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems : 'center'
+                    }
                 },
                 "& .MuiOutlinedInput-root" : {
                     marginBottom: "1vw"
                 }
             },
-            "& ::placeholder, & label" : {
-                color: "#fff"
-            }
     
         },
         "& .MuiButton-containedSuccess , & .addToCartForm" : {
@@ -46,6 +58,6 @@ let useCartsStyles = createUseStyles((theme) => ({
         }
     }
     
-}));
+});
 
 export default useCartsStyles;

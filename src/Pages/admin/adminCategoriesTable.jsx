@@ -14,7 +14,7 @@ let AdminCategoriesTable = () => {
 
     return (
         <>
-        <Button>
+        <Button mb={1}>
             <CSVLink
                 data={[categories]}>
                 export to excel

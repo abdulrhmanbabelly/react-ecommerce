@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useCartProduct, useUpdateCart } from "../../hooks";
 import { Delete } from '@mui/icons-material';
-import { Box, Card, CircularProgress, IconButton, TextField } from "@mui/material";
+import { Box, Card, IconButton, Link, TextField, Grid } from "@mui/material";
+import { Loading } from "../";
 
 let CartProduct = (props) => {
 
@@ -47,39 +48,35 @@ let CartProduct = (props) => {
         })
     };
 
-    if (loading) return <CircularProgress />;
+    if (loading) return <Loading width={50} height={10}/>;
 
     return (
     <>
     <Card className="cartProduct">
         <Box>
-            <div className="d-flex justify-content-between">
-                <div className="d-flex flex-row align-items-center">
-                    <div>
-                        <img
-                            src={product.image}
-                            className="img-fluid rounded-3"
-                            alt="Shopping item"
-                            style={{width: "65px"}} />
-                        </div>
-                        <div className="ms-3 w-75">
-                            <h5>{product.title}</h5>
-                            <a href={`/products/${productId}`}>product page</a>
-                        </div>
-                    </div>
-                    <div className="d-flex flex-row align-items-center">
-                    <div style={{
-                        width: "60px",
-                        marginRight : "10px",
-                        }}>
+            <Grid container>
+                <Grid item xs={12} sm={2} justifyContent='center' container p={1}>
+                    <img
+                        src={product.image}
+                        alt="Shopping item"
+                        />
+                </Grid>
+                <Grid item container xs={12} sm={10} justifyContent='space-between' alignItems='center'>
+                    <Grid item xs={12} sm={8}>
+                        <h5>{product.title}</h5>
+                        <Link href={`/products/${productId}`} color='inherit'>product page</Link>
+                    </Grid>
+                    <Grid item xs={6} sm={2} pr={2} pl={2}>
                         <TextField type="number" defaultValue={quantity} onChange={handleChangeCount} variant="standard"/>
-                    </div>
-                    <div style={{width: "80px"}}>
-                        <h5 className="mb-0">${product.price}</h5>
-                    </div>
-                    <IconButton onClick={handleDeleteProduct}><Delete /></IconButton>
-                </div>
-            </div>
+                    </Grid>
+                    <Grid item xs={3} sm={1} justifyContent='center' container>
+                        <h5>${product.price}</h5>
+                    </Grid>
+                    <Grid item xs={3} sm={1}>
+                        <IconButton onClick={handleDeleteProduct}><Delete /></IconButton>
+                    </Grid>
+                </Grid>
+            </Grid> 
         </Box>
     </Card>
     </>

@@ -3,6 +3,9 @@ import { Button, Checkbox, FormControl, FormControlLabel, FormGroup, InputLabel,
 import React, { useState } from "react";
 import { filterUsers } from "../../functions";
 import { gql } from "@apollo/client";
+import { FilterAlt } from "@mui/icons-material";
+import { Modal } from "../";
+
 let UsersFilter = () => {
 
     let [searchBy, setSearchBy] = useState('id');
@@ -54,6 +57,7 @@ let UsersFilter = () => {
     }
 
     return (
+        <Modal content={
         <form className="filter">
             <FormGroup>
                 <FormControl>
@@ -88,6 +92,10 @@ let UsersFilter = () => {
                 filter
             </Button>
         </form>
+        } headerContent='filter users' 
+            openIcon={<FilterAlt />}
+            closeButtonContent='fliter'
+            closeFunc={handleFilter}  />
     )
 
 }

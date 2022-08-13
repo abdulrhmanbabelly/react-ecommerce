@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Delete, CreditCard, Facebook, ArrowRight, WhatsApp, Instagram } from '@mui/icons-material';
-import { Box, Button, Card, FormGroup, Grid, IconButton, TextField } from '@mui/material';
+import { Box, Button, Card, FormGroup, Grid, IconButton, TextField, Typography } from '@mui/material';
 import { Popup, CartProduct } from '..';
 import { useDeleteCart } from '../../hooks';
 
@@ -29,12 +29,16 @@ let Cart = (props) => {
     <>
     <Card className="cart">
         <Box>
-        <div className='d-flex justify-content-between'>
-            <h4>Date : {date.substring(0, 10)}</h4>
-            <IconButton onClick={handleDelete}>
-                <Delete style={{Gridor: "#cecece", cursor : 'pointer'}}/>
-            </IconButton>
-        </div>
+        <Grid container justifyContent='space-between'>
+            <Grid item>
+                <h4>Date : {date.substring(0, 10)}</h4>
+            </Grid>
+            <Grid item>
+                <IconButton onClick={handleDelete}>
+                    <Delete style={{Gridor: "#cecece", cursor : 'pointer'}}/>
+                </IconButton>
+            </Grid>
+        </Grid>
         <Grid container>
             <Grid item md={7} sm={12}>
                 {
@@ -47,21 +51,21 @@ let Cart = (props) => {
                 )}   
                 </Grid>
             <Grid item md={5} sm={12}>
-                <Card className='paycard bg-primary'>
-                    <Box>
-                        <div className="d-flex justify-content-between align-items-center mb-4">
-                            <h5 className="mb-0">Card details</h5>
+                <Card className='paycard'>
+                    <Box p={1}>
+                        <Grid container justifyContent='space-between' mb={4}>
+                            <h2 className="mb-0">Card details</h2>
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
                             className="img-fluid rounded-3" style={{width: "45px"}} alt="Avatar" />
-                        </div>
+                        </Grid>
 
-                        <p className="small mb-2">Card type</p>
-                        <a href="#!" type="submit" className="text-white"><CreditCard /></a>
-                        <a href="#!" type="submit" className="text-white"><Facebook /></a>
-                        <a href="#!" type="submit" className="text-white"><WhatsApp /></a>
-                        <a href="#!" type="submit" className="text-white"><Instagram /></a>
+                        <Typography paragraph mb={2}>Card type</Typography>
+                        <CreditCard />
+                        <Facebook />
+                        <WhatsApp />
+                        <Instagram />
 
-                        <form className="mt-4 text-black">
+                        <form>
                             <FormGroup>
                                 <TextField type="text" 
                                         placeholder="Enter Cardholder's Name" variant='outlined' label="Cardholder's Name"/>
@@ -86,29 +90,39 @@ let Cart = (props) => {
                                     </Grid>
                                 </Grid>
                             </FormGroup>
-
                         </form>
 
-                        <hr className="my-4" />
+                        <hr />
+                        <br/>
+                        <Grid container justifyContent='space-between' mb={2}>
+                            <Grid item>
+                                <p>Subtotal</p>
+                            </Grid>
+                            <Grid item>
+                                <p>$<span id={`subtotal${id}`}>0</span></p>
+                            </Grid>
+                        </Grid>
 
-                        <div className="d-flex justify-content-between">
-                            <p className="mb-2">Subtotal</p>
-                            <p className="mb-2">$<span id={`subtotal${id}`}>0</span></p>
-                        </div>
+                        <Grid container justifyContent='space-between' mb={2}>
+                            <Grid item>
+                                <p>Shipping</p>
+                            </Grid>
+                            <Grid item>
+                                <p>$20.00</p>
+                            </Grid>
+                        </Grid>
 
-                        <div className="d-flex justify-content-between">
-                            <p className="mb-2">Shipping</p>
-                            <p className="mb-2">$20.00</p>
-                        </div>
-
-                        <div className="d-flex justify-content-between mb-4">
-                            <p className="mb-2">Total(Incl. taxes)</p>
-                            <p className="mb-2">$<span id={`total${id}`}>0</span></p>
-                        </div>
-
+                        <Grid container justifyContent='space-between' mb={2}>
+                            <Grid item>
+                                <p>Total(Incl. taxes)</p>
+                            </Grid>
+                            <Grid item>
+                                <p>$<span id={`total${id}`}>0</span></p>
+                            </Grid>
+                        </Grid>
                         <Button color="info" className='checkoutButton' variant='contained'>
                             <div>$<span id={`checkout${id}`}>0</span></div>
-                            <span>Checkout <ArrowRight /></span>
+                            <span className='check'>Checkout <ArrowRight /></span>
                         </Button>
                     </Box>
                 </Card>

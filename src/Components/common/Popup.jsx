@@ -1,8 +1,20 @@
 import React, { forwardRef, useState } from 'react';
-import { Alert, DialogContent, DialogActions, Dialog, Button, DialogContentText, DialogTitle, Slide } from '@mui/material';
+import { Alert, Snackbar, IconButton } from '@mui/material';
+import { Close } from '@mui/icons-material';
 
-const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+const CustomAlert = forwardRef((props, ref) => {
+  let { content, severity, handleClose } = props;
+  return (
+    <>
+      <Alert severity={severity} elevation={6} ref={ref} variant="filled" style={{ display : 'flex', alignItems : 'center' }}>
+      {content} 
+      <IconButton onClick={handleClose} color='inherit' size='small'>
+          <Close/>
+      </IconButton>
+      </Alert>
+    </>
+
+  ) 
 });
 
 let Popup = (props) => {
@@ -16,31 +28,21 @@ let Popup = (props) => {
 
   let renderContent = () => {
 
-    if (type === "error") return <Alert severity="error">{content}</Alert>;
-    else if (type === "warning") return <Alert severity="warning">{content}</Alert>;
-    else if (type === "info") return <Alert severity="info">{content}</Alert>;
-    else if (type === "success") return <Alert severity="success">{content}</Alert>;
+    if (type === "error") return <CustomAlert content={content} severity='error' handleClose={handleClose} />;
+    else if (type === "warning") return <CustomAlert content={content} severity='warning' handleClose={handleClose} />;
+    else if (type === "info") return <CustomAlert content={content} severity='info' handleClose={handleClose} />;
+    else if (type === "success") return <CustomAlert content={content} severity='success' handleClose={handleClose} />;
 
   }
 
   return (
-    <div>
-      <Dialog
+      <Snackbar
         open={open}
-        TransitionComponent={Transition}
-        keepMounted
+        autoHideDuration={6000}
         onClose={handleClose}
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
+        message={title}>
                 {renderContent()}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>ok</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+      </Snackbar>
   );
 }
 

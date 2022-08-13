@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { Dialog, List, AppBar, Toolbar, IconButton, Typography, Slide, Box, Button, FormGroup, FormLabel, MenuItem, Select, Slider, TextField, FormControl, InputLabel } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import { FormGroup, FormLabel, MenuItem, Select, Slider, TextField, FormControl, InputLabel } from "@mui/material";
 import { Popup } from '../';
 import { useAddProduct } from '../../hooks';
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import { Modal } from '../';
 
 let AddProduct = (props) => {
 
@@ -52,33 +48,8 @@ let AddProduct = (props) => {
     }
 
     return (
-        <div>
-        <Button variant="contained" color='success' onClick={handleClickOpen} style={{ marginBottom : "1vw" }}>
-            Add product
-        </Button>
-        <Dialog
-            fullScreen
-            open={open}
-            onClose={handleClose}
-            TransitionComponent={Transition}
-        >
-        <AppBar sx={{ position: 'relative' }}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={handleClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                    Update Product
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <List>
-            <Box>
+        <>
+            <Modal content={
                 <form>
                     <FormGroup>
                         <TextField type="text" placeholder="Example : HUAWEI MATE 10 LITE" label = 'title' variant="outlined" id="title"/>
@@ -99,14 +70,13 @@ let AddProduct = (props) => {
                         </FormControl>
                     </FormGroup>
                 </form>
-                <Button variant='contained' color='secondary' onClick={() => { handleAddProduct(); handleClose(); }} style={{ float : "right" }}>
-                    Add
-                </Button>
-            </Box>
-        </List>
-      </Dialog>
-      {popup}
-    </div>
+            } openButtonContent='add product'
+              closeButtonContent='add'
+              headerContent='add product'
+              closeFunc={handleAddProduct}/>
+        {popup}
+        </>
+        
   );
 }
 

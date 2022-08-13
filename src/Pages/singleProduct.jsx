@@ -1,10 +1,10 @@
-import { Button, CircularProgress, Divider, Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Divider, Grid, List, ListItem, ListItemText, Rating } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { AddToCart, Footer, CategorySlider, Loading } from "../Components";
 import { useSingleProduct } from "../hooks";
 import { useSingleProductStyles } from "../styles";
-
+import { green } from '@mui/material/colors';
 
 let SingleProduct = () => {
 
@@ -12,7 +12,7 @@ let SingleProduct = () => {
     let classes = useSingleProductStyles();
     let { product, loading, error } = useSingleProduct(id);
 
-    if (loading) return <Loading />;
+    if (loading) return <Loading width={100} height={100}/>;
     if (error) return <h2>error</h2>;
 
     return (
@@ -26,9 +26,15 @@ let SingleProduct = () => {
                 {product.description}
                 catagory : {product.catagory}
                 <br/>
-                <List className="list-group-flush">
-                    <ListItem className="text-warning">
-                        <ListItemText>{product.rating.rate}</ListItemText>
+                <List>
+                    <ListItem>
+                        <ListItemText><Rating readOnly value={Number(product.rating.rate)} /></ListItemText>
+                    </ListItem>
+                    <Divider />
+                    <ListItem>
+                        <ListItemText style={{color : green["700"]}}>
+                            ${product.price}
+                        </ListItemText>
                     </ListItem>
                     <Divider />
                     <ListItem>
@@ -36,17 +42,17 @@ let SingleProduct = () => {
                             {product.rating.count} left
                         </ListItemText>
                     </ListItem>
-                    <Divider />
-                    <ListItem className="text-success">
-                        <ListItemText>
-                            ${product.price}
-                        </ListItemText>
-                    </ListItem>
                 </List>
                 <br />
                 <form>
-                    <AddToCart productId = {id} productTitle={product.title}/>
-                    <Button color="success" variant='contained'>Buy</Button>
+                    <Grid container>
+                        <Grid item>
+                            <AddToCart productId = {id} productTitle={product.title}/>
+                        </Grid>
+                        <Grid item>
+                            <Button color="success" variant='contained'>Buy</Button>
+                        </Grid>
+                    </Grid>
                 </form>
             </Grid>
         </Grid>

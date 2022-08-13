@@ -11,8 +11,6 @@ body {
     overflow-x: hidden;
 }
 
-
-
 .MuiPaper-elevation ul > div {
     form {
         margin-bottom: 1vw;
@@ -31,42 +29,14 @@ body {
         width: 95vw;
         margin: auto;
     }
-    .filter {
-        box-shadow: none !important;
-        padding: 2vw !important;
-        border-bottom: 1px solid #ccc;
-    }
-    .store .product > div {
-        margin: auto;
-        box-shadow: none !important;
-        border-bottom: 1px solid #ccc;
-        img { 
-            width: 30vw !important;
-            margin: auto;
-        }
-    }
-    .singleProduct {
-        padding-bottom: 5vw !important;
-        .image {
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            img {
-                width:30% !important
-            }
-        }
-        & > .col-md-6:nth-of-type(2) {
-            padding: 2vw;
-            button {
-                margin-right: 1vw;
-            }
-        }
-
-    }
     .signIn-0-2-2, .signUp-0-2-2 {
         margin: 2vw auto !important;
         padding: 2vw !important;
         box-shadow: none !important;
     }
 }
-
+@media (max-width:400px) {
+    .store-0-2-2 .product div.MuiGrid-root.image img {
+        margin-top: 10vh !important;
+    }
+}

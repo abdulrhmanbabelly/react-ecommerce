@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, CssBaseline, ListItemText, ListItemIcon, ListItemButton, List, ListItem, Box, Divider, Drawer, IconButton, Toolbar } from '@mui/material';
+import { AppBar, CssBaseline, ListItemText, ListItemIcon, ListItemButton, List, ListItem, Box, Divider, Drawer, IconButton, Toolbar, Link } from '@mui/material';
 import { Store, PeopleAlt, Category, ShoppingCart, Cloud, ChevronRight, ChevronLeft, Menu } from '@mui/icons-material';
 import { styled, useTheme } from '@mui/material/styles';
 import { useAdminDashboardStyles } from '../../styles';
@@ -93,6 +93,7 @@ let AdminNavigationBar = (props) => {
           }}>
             <Cloud />
           </IconButton>
+          Dashboard
         </Toolbar>
         </CustomAppBar>
       <Drawer
@@ -116,36 +117,44 @@ let AdminNavigationBar = (props) => {
         <Divider />
         <List>
             <ListItem disablePadding>
+              <Link href='/adminDashboard/products' color='inherit' style={{ width : '100%' }}>
                 <ListItemButton>
                     <ListItemIcon>
                         <Store />
                     </ListItemIcon>
-                    <ListItemText primary={<a href='/adminDashboard/products'>Products</a>} />
+                    <ListItemText primary='Products' />
                 </ListItemButton>
+              </Link>
             </ListItem>
             <ListItem disablePadding>
+              <Link href='/adminDashboard/users' color='inherit' style={{ width : '100%' }}>
                 <ListItemButton>
                     <ListItemIcon>
-                        <PeopleAlt />
+                      <PeopleAlt />
                     </ListItemIcon>
-                    <ListItemText primary={<a href='/adminDashboard/users'>users</a>} />
+                    <ListItemText primary='Users' />
                 </ListItemButton>
+              </Link>
             </ListItem>
             <ListItem disablePadding>
+              <Link href='/adminDashboard/carts' color='inherit' style={{ width : '100%' }}>
                 <ListItemButton>
                     <ListItemIcon>
-                        <ShoppingCart />
+                      <ShoppingCart />
                     </ListItemIcon>
-                    <ListItemText primary={<a href='/adminDashboard/carts'>carts</a>} />
+                    <ListItemText primary='carts' />
                 </ListItemButton>
+              </Link>
             </ListItem>
             <ListItem disablePadding>
+              <Link href='/adminDashboard/categories' color='inherit' style={{ width : '100%' }}>
                 <ListItemButton>
                     <ListItemIcon>
-                        <Category />
+                      <Category />
                     </ListItemIcon>
-                    <ListItemText primary={<a href='/adminDashboard/categories'>categories</a>} />
+                    <ListItemText primary='categories' />
                 </ListItemButton>
+              </Link>
             </ListItem>
         </List>
       </Drawer>

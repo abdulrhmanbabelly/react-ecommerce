@@ -15,10 +15,7 @@ let AdminProductsTable = () => {
 
     return (
         <>
-        <ProductsFilter 
-        categories = {categories}
-         />
-        <Grid container spacing={2}>
+        <Grid container spacing={2} mb={1}>
             <Grid item>
                 <Button>
                     <CSVLink
@@ -29,6 +26,11 @@ let AdminProductsTable = () => {
             </Grid>  
             <Grid item>
                 <AddProduct categories={categories}/>
+            </Grid>
+            <Grid item>
+                <ProductsFilter 
+                    categories = {categories}
+                    />
             </Grid>
          </Grid>
         <Grid component={Paper}>

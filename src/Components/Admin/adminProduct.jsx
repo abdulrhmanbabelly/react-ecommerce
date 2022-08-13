@@ -38,9 +38,9 @@ let AdminProduct = (props) => {
                 <Button color="error" onClick={handleDeleteProduct}>delete</Button>
             </Box>
             <UpdateProduct product={props.product} categories={categories}/>
+            {popup}
             </TableCell>
         </TableRow>
-        {popup}
         </>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { IconButton, CardActions, Typography, Avatar, Collapse, CardContent, CardMedia, CardHeader, Card, Grid } from '@mui/material';
+import { IconButton, CardActions, Typography, Avatar, Collapse, CardContent, CardMedia, CardHeader, Card, Grid, Rating } from '@mui/material';
 import { red, green, yellow } from '@mui/material/colors';
 import { MoreVert, ExpandMore, Share, Favorite } from '@mui/icons-material';
 
@@ -15,7 +15,7 @@ const ExpandMoreButton = styled((props) => {
   }),
 }));
 
-let ProductView = (props) => {
+let ProductViewVertical = (props) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -50,9 +50,10 @@ let ProductView = (props) => {
         />
         <CardContent>
             <Typography variant="body2" color="text.secondary">
-                count : {count}
-                <br/>rate : <span style={{ color : yellow['700'] }}>{rate}</span>
+                <Rating readOnly value={rate} />
                 <br/>price : <span style={{ color : green['700'] }}>{price}$</span>
+                <br/>
+                {count} left
             </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -84,40 +85,4 @@ let ProductView = (props) => {
   );
 }
 
-
-/* let ProductView = (props) => {
-
-    let { image, title, description, price, id } = props.product;
-    let { rate, count } = props.product.rating;    
-    let theme = useTheme();
-
-    return (
-        <Grid item sm={props.sm} spacing={1}>
-            <Card className='product'>
-                <Card.Img variant="top" src={image} className=""/>
-                <Card.Body style={{ backgroundColor : theme.background, color : theme.foreground }}>
-                    <Card.Title>{title}</Card.Title>
-                    <Card.Text>
-                    {description.substring(0, 100)}...
-                    </Card.Text>
-                </Card.Body>
-                <ListGroup className="list-group-flush">
-                    <ListGroupItem className='text-warning' style={{ backgroundColor : theme.background }}>
-                        {rate}
-                    </ListGroupItem>
-                    <ListGroupItem style={{ backgroundColor : theme.background, color : theme.foreground }}>
-                        {count} left
-                    </ListGroupItem>
-                    <ListGroupItem className='text-success' style={{ backgroundColor : theme.background }}>
-                        ${price}
-                    </ListGroupItem>
-                </ListGroup>
-                <Card.Body style={{ backgroundColor : theme.background,color : theme.foreground }}>
-                    <Card.Link href={`http://localhost:3000/product/${id}`}>product page</Card.Link>
-                </Card.Body>
-            </Card> 
-        </Grid>
-    )
-} */
-
-export default ProductView;
+export default ProductViewVertical;
