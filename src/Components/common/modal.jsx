@@ -49,7 +49,7 @@ let Modal = (props) => {
                             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                                     {headerContent}
                             </Typography>
-                            <Button color='inherit' variant='text' onClick={() => { handleClose(); closeFunc() }}>
+                            <Button color='inherit' variant='text' onClick={() => { handleClose(); if(closeFunc) closeFunc() }}>
                                 {closeButtonContent}
                             </Button>
                         </Toolbar>

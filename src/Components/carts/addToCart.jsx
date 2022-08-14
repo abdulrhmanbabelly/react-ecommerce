@@ -1,10 +1,12 @@
-import { Box, Button, Divider, FormGroup, TextField, Slide, Typography, IconButton, Toolbar, AppBar, List, Dialog, CircularProgress, useTheme } from '@mui/material';
+import { Button, FormGroup, TextField, CircularProgress, useTheme } from '@mui/material';
 import React, { useState } from 'react';
 import { useUpdateCart, useUserCarts } from '../../hooks';
-import CloseIcon from '@mui/icons-material/Close';
 import { Popup, AddNewCart, Cart } from '../';
 import { useCartsStyles } from '../../styles';
 import { Modal } from '../';
+import SignIn from '../../Pages/signIn';
+import { useQuery } from '@apollo/client';
+import { LOGGED_IN } from '../../gql';
 
 
 let AddToCart = (props) => {
@@ -13,6 +15,7 @@ let AddToCart = (props) => {
     let { productId, productTitle } = props;
     let { carts, loading, error } = useUserCarts(1);
     let [popup, setPopup] = useState('');
+    let loggedIn = useQuery(LOGGED_IN).data.loggedIn;
     let classes = useCartsStyles(theme);
     let { updateCart } = useUpdateCart();
 
@@ -45,29 +48,32 @@ let AddToCart = (props) => {
         <Modal 
             content={
             <div className={classes.carts}>
-                {
-                carts.map((cart) => {
-                    return (
-                    <div key={Math.random() * 100000}>
-                        <Cart 
-                            cart={cart}
-                        />
-                        <form className='addToCartForm'>
-                            <FormGroup>
-                                <TextField type='number' id={`quantity${cart.id}`} label='quantity' variant='filled'/>     
-                            </FormGroup>
-                            <FormGroup>
-                                <Button variant='contained' onClick={() => {
-                                    handleAddToCart(cart)
-                                }}>
-                                    Add to cart
-                                </Button>
-                            </FormGroup>
-                        </form>
-                    </div>
-                    )})
-                }
-                <AddNewCart carts={carts} />
+                { loggedIn ? 
+                <>
+                    {
+                    carts.map((cart) => {
+                        return (
+                        <div key={Math.random() * 100000}>
+                            <Cart 
+                                cart={cart}
+                            />
+                            <form className='addToCartForm'>
+                                <FormGroup>
+                                    <TextField type='number' id={`quantity${cart.id}`} label='quantity' variant='filled'/>     
+                                </FormGroup>
+                                <FormGroup>
+                                    <Button variant='contained' onClick={() => {
+                                        handleAddToCart(cart)
+                                    }}>
+                                        Add to cart
+                                    </Button>
+                                </FormGroup>
+                            </form>
+                        </div>
+                        )})
+                    }
+                    <AddNewCart carts={carts} />
+                </> : <SignIn /> }
             </div>
             }
             openButtonContent='add to cart'

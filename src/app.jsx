@@ -22,7 +22,7 @@ let App = () => {
 
     let location = useLocation();
     let darkMode = useQuery(DARK_MODE);
-    let loggedIn = useQuery(LOGGED_IN);
+    let loggedIn = useQuery(LOGGED_IN).data.loggedIn;
     let darkTheme = createTheme({
         palette: {
             mode: 'dark',
@@ -40,32 +40,30 @@ let App = () => {
         <ThemeProvider theme={darkMode.data?.on === "true" ? darkTheme : lightTheme}>
         <CssBaseline />
         {location.pathname.indexOf('adminDashboard') === -1 && <NavigationBar />}
-        { loggedIn.data.loggedIn ?    
         <>
-                <Grid container style={{ width : "auto" }}>
-                    <Routes>
-                        <Route path='/' element={<Home/>} />
-                        {location.pathname.indexOf('adminDashboard') > -1 && (
-                        <Route path='/adminDashboard/*' element={<AdminNavigationBar routes={
-                            <Routes>
-                                <Route path='/products' exact element={<AdminProductsTable/>} />
-                                <Route path='/users' exact element={<AdminUsersTable/>} />
-                                <Route path='/categories' exact element={<AdminCategoriesTable/>} />
-                                <Route path='/carts' exact element={<AdminCartsTable />} />
-                            </Routes>
-                        }/>}/>
-                            
-                        )}
-                        <Route path='/carts' element={<Carts />} />
-                        <Route path='/store' element={<Store />} />
-                        <Route path='/products/:id' element={<SingleProduct />} />
-                        <Route path='/editAccount' element={<EditAccount />} />
-                        <Route path='/signUp' element={<SignUp />} />
-                    </Routes>
-                </Grid> 
-            </>
-            : <SignIn /> }
-         
+            <Grid container style={{ width : "auto" }}>
+                <Routes>
+                    <Route path='/' element={<Home/>} />
+                    {location.pathname.indexOf('adminDashboard') > -1 && (
+                    <Route path='/adminDashboard/*' element={<AdminNavigationBar routes={
+                        <Routes>
+                            <Route path='/products' exact element={<AdminProductsTable/>} />
+                            <Route path='/users' exact element={<AdminUsersTable/>} />
+                            <Route path='/categories' exact element={<AdminCategoriesTable/>} />
+                            <Route path='/carts' exact element={<AdminCartsTable />} />
+                        </Routes>
+                    }/>}/>
+                        
+                    )}
+                    <Route path='/carts' element={loggedIn ? <Carts /> : <SignIn />} />
+                    <Route path='/store' element={<Store />} />
+                    <Route path='/products/:id' element={<SingleProduct />} />
+                    <Route path='/editAccount' element={loggedIn ? <EditAccount /> : <SignIn />} />
+                    <Route path='/signUp' element={<SignUp />} />
+                    <Route path='/signIn' element={<SignIn />} />
+                </Routes>
+            </Grid> 
+        </>
         </ThemeProvider>
     </React.Suspense>
     )
