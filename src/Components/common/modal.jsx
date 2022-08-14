@@ -35,29 +35,31 @@ let Modal = (props) => {
                 onClose={handleClose}
                 TransitionComponent={Transition}
                 >
-                <AppBar sx={{ position: 'relative' }}>
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleClose}
-                            aria-label="close"
-                        >
-                            <Close />
-                        </IconButton>
-                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                                {headerContent}
-                        </Typography>
-                        <Button color='inherit' variant='text' onClick={() => { handleClose(); closeFunc() }}>
-                            {closeButtonContent}
-                        </Button>
-                    </Toolbar>
-                </AppBar>
-                <List>
-                    <Box style={{ position : 'relative' }}> 
-                            {content}
-                    </Box>
-                </List>
+                <Box style = {{ overflowX : 'hidden' }}>
+                    <AppBar sx={{ position: 'relative' }}>
+                        <Toolbar>
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                onClick={handleClose}
+                                aria-label="close"
+                            >
+                                <Close />
+                            </IconButton>
+                            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                                    {headerContent}
+                            </Typography>
+                            <Button color='inherit' variant='text' onClick={() => { handleClose(); closeFunc() }}>
+                                {closeButtonContent}
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+                    <List>
+                        <Box style={{ position : 'relative' }}> 
+                                {content}
+                        </Box>
+                    </List>
+                </Box>
             </Dialog>
         </div>
     </>)

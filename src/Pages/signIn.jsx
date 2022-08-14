@@ -3,7 +3,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Button, Checkbox, Grid, TextField, FormControlLabel } from '@mui/material';
 import { Container, Typography, Box, Link, CssBaseline, Avatar } from '@mui/material';
 import { useMutation } from '@apollo/client';
-import { SIGN_IN } from '../gql';
+import { LOGGED_IN, SIGN_IN } from '../gql';
+import client from '../config/apolloClient';
 
 function Copyright(props) {
   return (
@@ -22,18 +23,28 @@ let SignIn = () => {
 
   let [signIn] = useMutation(SIGN_IN);
 
-    let handleSubmit = async (e) => {
+    let handleSubmit = (e) => {
 
         e.preventDefault();
 
-        await signIn({
+        signIn({
           variables : {
             input : {
               username : document.getElementById('username').value,
               password : document.getElementById('password').value  
             }
           }
+        }).then((data) => {
+          client.writeQuery({
+            query : LOGGED_IN,
+            data : {
+              loggedIn : data.data.signIn.token ? true : false
+            }
+          });
+          localStorage.setItem('token', data.data.signIn.token)
         });
+
+
 
     }
 

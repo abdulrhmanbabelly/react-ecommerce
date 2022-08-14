@@ -1,7 +1,9 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 import React from 'react';
-import { Grid } from '@mui/material';
+import { createTheme, CssBaseline, Grid, ThemeProvider } from '@mui/material';
 import { Loading } from './Components';
+import { useQuery } from '@apollo/client';
+import { DARK_MODE, LOGGED_IN } from './gql';
 const AdminNavigationBar = React.lazy(() => import('./Components/Admin/adminNavigationBar'));
 const NavigationBar = React.lazy(() => import('./Components/common/navbar'));
 const Home = React.lazy(() => import('./Pages/home'));
@@ -16,35 +18,55 @@ const AdminUsersTable = React.lazy(() => import('./Pages/admin/adminUsersTable')
 const AdminCategoriesTable = React.lazy(() => import('./Pages/admin/adminCategoriesTable'));
 const AdminProductsTable = React.lazy(() => import('./Pages/admin/adminProductsTable'));
 
-let App = (props) => {
+let App = () => {
 
     let location = useLocation();
+    let darkMode = useQuery(DARK_MODE);
+    let loggedIn = useQuery(LOGGED_IN);
+    let darkTheme = createTheme({
+        palette: {
+            mode: 'dark',
+        }
+    })
 
+    let lightTheme = createTheme({
+        palette: {
+            mode: 'light',
+        }
+    })
+    
     return (
     <React.Suspense fallback={<Loading width={100} height={100}/>}>
-        {location.pathname.indexOf('adminDashboard') === -1 && <NavigationBar mode={props.mode} />}
-        <Grid container className="routes">
-            <Routes>
-                <Route path='/' element={<Home/>} />
-                {location.pathname.indexOf('adminDashboard') > -1 && (
-                <Route path='/adminDashboard/*' element={<AdminNavigationBar mode={props.mode} routes={
+        <ThemeProvider theme={darkMode.data?.on === "true" ? darkTheme : lightTheme}>
+        <CssBaseline />
+        {location.pathname.indexOf('adminDashboard') === -1 && <NavigationBar />}
+        { loggedIn.data.loggedIn ?    
+        <>
+                <Grid container style={{ width : "auto" }}>
                     <Routes>
-                        <Route path='/products' exact element={<AdminProductsTable/>} />
-                        <Route path='/users' exact element={<AdminUsersTable/>} />
-                        <Route path='/categories' exact element={<AdminCategoriesTable/>} />
-                        <Route path='/carts' exact element={<AdminCartsTable />} />
+                        <Route path='/' element={<Home/>} />
+                        {location.pathname.indexOf('adminDashboard') > -1 && (
+                        <Route path='/adminDashboard/*' element={<AdminNavigationBar routes={
+                            <Routes>
+                                <Route path='/products' exact element={<AdminProductsTable/>} />
+                                <Route path='/users' exact element={<AdminUsersTable/>} />
+                                <Route path='/categories' exact element={<AdminCategoriesTable/>} />
+                                <Route path='/carts' exact element={<AdminCartsTable />} />
+                            </Routes>
+                        }/>}/>
+                            
+                        )}
+                        <Route path='/carts' element={<Carts />} />
+                        <Route path='/store' element={<Store />} />
+                        <Route path='/products/:id' element={<SingleProduct />} />
+                        <Route path='/editAccount' element={<EditAccount />} />
+                        <Route path='/signUp' element={<SignUp />} />
                     </Routes>
-                }/>}/>
-                    
-                )}
-                <Route path='/carts' element={<Carts />} />
-                <Route path='/store' element={<Store />} />
-                <Route path='/products/:id' element={<SingleProduct />} />
-                <Route path='/editAccount' element={<EditAccount />} />
-                <Route path='/signIn' element={<SignIn />} />
-                <Route path='/signUp' element={<SignUp />} />
-            </Routes>
-        </Grid>
+                </Grid> 
+            </>
+            : <SignIn /> }
+         
+        </ThemeProvider>
     </React.Suspense>
     )
 }

@@ -1,9 +1,10 @@
 import { createUseStyles } from "react-jss";
 
-let useAdminDashboardStyles = createUseStyles((theme) => ({
+let useAdminDashboardStyles = createUseStyles({
     adminDashboard : {
         "& a" : {
-            textDecoration : "none"
+            textDecoration : "none",
+            color : (props) => `${props.palette.mode === 'light' ? '#1976d2' : '#fff' }`
         },
         "& .MuiListItemIcon-root" : {
             minWidth : "0 !important",
@@ -16,6 +17,6 @@ let useAdminDashboardStyles = createUseStyles((theme) => ({
             }
         }
     },
-}));
+});
 
 export default useAdminDashboardStyles;

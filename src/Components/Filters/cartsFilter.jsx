@@ -14,7 +14,7 @@ let CartsFilter = () => {
     let [startDate, setStartDate] = useState(new Date());
     let [endDate, setEndDate] = useState(new Date());
     let [limit, setLimit] = useState(5);
-    let [getCarts, { data }] = useLazyQuery(gql`
+    let [getCarts] = useLazyQuery(gql`
         query getCarts($path : String) {
                 sortedCarts(path : $path) @rest(type : "cart", path : "carts{args.path}") {
                     products
@@ -24,23 +24,25 @@ let CartsFilter = () => {
                 }
             }
         `);
-    let handleFilter = async () => {
+    let handleFilter = () => {
 
         let search = document.getElementById('search').value;
         let desc = document.getElementById('desc').checked;
 
-        await getCarts({
+        getCarts({
             variables : {
                 path : `/?${( desc ? 'sort=desc' : 'sort=asc')}${(startDate && endDate) && `&startdate=${startDate.getFullYear()}-${startDate.getMonth()}-${startDate.getDate()}&enddate=${endDate.getFullYear()}-${endDate.getMonth()}-${endDate.getDate()}`}&limit=${limit}`
             }
+        }).then((data) => {
+            if (data?.data.sortedCarts) {
+                filterCarts({
+                    searchBy : searchBy,
+                    search : search
+                }, data.data);
+            }
         });
 
-        if (data?.sortedCarts) {
-            filterCarts({
-                searchBy : searchBy,
-                search : search
-            }, data);
-        }
+        
 
     }
 

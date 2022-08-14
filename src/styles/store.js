@@ -16,12 +16,6 @@ let useStoreStyles = createUseStyles((theme) => ({
                 }
             }
         },
-        "& .footer" : {
-            width: "100% !important",
-            "& > div" : {
-                width: "auto !important"
-            }
-        },
         '& .filterButton' : {
             marginLeft : 'auto',
             marginRight : '1vw'

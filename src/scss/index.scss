@@ -20,14 +20,15 @@ body {
     }
     padding: 2vw;
 }
-.categorySlider {
-    width: 95vw;
-    margin: auto;
+ul li a {
+    color:  inherit !important;
+    text-decoration : none !important;
 }
+
 @media (max-width:854px) {
-    .categorySlider {
-        width: 95vw;
-        margin: auto;
+
+    footer li a {
+        margin : auto !important;
     }
     .signIn-0-2-2, .signUp-0-2-2 {
         margin: 2vw auto !important;

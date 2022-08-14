@@ -1,42 +1,39 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from 'react-dom/client';
 import App from "./app";
 import './scss/index.scss';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { CssBaseline } from "@mui/material";
 import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from "react-router-dom";
 import client from "./config/apolloClient";
+import { DARK_MODE, LOGGED_IN } from "./gql";
+
+// initiating dark mode
+
+if (!localStorage.getItem('darkMode')) localStorage.setItem('darkMode',false);
+
+client.writeQuery({
+    query : DARK_MODE,
+    data : {
+        on : localStorage.getItem('darkMode')
+    }
+});
+
+client.writeQuery({
+    query : LOGGED_IN,
+    data : {
+      loggedIn : localStorage.getItem('token') ? true : false
+    }
+  });
+
+
 
 let Index = () => {
 
-    let [darkMode, setDarkMode] = useState(false);
-    let mode = {
-        setDarkMode : setDarkMode,
-        darkMode : darkMode
-    }
-
-    let darkTheme = createTheme({
-        palette: {
-            mode: 'dark',
-        }
-    })
-
-    let lightTheme = createTheme({
-        palette: {
-            mode: 'light',
-        }
-    })
-    
-
     return (
         <ApolloProvider client={client}>
-            <ThemeProvider theme={(darkMode) ? darkTheme : lightTheme}>
-                <CssBaseline />
                 <BrowserRouter>
-                    <App mode = {mode} />
+                    <App />
                 </BrowserRouter>
-            </ThemeProvider>
         </ApolloProvider>
     )
 }

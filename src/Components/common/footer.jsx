@@ -47,7 +47,7 @@ let Footer = () => {
               </Grid>
 
               <Grid item md={5}>
-                <TextField contrast type='email' label='Email address' fullWidth/>
+                <TextField type='email' label='Email address' fullWidth/>
               </Grid>
               <Grid item>
                 <Button variant="contained" color="success">
@@ -69,99 +69,99 @@ let Footer = () => {
         </Grid>
         <Grid item xs={12}>
         <Grid container spacing={3} justifyContent='center'>
-            <Grid item container md={3} sm={6} justifyContent='center'>
+            <Grid item md={3} sm={6} xs={12}>
               <List className='list-unstyled mb-0'>
                 <ListItem>
-                  <Link color="inherit" href='#!' className='text-white'>
+                  <Link color="inherit" href='/'>
                     Home
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='/store' className='text-white'>
+                  <Link color="inherit" href='/store'>
                     Store
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='/carts' className='text-white'>
+                  <Link color="inherit" href='/carts'>
                     cart
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='/editAccount' className='text-white'>
+                  <Link color="inherit" href='/editAccount'>
                     edit account
                   </Link>
                 </ListItem>
               </List>
             </Grid>
 
-            <Grid item container md={3} sm={6} justifyContent='center'>
+            <Grid item md={3} sm={6} xs={12}>
               <List className='list-unstyled mb-0'>
                 <ListItem>
-                  <Link color="inherit" href='/signIn' className='text-white'>
+                  <Link color="inherit" href='/signIn'>
                     sign-in
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='/signUp' className='text-white'>
+                  <Link color="inherit" href='/signUp'>
                     sign-up
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='/adminDashboard' className='text-white'>
+                  <Link color="inherit" href='/adminDashboard'>
                     admin Dashboard
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='/' className='text-white'>
+                  <Link color="inherit" href='/'>
                     E-commerce
                   </Link>
                 </ListItem>
               </List>
             </Grid>
 
-            <Grid item container md={3} sm={6} justifyContent='center'>
+            <Grid item md={3} sm={6} xs={12}>
               <List className='list-unstyled mb-0'>
                 <ListItem>
-                  <Link color="inherit" href='#!' className='text-white'>
+                  <Link color="inherit" href='#!'>
                     Facebook
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='#!' className='text-white'>
+                  <Link color="inherit" href='#!'>
                     Instagram
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='#!' className='text-white'>
+                  <Link color="inherit" href='#!'>
                     LinkedIn
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='#!' className='text-white'>
+                  <Link color="inherit" href='#!'>
                      Codepen
                   </Link>
                 </ListItem>
               </List>
             </Grid>
-            <Grid item container md={3} sm={6} justifyContent='center'>
+            <Grid item md={3} sm={6} xs={12}>
               <List className='list-unstyled mb-0'>
                 <ListItem>
-                  <Link color="inherit" href='#!' className='text-white'>
+                  <Link color="inherit" href='#!'>
                     CodeSandBox
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='#!' className='text-white'>
+                  <Link color="inherit" href='#!'>
                     GeeksForGeeks
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='#!' className='text-white'>
+                  <Link color="inherit" href='#!'>
                     Twitter
                   </Link>
                 </ListItem>
                 <ListItem>
-                  <Link color="inherit" href='#!' className='text-white'>
+                  <Link color="inherit" href='#!'>
                     Telegram
                   </Link>
                 </ListItem>
@@ -173,10 +173,9 @@ let Footer = () => {
       </Grid>
 
       <Grid container p={3} justifyContent='center' style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
-        © 2022 Copyright:
-        <Link color="inherit" className='text-white' href='https://mdbootstrap.com/'>
-          abd alrhman babelly
-        </Link>
+        <Grid item>
+          © 2022 Copyright:abd alrhman babelly
+        </Grid>
       </Grid>
     </footer>
        )

@@ -57,10 +57,13 @@ let SingleProduct = () => {
             </Grid>
         </Grid>
         <h2 className="p-2">You Might Also Like : </h2>
-        <CategorySlider category={product.category}/>
         <Grid container>
-            <Footer/>
+            <Grid item p={2} width="100vw" xs={12}>
+                <CategorySlider category={product.category}/>
+            </Grid>
         </Grid>
+        <Footer/>
+
     </>
     )
 

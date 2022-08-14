@@ -30,8 +30,8 @@ let CategorySlider = (props) => {
     return (
     <>
     <h2 className="text-center p-2">{category}</h2>
-    <Grid className={`border ${classes.categorySlider} categorySlider`}>
-        <Carousel slidesToShow={slidesToShow}> 
+    <Grid className={`border ${classes.categorySlider}`}>
+        <Carousel slidesToShow={slidesToShow} autoplay cellSpacing={5}> 
                 {
                     categoryProducts.map((product, i) =>
                     <ProductViewVertical key={i} product={product} sm={12} md={12}/>)

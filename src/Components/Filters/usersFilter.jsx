@@ -10,7 +10,7 @@ let UsersFilter = () => {
 
     let [searchBy, setSearchBy] = useState('id');
     let [limit, setLimit] = useState(5);
-    let [getUsers, {data}] = useLazyQuery(gql`
+    let [getUsers] = useLazyQuery(gql`
     query getUsers($path : String) {
             sortedUsers(path : $path) @rest(type : "user", path : "users{args.path}") {
                 id
@@ -36,23 +36,27 @@ let UsersFilter = () => {
         }
     `);
 
-    let handleFilter = async () => {
+    let handleFilter = () => {
 
         let search = document.getElementById('search').value;
         let desc = document.getElementById('desc').checked;
         
-        await getUsers({
+        getUsers({
             variables : {
                 path : `/?${( desc ? 'sort=desc' : 'sort=asc')}&limit=${limit}`
             }
+        }).then((data) => {
+            
+            if(data?.data.sortedUsers) {
+                filterUsers({
+                    searchBy : searchBy,
+                    search : search
+                }, data.data)
+            }
+            
         });
 
-        if(data?.sortedUsers) {
-            filterUsers({
-                searchBy : searchBy,
-                search : search
-            }, data)
-        }
+
 
     }
 

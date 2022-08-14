@@ -17,7 +17,7 @@ let ProductsFliter = () => {
     let [countValue, setCountValue] = useState([0,1000]);
 
 
-    let [getProducts, { data }] = useLazyQuery(gql`
+    let [getProducts] = useLazyQuery(gql`
         query getProducts($path : String) {
                 sortedProducts(path : $path) @rest(type : "product", path : "products{args.path}") {
                     title
@@ -32,27 +32,29 @@ let ProductsFliter = () => {
             }
         `);
 
-    let handleFilter = async () => {
+    let handleFilter = () => {
 
         let desc = document.getElementById('desc').checked;
         let search = document.getElementById('search').value;
 
-        await getProducts({
+        getProducts({
             variables : {
                 path : `${category === 'all' ? '' : `/category/${category}`}/${( desc ? '?sort=desc' : '?sort=asc')}`
             }
+        }).then((data) => {
+            if (data?.data.sortedProducts) {
+                filterProducts({
+                    searchBy : searchBy,
+                    limit : limit,
+                    search : search,
+                    priceValue : priceValue,
+                    rateValue : rateValue,
+                    countValue : countValue
+                }, data.data);
+            }
         });
 
-        if (data?.sortedProducts) {
-            filterProducts({
-                searchBy : searchBy,
-                limit : limit,
-                search : search,
-                priceValue : priceValue,
-                rateValue : rateValue,
-                countValue : countValue
-            }, data);
-        }
+        
 
     }
 

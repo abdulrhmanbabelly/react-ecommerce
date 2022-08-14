@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { AppBar, Box, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu } from '@mui/material';
+import { ListItemIcon ,Divider ,AppBar, Box, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, Link } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-import { AccountCircle, Search, Cloud, ShoppingCart, Store, MoreVert } from '@mui/icons-material';
+import { AccountCircle, Search, ShoppingCart, Store, MoreVert, Settings, Login, Add, DarkMode } from '@mui/icons-material';
 import { useHeaderStyles } from '../../styles';
 import { toggleTheme } from '../../functions';
 
@@ -45,11 +45,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-let NavigationBar = (props) => {
+let NavigationBar = () => {
 
-    let { setDarkMode, darkMode } = props.mode;
     let classes = useHeaderStyles();
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
     const isMenuOpen = Boolean(anchorEl);
@@ -57,106 +56,174 @@ let NavigationBar = (props) => {
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
-    };
-
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
-
-    const handleMenuClose = () => {
+    };   
+    
+    const handleProfileMenuClose = () => {
         setAnchorEl(null);
-        handleMobileMenuClose();
     };
 
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+    const handleMobileMenuClose = () => {
+        setMobileMoreAnchorEl(null);
+    };
+ 
+
+
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-        }}
-        id={menuId}
-        keepMounted
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-        }}
-        open={isMenuOpen}
-        onClose={handleMenuClose}
-        >
-            <MenuItem onClick={handleMenuClose}><a href="/editAccount">account</a></MenuItem>
-            <MenuItem onClick={handleMenuClose}><a href="/signIn">Sign-in</a></MenuItem>
-            <MenuItem onClick={handleMenuClose}><a href="/signUp">Sign-up</a></MenuItem>
-        </Menu>
+         anchorEl={anchorEl}
+         id="account-menu"
+         open={isMenuOpen}
+         onClose={handleProfileMenuOpen}
+         onClick={handleProfileMenuClose}
+         PaperProps={{
+           elevation: 0,
+           sx: {
+             overflow: 'visible',
+             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+             mt: 1.5,
+             '& .MuiAvatar-root': {
+               width: 32,
+               height: 32,
+               ml: -0.5,
+               mr: 1,
+             },
+             '&:before': {
+               content: '""',
+               display: 'block',
+               position: 'absolute',
+               top: 0,
+               right: 14,
+               width: 10,
+               height: 10,
+               bgcolor: 'background.paper',
+               transform: 'translateY(-50%) rotate(45deg)',
+               zIndex: 0,
+             },
+           },
+         }}
+         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem>
+          <ListItemIcon>
+            <Add fontSize="small" />
+          </ListItemIcon>
+            <Link href='/signUp'>
+                sign-Up
+            </Link>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Login fontSize="small" />
+          </ListItemIcon>
+            <Link href='/signIn'>
+                sign-in
+            </Link>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+            <Link href='/editAccount'>
+                Settings
+            </Link>
+        </MenuItem>
+      </Menu>
     );
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
-        <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-        }}
-        className={classes.header}
-        id={mobileMenuId}
-        keepMounted
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-        }}
-        open={isMobileMenuOpen}
-        onClose={handleMobileMenuClose}
-        >
-            <MenuItem>
-                <IconButton size="large" color="inherit">
-                    <Badge color="error">
-                        <ShoppingCart />
-                    </Badge>
-                </IconButton>
-                <a href="/carts">Carts</a>
-            </MenuItem> 
-            <MenuItem>
-                <IconButton
-                size="large"
-                color="inherit"
-                >
-                    <Store />
-                </IconButton>
-                <a href="/store">store</a>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="primary-search-account-menu"
-                aria-haspopup="true"
-                color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                Profile
-            </MenuItem>
-            <MenuItem onClick={() => {
-                    toggleTheme(darkMode, setDarkMode);
-                }}>
-                <IconButton 
-                size="large"
-                aria-label="account of current user"
-                aria-controls="primary-search-account-menu"
-                aria-haspopup="true"
-                color="inherit"
-                >
-                    <Cloud />
-                </IconButton>
+         <Menu
+         anchorEl={mobileMoreAnchorEl}
+         id="account-menu"
+         open={isMobileMenuOpen}
+         onClose={handleMobileMenuClose}
+         onClick={handleMobileMenuClose}
+         PaperProps={{
+           elevation: 0,
+           sx: {
+             overflow: 'visible',
+             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+             mt: 1.5,
+             '& .MuiAvatar-root': {
+               width: 32,
+               height: 32,
+               ml: -0.5,
+               mr: 1,
+             },
+             '&:before': {
+               content: '""',
+               display: 'block',
+               position: 'absolute',
+               top: 0,
+               right: 14,
+               width: 10,
+               height: 10,
+               bgcolor: 'background.paper',
+               transform: 'translateY(-50%) rotate(45deg)',
+               zIndex: 0,
+             },
+           },
+         }}
+         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem>
+            <ListItemIcon>
+                <Store />
+            </ListItemIcon>
+            <Link href='/store'>
+                Store
+            </Link>
+        </MenuItem>
+        <MenuItem>
+            <ListItemIcon>
+                <ShoppingCart />
+            </ListItemIcon>
+            <Link href='/carts'>
+                Carts
+            </Link>
+        </MenuItem>
+        <Divider />
+        <MenuItem>
+          <ListItemIcon>
+            <Add fontSize="small" />
+          </ListItemIcon>
+            <Link href='/signUp'>
+                Sign-Up
+            </Link>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Login fontSize="small" />
+          </ListItemIcon>
+            <Link href='/signIn'>
+                Sign-in
+            </Link>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+            <Link href='/editAccount'>
+                Settings
+            </Link>
+        </MenuItem>
+        <MenuItem onClick={() => {
+                        toggleTheme();
+                    }}>
+          <ListItemIcon>
+            <DarkMode />
+          </ListItemIcon>
                 Dark mode
-            </MenuItem>
-        </Menu>
+        </MenuItem>
+        
+      </Menu>
     );
 
     return (
@@ -186,20 +253,24 @@ let NavigationBar = (props) => {
                 size="large"
                 color="inherit"
                 onClick={() => {
-                    toggleTheme(darkMode, setDarkMode);
+                    toggleTheme();
                 }}>
-                    <Cloud />
+                    <DarkMode />
                 </IconButton>
-                <IconButton size="large" color="inherit">
-                <Badge color="error">
-                    <a href="/carts"><ShoppingCart /></a>    
-                </Badge>
-                </IconButton>
-                <IconButton
-                size="large"
-                >
-                    <a href="/store"><Store /></a>    
-                </IconButton>
+                <Link href="/carts" color="inherit">
+                    <IconButton size="large" color="inherit">
+                        <Badge color="error">
+                            <ShoppingCart />   
+                        </Badge>
+                    </IconButton>
+                </Link>
+                <Link href="/store" color="inherit">
+                    <IconButton size="large"color="inherit">
+                        <Badge color="error">
+                            <Store />  
+                        </Badge>
+                    </IconButton>
+                </Link>
                 <IconButton
                 size="large"
                 edge="end"

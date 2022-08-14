@@ -16,9 +16,6 @@ let useHeaderStyles = createUseStyles((theme) => ({
             "&:hover" : {
                 color: "#fff"
             }
-        },
-        "& li a" : {
-            color:  "rgba(0, 0, 0, 0.87) !important",
         }
     }
 }));

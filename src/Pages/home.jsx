@@ -35,7 +35,7 @@ let Home = () => {
       <Grid item xs={12} container justifyContent='center' p={2}>
         <h1>Catagories</h1>
       </Grid>
-      <Grid item xs={12} p={2}>
+      <Grid item xs={12} p={2} width="100vw">
         {categories.map((category) => <CategorySlider key={Math.random() * 10000} category={category} />)}
       </Grid>
       <Grid item xs={12}>

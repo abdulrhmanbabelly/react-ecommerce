@@ -63,7 +63,7 @@ let EditAccount = () => {
 
     return (
     <form className={classes.signUp}>
-        <h3 className='text-center'>Edit-account</h3>
+        <h2 className='text-center'>Edit-account</h2>
         <h5>Personal information</h5>
         <Grid container spacing={1}>
             <Grid item xs={12} sm={6} md={4} lg={3}>

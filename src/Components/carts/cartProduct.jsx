@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCartProduct, useUpdateCart } from "../../hooks";
 import { Delete } from '@mui/icons-material';
 import { Box, Card, IconButton, Link, TextField, Grid } from "@mui/material";
-import { Loading } from "../";
+import { Loading, Popup } from "../";
 
 let CartProduct = (props) => {
 
@@ -10,7 +10,7 @@ let CartProduct = (props) => {
     let { cart } = props;
     let { product, loading } = useCartProduct(productId);
     let { updateCart } = useUpdateCart();
-
+    let [popup, setPopup] = useState('');
     useEffect(() => {
 
         if (!loading) {
@@ -39,16 +39,20 @@ let CartProduct = (props) => {
     }
 
     let handleDeleteProduct = async () => {
-        cart.products.splice(cart.products.indexOf(props.product), 1);
-        updateCart({
-            variables : {
-                id : cart.id,
-                input : cart
-            }
-        })
+        
+
+        setPopup(<Popup content={`deleted product ${productId}`} type='error' then={
+            () => {
+            cart.products.splice(cart.products.indexOf(props.product), 1);
+            updateCart({
+                variables : {
+                    id : cart.id,
+                    input : cart
+                }
+            })}} setPopup={setPopup} />)
     };
 
-    if (loading) return <Loading width={50} height={10}/>;
+    if (loading) return <Loading width={100} height={10}/>;
 
     return (
     <>
@@ -79,6 +83,7 @@ let CartProduct = (props) => {
             </Grid> 
         </Box>
     </Card>
+    {popup}
     </>
     )
 }
