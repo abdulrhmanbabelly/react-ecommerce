@@ -41,7 +41,10 @@ let SignIn = () => {
               loggedIn : data.data.signIn.token ? true : false
             }
           });
-          localStorage.setItem('token', data.data.signIn.token)
+          localStorage.setItem('token', data.data.signIn.token);
+          if (location.pathname === '/signIn') {
+            location.href = '/';
+          }
         });
 
 

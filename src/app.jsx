@@ -22,7 +22,7 @@ let App = () => {
 
     let location = useLocation();
     let darkMode = useQuery(DARK_MODE);
-    let loggedIn = useQuery(LOGGED_IN).data.loggedIn === "true";
+    let loggedIn = useQuery(LOGGED_IN).data.loggedIn;
     let darkTheme = createTheme({
         palette: {
             mode: 'dark',

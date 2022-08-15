@@ -6,6 +6,7 @@ import { useHeaderStyles } from '../../styles';
 import { toggleTheme } from '../../functions';
 import client from '../../config/apolloClient';
 import { LOGGED_IN } from '../../gql';
+import { useQuery } from '@apollo/client';
 
 const SearchInput = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -50,6 +51,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 let NavigationBar = () => {
 
     let classes = useHeaderStyles();
+    let loggedIn = useQuery(LOGGED_IN).data.loggedIn;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
@@ -116,7 +118,9 @@ let NavigationBar = () => {
                 sign-Up
             </Link>
         </MenuItem>
-        <MenuItem>
+        {
+          !loggedIn &&
+          <MenuItem>
           <ListItemIcon>
             <Login fontSize="small" />
           </ListItemIcon>
@@ -124,12 +128,13 @@ let NavigationBar = () => {
                 sign-in
             </Link>
         </MenuItem>
-        <MenuItem>
+        }
+        {
+          loggedIn && <MenuItem>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
               <span onClick={() => {
-
                 localStorage.removeItem('token');
                 client.writeQuery({
                   query : LOGGED_IN,
@@ -142,6 +147,7 @@ let NavigationBar = () => {
                 Logout 
               </span>
         </MenuItem>
+        }
         <MenuItem>
           <ListItemIcon>
             <Settings fontSize="small" />
