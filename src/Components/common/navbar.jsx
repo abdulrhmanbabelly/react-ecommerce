@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { ListItemIcon ,Divider ,AppBar, Box, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, Link } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-import { AccountCircle, Search, ShoppingCart, Store, MoreVert, Settings, Login, Add, DarkMode } from '@mui/icons-material';
+import { AccountCircle, Search, ShoppingCart, Store, MoreVert, Settings, Login, Add, DarkMode, Logout } from '@mui/icons-material';
 import { useHeaderStyles } from '../../styles';
 import { toggleTheme } from '../../functions';
+import client from '../../config/apolloClient';
+import { LOGGED_IN } from '../../gql';
 
 const SearchInput = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -69,9 +71,6 @@ let NavigationBar = () => {
         setMobileMoreAnchorEl(null);
     };
  
-
-
-
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -124,6 +123,24 @@ let NavigationBar = () => {
             <Link href='/signIn'>
                 sign-in
             </Link>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+              <span onClick={() => {
+
+                localStorage.removeItem('token');
+                client.writeQuery({
+                  query : LOGGED_IN,
+                  data : {
+                    loggedIn : false
+                  }
+                })
+                location.href = "/signIn"
+              }}>
+                Logout 
+              </span>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
