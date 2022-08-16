@@ -1,5 +1,5 @@
 export { default as useSignInStyles } from './signIn';
-export { default as useSignUpStyles } from './signUp';
+export { default as useEditAccountStyles } from './editAccount';
 export { default as useHomeStyles } from './home';
 export { default as useFooterStyles } from './footer';
 export { default as useAdminDashboardStyles } from './adminDashboard';

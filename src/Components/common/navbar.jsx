@@ -110,27 +110,41 @@ let NavigationBar = () => {
          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
-          <ListItemIcon>
-            <Add fontSize="small" />
-          </ListItemIcon>
-            <Link href='/signUp'>
-                sign-Up
-            </Link>
-        </MenuItem>
         {
           !loggedIn &&
+          <>
+            <MenuItem>
+              <ListItemIcon>
+                <Add fontSize="small" />
+              </ListItemIcon>
+                <Link href='/signUp'>
+                    sign-Up
+                </Link>
+            </MenuItem>
           <MenuItem>
-          <ListItemIcon>
-            <Login fontSize="small" />
-          </ListItemIcon>
-            <Link href='/signIn'>
-                sign-in
-            </Link>
-        </MenuItem>
+            <ListItemIcon>
+              <Login fontSize="small" />
+            </ListItemIcon>
+              <Link href='/signIn'>
+                  sign-in
+              </Link>
+          </MenuItem>
+          </>
+        }
+          {
+          loggedIn && 
+          <MenuItem>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+                <Link href='/editAccount'>
+                    Settings
+                </Link>
+            </MenuItem>
         }
         {
-          loggedIn && <MenuItem>
+          loggedIn && 
+          <MenuItem>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
@@ -148,14 +162,6 @@ let NavigationBar = () => {
               </span>
         </MenuItem>
         }
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-            <Link href='/editAccount'>
-                Settings
-            </Link>
-        </MenuItem>
       </Menu>
     );
 
@@ -213,30 +219,59 @@ let NavigationBar = () => {
             </Link>
         </MenuItem>
         <Divider />
-        <MenuItem>
+        {
+          loggedIn && 
+          <MenuItem>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+                <Link href='/editAccount'>
+                    Settings
+                </Link>
+            </MenuItem>
+        }
+        {
+          loggedIn && 
+          <MenuItem>
           <ListItemIcon>
-            <Add fontSize="small" />
+            <Logout fontSize="small" />
           </ListItemIcon>
-            <Link href='/signUp'>
-                Sign-Up
-            </Link>
+              <span onClick={() => {
+                localStorage.removeItem('token');
+                client.writeQuery({
+                  query : LOGGED_IN,
+                  data : {
+                    loggedIn : false
+                  }
+                })
+                location.href = "/signIn"
+              }}>
+                Logout 
+              </span>
         </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Login fontSize="small" />
-          </ListItemIcon>
-            <Link href='/signIn'>
-                Sign-in
-            </Link>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-            <Link href='/editAccount'>
-                Settings
-            </Link>
-        </MenuItem>
+        }
+        {
+          !loggedIn &&
+          <MenuItem>
+            <ListItemIcon>
+              <Add fontSize="small" />
+            </ListItemIcon>
+              <Link href='/signUp'>
+                  sign-Up
+              </Link>
+          </MenuItem>
+        }
+        {
+          !loggedIn && 
+          <MenuItem>
+            <ListItemIcon>
+              <Login fontSize="small" />
+            </ListItemIcon>
+              <Link href='/signIn'>
+                  sign-in
+              </Link>
+          </MenuItem>
+        }
         <MenuItem onClick={() => {
                         toggleTheme();
                     }}>

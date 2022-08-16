@@ -1,7 +1,7 @@
 import { createUseStyles } from "react-jss";
 
-let useSignUpStyles = createUseStyles((theme) => ({
-    signUp : {
+let useEditAccountStyles = createUseStyles((theme) => ({
+    editAccount : {
         margin: "3vw auto",
         padding: "1vw",
         width: "90%",
@@ -18,4 +18,4 @@ let useSignUpStyles = createUseStyles((theme) => ({
     }
 }));
 
-export default useSignUpStyles;
+export default useEditAccountStyles;

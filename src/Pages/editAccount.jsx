@@ -1,20 +1,20 @@
 import { useMutation } from '@apollo/client';
-import { Button, CircularProgress, FormGroup, Grid, TextField } from '@mui/material';
+import { Button, FormGroup, Grid, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import { Loading, Popup } from '../Components';
-import { DELETE_USER, GET_USER, UPDATE_USER } from '../gql';
+import { DELETE_USER, UPDATE_USER } from '../gql';
 import { useUser } from '../hooks';
-import { useSignUpStyles } from '../styles';
+import { useEditAccountStyles } from '../styles';
 
 let EditAccount = () => {
 
     let { loading, error, user } = useUser(1);
-    let classes = useSignUpStyles();
+    let classes = useEditAccountStyles();
     let [updateUser] = useMutation(UPDATE_USER);
     let [deleteUser] = useMutation(DELETE_USER);
     let [popup, setPopup] = useState(null);
 
-    if (loading) return <Loading />
+    if (loading) return <Loading width={100 } height={100}/>
     if (error) return <h2>error</h2>
 
     let handleUpdate = async (e) => {
@@ -58,11 +58,13 @@ let EditAccount = () => {
                 }
             }
          );
-        setPopup(<Popup content={`deleted your account`} type="error"/>)
+        setPopup(<Popup content={`deleted your account`} type="error" setPopup={setPopup} then={() => {
+            location.href = '/signIn'
+        }}/>)
     };
 
     return (
-    <form className={classes.signUp}>
+    <form className={classes.editAccount}>
         <h2 className='text-center'>Edit-account</h2>
         <h5>Personal information</h5>
         <Grid container spacing={1}>
