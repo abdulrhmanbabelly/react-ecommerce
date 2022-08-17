@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useQuery } from '@apollo/client';
-import { GET_USER } from "../gql/user";
+import { GET_USER } from "../gql";
 
 let useUser = (id) => {
 

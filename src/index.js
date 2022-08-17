@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
 import App from "./app";
-import './scss/index.scss';
 import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from "react-router-dom";
 import client from "./config/apolloClient";
@@ -31,9 +30,9 @@ let Index = () => {
 
     return (
         <ApolloProvider client={client}>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </ApolloProvider>
     )
 }

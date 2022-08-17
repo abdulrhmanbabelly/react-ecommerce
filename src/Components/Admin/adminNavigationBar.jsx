@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { AppBar, CssBaseline, ListItemText, ListItemIcon, ListItemButton, List, ListItem, Box, Divider, Drawer, IconButton, Toolbar, Link } from '@mui/material';
 import { Store, PeopleAlt, Category, ShoppingCart, ChevronRight, ChevronLeft, Menu, DarkMode } from '@mui/icons-material';
 import { styled, useTheme } from '@mui/material/styles';
-import { useAdminDashboardStyles } from '../../styles';
 import { toggleTheme } from '../../functions';
-
+import { adminDashboardStyles } from '../../styles';
 const drawerWidth = 180;
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -49,11 +48,8 @@ const CustomAppBar = styled(AppBar, {
 
 let AdminNavigationBar = (props) => {
   
-  let { darkMode, setDarkMode } = props.mode;
-
   const theme = useTheme();
   const [open, setOpen] = useState(true);
-  let classes = useAdminDashboardStyles(theme);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -70,8 +66,7 @@ let AdminNavigationBar = (props) => {
   }
 
   return (
-    <Box sx={{ display: 'flex' }} className={classes.adminDashboard}>
-      <CssBaseline />
+    <Box sx={adminDashboardStyles}>
         <CustomAppBar open={open}>
         <Toolbar>
           <IconButton
@@ -89,7 +84,7 @@ let AdminNavigationBar = (props) => {
             edge="end"
             sx={{ mr: 2 }}
             onClick={() => {
-              toggleTheme(darkMode, setDarkMode);
+              toggleTheme();
           }}>
             <DarkMode />
           </IconButton>

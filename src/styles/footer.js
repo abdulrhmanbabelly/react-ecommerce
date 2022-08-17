@@ -1,7 +1,6 @@
-import { createUseStyles } from "react-jss";
 
-let useFooterStyles = createUseStyles({
-    footer : {
+let footerStyles = (props) => {
+    return ({
         width : '100vw',
         borderTop : '1px solid #ccc',
         "& input, ::placeholder, label" : {
@@ -18,7 +17,8 @@ let useFooterStyles = createUseStyles({
         "& li" : {
             textAlign : 'center'
         }
-    }
-});
+    })
+  
+}
 
-export default useFooterStyles;
+export default footerStyles;

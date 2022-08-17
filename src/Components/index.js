@@ -13,10 +13,11 @@ export { default as CategorySlider } from './common/categorySlider';
 export { default as Footer } from './common/footer';
 export { default as NavigationBar } from './common/navbar';
 export { default as Loading } from './common/loading';
+export { default as Modal } from './common/modal'
+export { default as AdminNavigationBar } from './Admin/adminNavigationBar';
 export { default as AddProduct } from './Admin/addProduct';
 export { default as AdminCart } from './Admin/adminCart';
 export { default as AdminCategory } from './Admin/adminCategory';
 export { default as AdminProduct } from './Admin/adminProduct';
 export { default as AdminUser } from './Admin/adminUser';
 export { default as UpdateProduct } from './Admin/updateProduct';
-export { default as Modal } from './common/modal'

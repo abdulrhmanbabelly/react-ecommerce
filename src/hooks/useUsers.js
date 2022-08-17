@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GET_USERS } from "../gql/user";
+import { GET_USERS } from "../gql";
 
 let useUsers = () => {
 

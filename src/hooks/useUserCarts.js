@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { copyObj } from "../functions";
-import { GET_USER_CART } from "../gql/cart";
+import { GET_USER_CART } from "../gql";
 
 let useUserCarts = (userId) => {
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ListItemIcon ,Divider ,AppBar, Box, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, Link } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import { AccountCircle, Search, ShoppingCart, Store, MoreVert, Settings, Login, Add, DarkMode, Logout } from '@mui/icons-material';
-import { useHeaderStyles } from '../../styles';
+import { headerStyles } from '../../styles';
 import { toggleTheme } from '../../functions';
 import client from '../../config/apolloClient';
 import { LOGGED_IN } from '../../gql';
@@ -50,7 +50,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 let NavigationBar = () => {
 
-    let classes = useHeaderStyles();
     let loggedIn = useQuery(LOGGED_IN).data.loggedIn;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -105,6 +104,9 @@ let NavigationBar = () => {
                transform: 'translateY(-50%) rotate(45deg)',
                zIndex: 0,
              },
+             '& li a' : {
+              textDecoration : 'none'
+             }
            },
          }}
          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
@@ -112,24 +114,25 @@ let NavigationBar = () => {
       >
         {
           !loggedIn &&
-          <>
             <MenuItem>
               <ListItemIcon>
                 <Add fontSize="small" />
               </ListItemIcon>
-                <Link href='/signUp'>
+                <Link color="inherit" href='/signUp'>
                     sign-Up
                 </Link>
             </MenuItem>
-          <MenuItem>
+        }
+        {
+          !loggedIn &&
+         <MenuItem>
             <ListItemIcon>
               <Login fontSize="small" />
             </ListItemIcon>
-              <Link href='/signIn'>
+              <Link color="inherit" href='/signIn'>
                   sign-in
               </Link>
           </MenuItem>
-          </>
         }
           {
           loggedIn && 
@@ -137,7 +140,7 @@ let NavigationBar = () => {
               <ListItemIcon>
                 <Settings fontSize="small" />
               </ListItemIcon>
-                <Link href='/editAccount'>
+                <Link color="inherit" href='/editAccount'>
                     Settings
                 </Link>
             </MenuItem>
@@ -197,16 +200,20 @@ let NavigationBar = () => {
                transform: 'translateY(-50%) rotate(45deg)',
                zIndex: 0,
              },
+             '& li a' : {
+              textDecoration : 'none'
+             }
            },
          }}
          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+
       >
         <MenuItem>
             <ListItemIcon>
                 <Store />
             </ListItemIcon>
-            <Link href='/store'>
+            <Link color="inherit" href='/store'>
                 Store
             </Link>
         </MenuItem>
@@ -214,7 +221,7 @@ let NavigationBar = () => {
             <ListItemIcon>
                 <ShoppingCart />
             </ListItemIcon>
-            <Link href='/carts'>
+            <Link color="inherit" href='/carts'>
                 Carts
             </Link>
         </MenuItem>
@@ -225,7 +232,7 @@ let NavigationBar = () => {
               <ListItemIcon>
                 <Settings fontSize="small" />
               </ListItemIcon>
-                <Link href='/editAccount'>
+                <Link color="inherit" href='/editAccount'>
                     Settings
                 </Link>
             </MenuItem>
@@ -256,7 +263,7 @@ let NavigationBar = () => {
             <ListItemIcon>
               <Add fontSize="small" />
             </ListItemIcon>
-              <Link href='/signUp'>
+              <Link color="inherit" href='/signUp'>
                   sign-Up
               </Link>
           </MenuItem>
@@ -267,7 +274,7 @@ let NavigationBar = () => {
             <ListItemIcon>
               <Login fontSize="small" />
             </ListItemIcon>
-              <Link href='/signIn'>
+              <Link color="inherit" href='/signIn'>
                   sign-in
               </Link>
           </MenuItem>
@@ -285,7 +292,7 @@ let NavigationBar = () => {
     );
 
     return (
-        <Box sx={{ flexGrow: 1 }} className={classes.header}>
+        <Box sx={headerStyles}>
         <AppBar position="static">
             <Toolbar>
             <Typography
@@ -294,7 +301,7 @@ let NavigationBar = () => {
                 component="div"
                 sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-               <a href="/">E-commerce</a>
+               <Link color="inherit" href="/">E-commerce</Link>
             </Typography>
             <SearchInput>
                 <SearchIconWrapper>

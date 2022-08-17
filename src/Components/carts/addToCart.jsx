@@ -1,8 +1,8 @@
-import { Button, FormGroup, TextField, CircularProgress, useTheme } from '@mui/material';
+import { Button, FormGroup, TextField, CircularProgress, useTheme, Box } from '@mui/material';
 import React, { useState } from 'react';
 import { useUpdateCart, useUserCarts } from '../../hooks';
 import { Popup, AddNewCart, Cart } from '../';
-import { useCartsStyles } from '../../styles';
+import { cartsStyles } from '../../styles';
 import { Modal } from '../';
 import SignIn from '../../Pages/signIn';
 import { useQuery } from '@apollo/client';
@@ -16,7 +16,6 @@ let AddToCart = (props) => {
     let { carts, loading, error } = useUserCarts(1);
     let [popup, setPopup] = useState('');
     let loggedIn = useQuery(LOGGED_IN).data.loggedIn;
-    let classes = useCartsStyles(theme);
     let { updateCart } = useUpdateCart();
 
 
@@ -47,7 +46,7 @@ let AddToCart = (props) => {
     <>
         <Modal 
             content={
-            <div className={classes.carts}>
+            <Box sx={cartsStyles(theme)}>
                 { loggedIn ? 
                 <>
                     {
@@ -74,7 +73,7 @@ let AddToCart = (props) => {
                     }
                     <AddNewCart carts={carts} />
                 </> : <SignIn /> }
-            </div>
+            </Box>
             }
             openButtonContent='add to cart'
             closeButtonContent='close'

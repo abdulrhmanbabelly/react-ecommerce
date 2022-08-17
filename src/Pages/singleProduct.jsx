@@ -3,13 +3,12 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { AddToCart, Footer, CategorySlider, Loading } from "../Components";
 import { useSingleProduct } from "../hooks";
-import { useSingleProductStyles } from "../styles";
+import { singleProductStyles } from "../styles";
 import { green } from '@mui/material/colors';
 
 let SingleProduct = () => {
 
     let { id } = useParams();
-    let classes = useSingleProductStyles();
     let { product, loading, error } = useSingleProduct(id);
 
     if (loading) return <Loading width={100} height={100}/>;
@@ -17,7 +16,7 @@ let SingleProduct = () => {
 
     return (
     <>
-        <Grid container className={`${classes.singleProduct} singleProduct`}>
+        <Grid container sx={singleProductStyles}>
             <Grid item md={6} xs={12} className='image'>
                 <img src={product.image}/>
             </Grid>

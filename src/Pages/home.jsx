@@ -2,17 +2,16 @@ import React from 'react';
 import { Footer, CategorySlider } from '../Components';
 import { useCategories } from '../hooks';
 import { Grid } from '@mui/material';
-import { useHomeStyles } from '../styles';
+import { homeStyles } from '../styles';
 import Carousel from "nuka-carousel";
 
 let Home = () => {
 
   let { categories } = useCategories();
-  let classes = useHomeStyles();
 
   return (
     <>
-      <Grid item xs={12} className={classes.home}>
+      <Grid item xs={12} sx={homeStyles}>
         <Carousel slidesToShow={1}>
           <div>
             <img src="https://images.pexels.com/photos/38519/macbook-laptop-ipad-apple-38519.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
@@ -36,7 +35,7 @@ let Home = () => {
         <h1>Catagories</h1>
       </Grid>
       <Grid item xs={12} p={2} width="100vw">
-        {categories.map((category) => <CategorySlider key={Math.random() * 10000} category={category} />)}
+        {categories.map((category, i) => <CategorySlider key={i} category={category} />)}
       </Grid>
       <Grid item xs={12}>
         <Footer />

@@ -1,32 +1,31 @@
-import { Grid, useTheme } from '@mui/material';
+import { Box, Grid, useTheme } from '@mui/material';
 import React from 'react';
 import { AddNewCart, Cart, Footer, Loading } from '../Components';
 import { useUserCarts } from '../hooks';
-import { useCartsStyles } from '../styles';
+import { cartsStyles } from '../styles';
 
 let Carts = () => {
 
+    let theme = useTheme()
     let { carts, loading, error } = useUserCarts(1);
-    let theme = useTheme();
-    let classes = useCartsStyles(theme);
     if (loading) return (<Loading width={100} height={100}/>);
     if (error) return (<h2>error</h2>);
 
     return (
         <>
-        <div className={`carts ${classes.carts}`}>
+        <Box sx={cartsStyles(theme)}>
             {
-                carts.map((cart) => 
+                carts.map((cart, i) => 
                 <Cart 
                 cart={cart}
-                key={Math.random() * 100000} 
+                key={i} 
                 />)
             }
             <AddNewCart carts={carts}/>
             <Grid>
                 <Footer/>   
             </Grid>
-        </div>
+        </Box>
         </>
     )
 }

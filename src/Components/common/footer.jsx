@@ -1,14 +1,14 @@
 import React from "react";
 import { Facebook, Twitter, Google, Instagram, LinkedIn, GitHub} from '@mui/icons-material';
-import { Button, Grid, IconButton, Link, List, ListItem, TextField, useTheme } from "@mui/material";
-import { useFooterStyles } from "../../styles";
+import { Box, Button, Grid, IconButton, Link, List, ListItem, TextField, useTheme } from "@mui/material";
+import { footerStyles } from "../../styles";
 
 let Footer = () => {
   let theme = useTheme();
-  let classes = useFooterStyles(theme);
     return (
-      <footer className={classes.footer}>
-      <Grid container p={4} bgcolor='inherit'>
+    <footer>
+      <Box sx={footerStyles(theme)}>
+        <Grid container p={4} bgcolor='inherit'>
         <Grid item xs={12}>
           <Grid container justifyContent='center' p={2}>
             <IconButton color='inherit'>
@@ -177,7 +177,8 @@ let Footer = () => {
           © 2022 Copyright:abd alrhman babelly
         </Grid>
       </Grid>
-    </footer>
+    </Box>
+  </footer>
        )
 }
 

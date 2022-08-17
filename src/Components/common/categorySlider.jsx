@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useCategoryProducts } from "../../hooks";
 import { Grid } from "@mui/material";
 import Carousel from "nuka-carousel";
-import { useCategorySliderStyles } from "../../styles";
+import { categorySliderStyles } from "../../styles";
 import { ProductViewVertical, Loading } from "../";
 
 
@@ -12,7 +12,6 @@ let CategorySlider = (props) => {
 
     let { loading, categoryProducts, error } = useCategoryProducts(category);
     let [slidesToShow, setSlidesToShow] = useState(window.innerWidth <= 786 ? 1 : 3);
-    let classes = useCategorySliderStyles();
 
     window.addEventListener(
         'resize',
@@ -30,7 +29,7 @@ let CategorySlider = (props) => {
     return (
     <>
     <h2 className="text-center p-2">{category}</h2>
-    <Grid className={`border ${classes.categorySlider}`}>
+    <Grid className="border" sx={categorySliderStyles}>
         <Carousel slidesToShow={slidesToShow} autoplay cellSpacing={5}> 
                 {
                     categoryProducts.map((product, i) =>

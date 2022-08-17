@@ -1,21 +1,20 @@
 import React from 'react';
 import { ProductsFilter, Footer, Loading, ProductViewHorizontal } from '../Components';
 import { useProducts } from '../hooks';
-import { useStoreStyles } from '../styles';
+import { storeStyles } from '../styles';
 import { Divider, Grid } from '@mui/material';
 
 let Store = () => {
 
     let { loading, error, products } = useProducts();
     
-    let classes = useStoreStyles();
 
     if (loading) return <Loading width={100} height={100}/>
     if (error) return <h2>error</h2>
 
 
     return (
-        <Grid container className={classes.store + " store"}>
+        <Grid container sx={storeStyles}>
             <div className='filterButton'>
                 <ProductsFilter />
             </div>

@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { GET_CARTS } from "../gql/cart";
+import { GET_CARTS } from "../gql";
 
 let useCarts = () => {
 

@@ -1,8 +1,8 @@
 
 const path = require("path");
 const webpack = require("webpack");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CompressionPlugin = require("compression-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
   entry: './src/index.js',
@@ -48,5 +48,5 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
   },
-  plugins: [new CompressionPlugin(), new webpack.HotModuleReplacementPlugin()]
+  plugins: [new CompressionPlugin(), new webpack.HotModuleReplacementPlugin(), new BundleAnalyzerPlugin()]
 };

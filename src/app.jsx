@@ -1,28 +1,15 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
 import React from 'react';
 import { createTheme, CssBaseline, Grid, ThemeProvider } from '@mui/material';
-import { Loading } from './Components';
+import { Loading, NavigationBar, AdminNavigationBar } from './Components';
 import { useQuery } from '@apollo/client';
-import { DARK_MODE, LOGGED_IN } from './gql';
-const AdminNavigationBar = React.lazy(() => import('./Components/Admin/adminNavigationBar'));
-const NavigationBar = React.lazy(() => import('./Components/common/navbar'));
-const Home = React.lazy(() => import('./Pages/home'));
-const Carts = React.lazy(() => import('./Pages/carts'));
-const Store = React.lazy(() => import('./Pages/store'));
-const SingleProduct = React.lazy(() => import('./Pages/singleProduct'));
-const SignIn = React.lazy(() => import('./Pages/signIn'));
-const SignUp = React.lazy(() => import('./Pages/signUp'));
-const EditAccount = React.lazy(() => import('./Pages/editAccount'));
-const AdminCartsTable = React.lazy(() => import('./Pages/admin/adminCartsTable'));
-const AdminUsersTable = React.lazy(() => import('./Pages/admin/adminUsersTable'));
-const AdminCategoriesTable = React.lazy(() => import('./Pages/admin/adminCategoriesTable'));
-const AdminProductsTable = React.lazy(() => import('./Pages/admin/adminProductsTable'));
+import { DARK_MODE } from './gql';
+import { AdminRouter, ClientRouter } from './routers';
 
 let App = () => {
 
     let location = useLocation();
     let darkMode = useQuery(DARK_MODE);
-    let loggedIn = useQuery(LOGGED_IN).data.loggedIn;
     let darkTheme = createTheme({
         palette: {
             mode: 'dark',
@@ -43,24 +30,12 @@ let App = () => {
         <>
             <Grid container style={{ width : "auto" }}>
                 <Routes>
-                    <Route path='/' element={<Home/>} />
                     {location.pathname.indexOf('adminDashboard') > -1 && (
                     <Route path='/adminDashboard/*' element={<AdminNavigationBar routes={
-                        <Routes>
-                            <Route path='/products' exact element={<AdminProductsTable/>} />
-                            <Route path='/users' exact element={<AdminUsersTable/>} />
-                            <Route path='/categories' exact element={<AdminCategoriesTable/>} />
-                            <Route path='/carts' exact element={<AdminCartsTable />} />
-                        </Routes>
-                    }/>}/>
-                        
+                        <AdminRouter />
+                        }/>}/>
                     )}
-                    <Route path='/carts' element={loggedIn ? <Carts /> : <SignIn />} />
-                    <Route path='/store' element={<Store />} />
-                    <Route path='/products/:id' element={<SingleProduct />} />
-                    <Route path='/editAccount' element={loggedIn ? <EditAccount /> : <SignIn />} />
-                    <Route path='/signUp' element={<SignUp />} />
-                    <Route path='/signIn' element={<SignIn />} />
+                    <Route path='/*' element={<ClientRouter />} />
                 </Routes>
             </Grid> 
         </>
