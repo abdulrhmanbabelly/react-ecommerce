@@ -6,7 +6,7 @@ import { cartsStyles } from '../../styles';
 import { Modal } from '../';
 import { SignIn } from '../../Pages';
 import { useQuery } from '@apollo/client';
-import { LOGGED_IN, UPDATE_CART } from '../../gql';
+import { LOGGED_IN, UPDATE_CART, UPDATE_COMPONENET } from '../../gql';
 import client from '../../config/apolloClient';
 
 
@@ -17,6 +17,7 @@ let AddToCart = (props) => {
     let { carts, loading, error } = useUserCarts(1);
     let loggedIn = useQuery(LOGGED_IN).data.loggedIn;
     let { triggerNotification } = useNotification();
+    let { data } = useQuery(UPDATE_COMPONENET);
 
 
     let handleAddToCart = (cart) => {
@@ -55,7 +56,7 @@ let AddToCart = (props) => {
                     {
                     carts.map((cart, i) => 
                         <div key={i}>
-                            <Cart cart={cart} />
+                            <Cart cart={cart} price={localStorage.getItem(`price:${cart.id}`)}/>
                             <div key={Math.random() * 100000}>
                                 <form className='addToCartForm'>
                                     <FormGroup>
