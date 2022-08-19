@@ -1,36 +1,41 @@
 import { Box, Button, TableCell, TableRow } from '@mui/material';
-import React, { useState } from 'react';
-import { Popup, UpdateProduct } from '../';
-import { useDeleteProduct } from '../../hooks';
+import { blue, green, red, yellow } from '@mui/material/colors';
+import React from 'react';
+import { UpdateProduct } from '../';
+import { useDeleteProduct, useNotification } from '../../hooks';
 
 let AdminProduct = (props) => {
 
     let { title, price, id, category, rating } = props.product;
     let { rate, count } = rating;
     let { categories } = props;    
-    let [popup, setPopup] = useState('');
     let { deleteProduct } = useDeleteProduct(id);
+    const { triggerNotification } = useNotification();
 
-    let handleDeleteProduct = async () => {
-        setPopup(<Popup type="error" title="Done Deleting Product" content={`deleted product ${title}`} setPopup={setPopup} then={async() => {
-            await deleteProduct({
-                variables : {
-                    id : id
-                }
-            });
-        }}/>);
+    let handleDeleteProduct = () => {
+        deleteProduct({
+            variables : {
+                id : id
+            }
+        }).then((data) => {
+            
+            if (!data.errors) triggerNotification(`deleted product ${title}`, "success");
+            else triggerNotification(`failed to delete product ${title}`, "error");
 
+        }).catch((err) => {
+            triggerNotification(`failed to delete product ${title}`, "error");
+        });
     } 
 
     return (
         <>
         <TableRow>
-            <TableCell className="text-info">{id}</TableCell>
+            <TableCell sx={{ color: blue['700'] }}>{id}</TableCell>
             <TableCell>{category}</TableCell>
             <TableCell>{title}</TableCell>
-            <TableCell className='text-danger'>{count}</TableCell>
-            <TableCell className='text-warning'>{rate}</TableCell>
-            <TableCell className="text-success">${price}</TableCell>
+            <TableCell sx={{ color: red['700'] }}>{count}</TableCell>
+            <TableCell sx={{ color: yellow['700'] }}>{rate}</TableCell>
+            <TableCell sx={{ color: green['700'] }}>${price}</TableCell>
             <TableCell style={{
                 display : 'flex'
             }}>
@@ -38,7 +43,6 @@ let AdminProduct = (props) => {
                 <Button color="error" onClick={handleDeleteProduct}>delete</Button>
             </Box>
             <UpdateProduct product={props.product} categories={categories}/>
-            {popup}
             </TableCell>
         </TableRow>
         </>

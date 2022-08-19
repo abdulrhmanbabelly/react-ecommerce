@@ -7,7 +7,7 @@ export { default as ProductViewVertical } from './store/productViewVertical';
 export { default as ProductsFilter } from './Filters/productsFilter';
 export { default as CartsFilter } from './Filters/cartsFilter';
 export { default as UsersFilter } from './Filters/usersFilter';
-export { default as Popup } from './common/popup';
+export { default as Notification  } from './common/notification';
 export { default as Cart } from './carts/cart';
 export { default as CategorySlider } from './common/categorySlider';
 export { default as Footer } from './common/footer';

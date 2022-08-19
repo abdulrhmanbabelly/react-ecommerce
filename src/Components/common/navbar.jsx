@@ -114,35 +114,35 @@ let NavigationBar = () => {
       >
         {
           !loggedIn &&
-            <MenuItem>
+            <MenuItem onClick={() => {
+              location.href = '/signUp'
+            }}>
               <ListItemIcon>
                 <Add fontSize="small" />
               </ListItemIcon>
-                <Link color="inherit" href='/signUp'>
-                    sign-Up
-                </Link>
+                  sign-Up
             </MenuItem>
         }
         {
           !loggedIn &&
-         <MenuItem>
+         <MenuItem onClick={() => {
+          location.href = '/signIn'
+        }}>
             <ListItemIcon>
               <Login fontSize="small" />
             </ListItemIcon>
-              <Link color="inherit" href='/signIn'>
-                  sign-in
-              </Link>
+                sign-in
           </MenuItem>
         }
           {
           loggedIn && 
-          <MenuItem>
+          <MenuItem onClick={() => {
+              location.href = '/editAccount'
+          }}>
               <ListItemIcon>
                 <Settings fontSize="small" />
               </ListItemIcon>
-                <Link color="inherit" href='/editAccount'>
                     Settings
-                </Link>
             </MenuItem>
         }
         {
@@ -209,32 +209,54 @@ let NavigationBar = () => {
          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
 
       >
-        <MenuItem>
+        <MenuItem onClick={() => {
+          location.href = '/store'
+        }}>
             <ListItemIcon>
                 <Store />
             </ListItemIcon>
-            <Link color="inherit" href='/store'>
-                Store
-            </Link>
+              Store
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => {
+          location.href = '/carts'
+        }}>
             <ListItemIcon>
                 <ShoppingCart />
             </ListItemIcon>
-            <Link color="inherit" href='/carts'>
                 Carts
-            </Link>
         </MenuItem>
         <Divider />
         {
+          !loggedIn &&
+            <MenuItem onClick={() => {
+              location.href = '/signUp'
+            }}>
+              <ListItemIcon>
+                <Add fontSize="small" />
+              </ListItemIcon>
+                  sign-Up
+            </MenuItem>
+        }
+        {
+          !loggedIn &&
+         <MenuItem onClick={() => {
+          location.href = '/signIn'
+        }}>
+            <ListItemIcon>
+              <Login fontSize="small" />
+            </ListItemIcon>
+                sign-in
+          </MenuItem>
+        }
+          {
           loggedIn && 
-          <MenuItem>
+          <MenuItem onClick={() => {
+              location.href = '/editAccount'
+          }}>
               <ListItemIcon>
                 <Settings fontSize="small" />
               </ListItemIcon>
-                <Link color="inherit" href='/editAccount'>
                     Settings
-                </Link>
             </MenuItem>
         }
         {
@@ -256,28 +278,6 @@ let NavigationBar = () => {
                 Logout 
               </span>
         </MenuItem>
-        }
-        {
-          !loggedIn &&
-          <MenuItem>
-            <ListItemIcon>
-              <Add fontSize="small" />
-            </ListItemIcon>
-              <Link color="inherit" href='/signUp'>
-                  sign-Up
-              </Link>
-          </MenuItem>
-        }
-        {
-          !loggedIn && 
-          <MenuItem>
-            <ListItemIcon>
-              <Login fontSize="small" />
-            </ListItemIcon>
-              <Link color="inherit" href='/signIn'>
-                  sign-in
-              </Link>
-          </MenuItem>
         }
         <MenuItem onClick={() => {
                         toggleTheme();

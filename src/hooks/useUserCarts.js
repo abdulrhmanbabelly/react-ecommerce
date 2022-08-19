@@ -6,7 +6,6 @@ let useUserCarts = (userId) => {
 
     let { loading, error, data } = useQuery(GET_USER_CART,
     {
-        notifyOnNetworkStatusChange : true,
         variables : {
             userId
         }

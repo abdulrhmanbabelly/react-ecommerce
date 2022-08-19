@@ -1,27 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { useCartProduct, useUpdateCart } from "../../hooks";
+import React, { useEffect } from "react";
+import { useCartProduct, useNotification } from "../../hooks";
 import { Delete } from '@mui/icons-material';
 import { Box, Card, IconButton, Link, TextField, Grid } from "@mui/material";
-import { Loading, Popup } from "../";
+import { Loading } from "../";
+import client from "../../config/apolloClient";
+import {  UPDATE_CART, UPDATE_COMPONENET } from "../../gql";
+import { useState } from "react";
 
 let CartProduct = (props) => {
 
     let { productId, quantity } = props.product;
     let { cart } = props;
     let { product, loading } = useCartProduct(productId);
-    let { updateCart } = useUpdateCart();
-    let [popup, setPopup] = useState('');
-    useEffect(() => {
+    let { triggerNotification } = useNotification();
 
         if (!loading) {
-            document.getElementById(`subtotal${cart.id}`).textContent = Number(document.getElementById(`subtotal${cart.id}`).textContent) + Number(product.price) * quantity;
-            document.getElementById(`total${cart.id}`).textContent = Number(document.getElementById(`subtotal${cart.id}`).textContent) + 20;
-            document.getElementById(`checkout${cart.id}`).textContent = document.getElementById(`total${cart.id}`).textContent;    
+            localStorage.setItem(`price:${cart.id}`, Number(localStorage.getItem(`price:${cart.id}`)) + product.price * quantity);
         }
 
-    });
-      
-    let handleChangeCount = async (e) => {
+        useEffect(() => {
+            client.writeQuery({
+                query : UPDATE_COMPONENET,
+                data : {
+                    update : Math.random() * 10000
+                }
+            })    
+        }, [loading])
+ 
+
+
+    let handleChangeCount = (e) => {
+
+
         let productIndex;
         for (let i = 0; i < cart.products.length; i++) {
             if (productId == cart.products[i].productId) {
@@ -30,30 +40,49 @@ let CartProduct = (props) => {
             }
         }
         cart.products[productIndex].quantity = Number(e.target.value);
-        await updateCart({
+
+        client.writeQuery({
+            query : UPDATE_CART,
             variables : {
-                input : cart,
                 id : cart.id
+            },
+            data : {
+                cart : cart
             }
         });
+
+        setTimeout(() => {
+            client.writeQuery({
+                query : UPDATE_COMPONENET,
+                data : {
+                    update : Math.random() * 10000
+                }
+            })  
+        }, 50)
+
+
+
     }
 
-    let handleDeleteProduct = async () => {
-        
+    let handleDeleteProduct = () => {
+        cart.products.splice(cart.products.indexOf(props.product), 1);
 
-        setPopup(<Popup content={`deleted product ${productId}`} type='error' then={
-            () => {
-            cart.products.splice(cart.products.indexOf(props.product), 1);
-            updateCart({
-                variables : {
-                    id : cart.id,
-                    input : cart
-                }
-            })}} setPopup={setPopup} />)
+        client.writeQuery({
+            query : UPDATE_CART,
+            variables : {
+                id : cart.id
+            },
+            data : {
+                cart : cart
+            }
+        });
+
+        localStorage.setItem(`price:${cart.id}`, Number(localStorage.getItem(`price:${cart.id}`)) - product.price * quantity);
+
+        triggerNotification(`deleted product ${product.title}`)
     };
 
     if (loading) return <Loading width={100} height={10}/>;
-
     return (
     <>
     <Card className="cartProduct">
@@ -83,7 +112,6 @@ let CartProduct = (props) => {
             </Grid> 
         </Box>
     </Card>
-    {popup}
     </>
     )
 }

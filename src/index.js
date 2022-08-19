@@ -4,7 +4,8 @@ import App from "./app";
 import { ApolloProvider } from '@apollo/client';
 import { BrowserRouter } from "react-router-dom";
 import client from "./config/apolloClient";
-import { DARK_MODE, LOGGED_IN } from "./gql";
+import { DARK_MODE, LOGGED_IN, PRICES } from "./gql";
+import { AlertContextProvider } from "./contexts/alertContext";
 
 // initiating dark mode
 
@@ -25,14 +26,16 @@ client.writeQuery({
   });
 
 
-
 let Index = () => {
+
 
     return (
         <ApolloProvider client={client}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
+            <AlertContextProvider>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </AlertContextProvider>
         </ApolloProvider>
     )
 }

@@ -1,30 +1,50 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Delete, CreditCard, Facebook, ArrowRight, WhatsApp, Instagram } from '@mui/icons-material';
 import { Box, Button, Card, FormGroup, Grid, IconButton, TextField, Typography } from '@mui/material';
-import { Popup, CartProduct } from '..';
-import { useDeleteCart } from '../../hooks';
+import { CartProduct } from '..';
+import { useDeleteCart, useNotification, useUpdateCart } from '../../hooks';
 
 let Cart = (props) => {
-    let { cart } = props;
+
+    let { cart, price } = props;
+    localStorage.setItem(`price:${cart.id}`, 0)
     let { products, date, id } = cart; 
-    let [popup, setPopup] = useState(null);
     let { deleteCart } = useDeleteCart(id);
+    let { updateCart } = useUpdateCart();
+    let { triggerNotification } = useNotification();
+
 
     let handleDelete = () => {
-        setPopup(<Popup content={`deleted cart ${id}`} type="error"
-        title="Done Deleting Cart"
-        setPopup={setPopup}
-        then={
-            async () => {
-            await deleteCart({
-                variables : {
-                   id : id
-                }
-           })}
-        }
-        />);
+        
+        deleteCart({
+            variables : {
+                id : id
+            }
+        }).then((data) => {
+            
+            if (!data.errors) triggerNotification(`deleted cart ${id}`, "success");
+            else triggerNotification(`failed to delete cart ${id}`, "error");
+
+        }).catch((err) => {
+            triggerNotification(`failed to delete cart ${id}`, "error");
+        });
     }
 
+    let handleUpdateCart = () => {
+        updateCart({
+            variables : {
+                id : id,
+                input : cart    
+            }
+        }).then((data) => {
+            
+            if (!data.errors) triggerNotification(`updated cart ${id}`, "success");
+            else triggerNotification(`failed to update cart ${id}`, "error");
+
+        }).catch((err) => {
+            triggerNotification(`failed to update cart ${id}`, "error");
+        });
+    }
     return (
     <>
     <Card className="cart">
@@ -35,24 +55,26 @@ let Cart = (props) => {
             </Grid>
             <Grid item>
                 <IconButton onClick={handleDelete}>
-                    <Delete style={{Gridor: "#cecece", cursor : 'pointer'}}/>
+                    <Delete style={{ Gridor: "#cecece", cursor : 'pointer' }}/>
                 </IconButton>
             </Grid>
         </Grid>
         <Grid container>
             <Grid item md={7} sm={12}>
                 {
-                products.map((product) => 
-                <CartProduct 
-                    key = {Math.random() * 100000}
+                products.map((product, i) => {
+                    return <CartProduct 
+                    key = {i}
                     product = {product}
                     cart = {cart}
                 />
+                }
+  
                 )}   
                 </Grid>
             <Grid item md={5} sm={12}>
                 <Card className='paycard'>
-                    <Box p={1}>
+                    <Box p={1} overflow="hidden">
                         <Grid container justifyContent='space-between' mb={4}>
                             <h2 className="mb-0">Card details</h2>
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
@@ -99,7 +121,7 @@ let Cart = (props) => {
                                 <p>Subtotal</p>
                             </Grid>
                             <Grid item>
-                                <p>$<span id={`subtotal${id}`}>0</span></p>
+                                <p>$<span>{Number(price)}</span></p>
                             </Grid>
                         </Grid>
 
@@ -117,11 +139,11 @@ let Cart = (props) => {
                                 <p>Total(Incl. taxes)</p>
                             </Grid>
                             <Grid item>
-                                <p>$<span id={`total${id}`}>0</span></p>
+                                <p>$<span>{Number(price)+ 20}</span></p>
                             </Grid>
                         </Grid>
                         <Button color="info" className='checkoutButton' variant='contained'>
-                            <div>$<span id={`checkout${id}`}>0</span></div>
+                            <div>$<span>{Number(price)+ 20}</span></div>
                             <span className='check'>Checkout <ArrowRight /></span>
                         </Button>
                     </Box>
@@ -129,8 +151,8 @@ let Cart = (props) => {
             </Grid>
         </Grid>
         </Box>
+        <Button onClick={handleUpdateCart} variant='outlined' sx={{ float : 'right', marginTop : '1vw', marginBottom : '-1vw' }}>save changes</Button>
     </Card>
-    {popup}
     </>
     )
 }

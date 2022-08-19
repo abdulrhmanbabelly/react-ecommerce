@@ -32,7 +32,7 @@ let useAddNewCart = () => {
         }
     });
 
-    return addNewCart; 
+    return {addNewCart}; 
 }
 
 export default useAddNewCart;

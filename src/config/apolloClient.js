@@ -22,6 +22,11 @@ const client = new ApolloClient({
                         merge(exits = [], incoming = []) {
                             return [...incoming]
                         }
+                    },
+                    cart : {
+                        merge(exits = [], incoming) {
+                            return incoming
+                        }
                     }
                 }
             }

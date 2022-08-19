@@ -24,6 +24,7 @@ mutation updateCart ($id : Int, $input : input) {
     cart(id : $id, input : $input) @rest(type: "cart", path: "carts/{args.id}" , method : "PUT") {
             products
             id
+            price @client
         }
     }
 `;

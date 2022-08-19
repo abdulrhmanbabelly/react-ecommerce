@@ -1,6 +1,8 @@
+import { useQuery } from '@apollo/client';
 import { Box, Grid, useTheme } from '@mui/material';
 import React from 'react';
 import { AddNewCart, Cart, Footer, Loading } from '../Components';
+import { UPDATE_COMPONENET } from '../gql';
 import { useUserCarts } from '../hooks';
 import { cartsStyles } from '../styles';
 
@@ -8,8 +10,12 @@ let Carts = () => {
 
     let theme = useTheme()
     let { carts, loading, error } = useUserCarts(1);
+ 
+    let { data } = useQuery(UPDATE_COMPONENET);
     if (loading) return (<Loading width={100} height={100}/>);
     if (error) return (<h2>error</h2>);
+
+ 
 
     return (
         <>
@@ -19,6 +25,7 @@ let Carts = () => {
                 <Cart 
                 cart={cart}
                 key={i} 
+                price={Number(localStorage.getItem(`price:${cart.id}`))}
                 />)
             }
             <AddNewCart carts={carts}/>

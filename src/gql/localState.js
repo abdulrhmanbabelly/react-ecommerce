@@ -12,4 +12,10 @@ let LOGGED_IN = gql`
         loggedIn @client
     }
 `
-export { LOGGED_IN, DARK_MODE };
+let UPDATE_COMPONENET = gql`
+    query Update {
+        update @client
+    }
+`
+ 
+export { LOGGED_IN, DARK_MODE, UPDATE_COMPONENET };

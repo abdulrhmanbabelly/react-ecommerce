@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { Box, Button, FormGroup, Grid, TextField } from '@mui/material';
-import React, { useState } from 'react';
-import { Loading, Popup } from '../Components';
+import React from 'react';
+import { Loading } from '../Components';
 import { DELETE_USER, UPDATE_USER } from '../gql';
 import { useUser } from '../hooks';
 import { editAccountStyles } from '../styles';
@@ -11,7 +11,6 @@ let EditAccount = () => {
     let { loading, error, user } = useUser(1);
     let [updateUser] = useMutation(UPDATE_USER);
     let [deleteUser] = useMutation(DELETE_USER);
-    let [popup, setPopup] = useState(null);
 
     if (loading) return <Loading width={100 } height={100}/>
     if (error) return <h2>error</h2>
@@ -45,7 +44,6 @@ let EditAccount = () => {
                 }
             }
         );
-        setPopup(<Popup content={`updated your account`} type="success" setPopup={setPopup}/>)
     };
 
     let handleDelete = async (e) => {
@@ -57,9 +55,7 @@ let EditAccount = () => {
                 }
             }
          );
-        setPopup(<Popup content={`deleted your account`} type="error" setPopup={setPopup} then={() => {
-            location.href = '/signIn'
-        }}/>)
+         location.href = '/signUp';
     };
 
     return (
@@ -137,7 +133,6 @@ let EditAccount = () => {
             <Button type="submit" onClick={handleDelete}>
                 delete
             </Button>
-            {popup}
         </form>
     </Box>
     )

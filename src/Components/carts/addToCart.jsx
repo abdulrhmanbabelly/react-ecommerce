@@ -1,12 +1,13 @@
 import { Button, FormGroup, TextField, CircularProgress, useTheme, Box } from '@mui/material';
-import React, { useState } from 'react';
-import { useUpdateCart, useUserCarts } from '../../hooks';
-import { Popup, AddNewCart, Cart } from '../';
+import React from 'react';
+import { useNotification, useUserCarts } from '../../hooks';
+import { AddNewCart, Cart } from '../';
 import { cartsStyles } from '../../styles';
 import { Modal } from '../';
-import SignIn from '../../Pages/signIn';
+import { SignIn } from '../../Pages';
 import { useQuery } from '@apollo/client';
-import { LOGGED_IN } from '../../gql';
+import { LOGGED_IN, UPDATE_CART } from '../../gql';
+import client from '../../config/apolloClient';
 
 
 let AddToCart = (props) => {
@@ -14,12 +15,11 @@ let AddToCart = (props) => {
     let theme = useTheme();
     let { productId, productTitle } = props;
     let { carts, loading, error } = useUserCarts(1);
-    let [popup, setPopup] = useState('');
     let loggedIn = useQuery(LOGGED_IN).data.loggedIn;
-    let { updateCart } = useUpdateCart();
+    let { triggerNotification } = useNotification();
 
 
-    let handleAddToCart = async (cart) => {
+    let handleAddToCart = (cart) => {
         let found = false;
         for (let i = 0; i < cart.products.length; i++) {
             if (cart.products[i].productId == productId) {
@@ -29,13 +29,16 @@ let AddToCart = (props) => {
             }
         }
         if (!found) cart.products.push({ productId : Number(productId), quantity : Number(document.getElementById(`quantity${cart.id}`).value)});
-        await updateCart({
+        client.writeQuery({
+            query : UPDATE_CART,
             variables : {
-                input : cart,
                 id : cart.id
+            },
+            data : {
+                cart : cart
             }
         });
-        setPopup(<Popup content={`added product ${productTitle}`} type="success" title="Done Updating Cart" setPopup={setPopup}/>);
+        triggerNotification(`added prodcut ${productTitle}`)
     }
 
 
@@ -50,28 +53,25 @@ let AddToCart = (props) => {
                 { loggedIn ? 
                 <>
                     {
-                    carts.map((cart) => {
-                        return (
-                        <div key={Math.random() * 100000}>
-                            <Cart 
-                                cart={cart}
-                            />
-                            <form className='addToCartForm'>
-                                <FormGroup>
-                                    <TextField type='number' id={`quantity${cart.id}`} label='quantity' variant='filled'/>     
-                                </FormGroup>
-                                <FormGroup>
-                                    <Button variant='contained' onClick={() => {
-                                        handleAddToCart(cart)
-                                    }}>
-                                        Add to cart
-                                    </Button>
-                                </FormGroup>
-                            </form>
-                        </div>
-                        )})
-                    }
-                    <AddNewCart carts={carts} />
+                    carts.map((cart, i) => 
+                        <div key={i}>
+                            <Cart cart={cart} />
+                            <div key={Math.random() * 100000}>
+                                <form className='addToCartForm'>
+                                    <FormGroup>
+                                        <TextField type='number' id={`quantity${cart.id}`} label='quantity' variant='filled'/>     
+                                    </FormGroup>
+                                    <FormGroup>
+                                        <Button variant='contained' onClick={() => {
+                                            handleAddToCart(cart)
+                                        }}>
+                                            Add to cart
+                                        </Button>
+                                    </FormGroup>
+                                </form>
+                            </div>
+                        </div>)}
+                    <AddNewCart/>
                 </> : <SignIn /> }
             </Box>
             }
@@ -80,7 +80,6 @@ let AddToCart = (props) => {
             headerContent='add to cart'
             openButtonColor='warning'
         />
-        {popup}
     </>
     );
 }

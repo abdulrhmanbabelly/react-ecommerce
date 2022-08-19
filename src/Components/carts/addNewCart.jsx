@@ -1,21 +1,20 @@
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
-import { Popup } from '../';
-import { useAddNewCart } from '../../hooks';
+import React from 'react';
+import { useAddNewCart, useNotification } from '../../hooks';
 
 let AddNewCart = () => {
 
-    let [popup, setPopup] = useState('');
     let { addNewCart } = useAddNewCart();
-    
-    let handleAddNewCart = async () => {
+    let { triggerNotification } = useNotification();
+ 
+    let handleAddNewCart = () => {
         let date = new Date();
         let cart = {
             userId : 1,
             products : [],
             date: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
         };
-        await addNewCart({
+        addNewCart({
             variables : {
                 input : {
                     userId : cart.userId,
@@ -23,8 +22,15 @@ let AddNewCart = () => {
                     date : cart.date
                 }
             }
+        }).then((data) => {
+            
+            let id = data.data.cart.id
+            if (!data.errors) triggerNotification(`added cart ${id}`, "success");
+            else triggerNotification(`failed to add cart ${id}`, "error");
+
+        }).catch((err) => {
+            triggerNotification(`failed to add cart ${id}`, "error");
         });
-        setPopup(<Popup title="created Cart" type="success" content={`added new Cart`} setPopup={setPopup}/>);
     }
 
     return (
@@ -32,7 +38,6 @@ let AddNewCart = () => {
             <Button color="success" variant='contained' onClick={handleAddNewCart}>
                 New cart
             </Button>
-            {popup}
         </>
     )
 
