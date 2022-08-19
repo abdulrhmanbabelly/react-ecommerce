@@ -26,20 +26,27 @@ let AddToCart = (props) => {
             if (cart.products[i].productId == productId) {
                 cart.products[i].quantity += Number(document.getElementById(`quantity${cart.id}`).value);
                 found = true;
-                break;
+                triggerNotification('this product is already in your cart', 'error')
+                break; 
             }
         }
-        if (!found) cart.products.push({ productId : Number(productId), quantity : Number(document.getElementById(`quantity${cart.id}`).value)});
-        client.writeQuery({
-            query : UPDATE_CART,
-            variables : {
-                id : cart.id
-            },
-            data : {
-                cart : cart
-            }
-        });
-        triggerNotification(`added prodcut ${productTitle}`)
+        if (!found) { 
+            
+            cart.products.push({ productId : Number(productId), quantity : Number(document.getElementById(`quantity${cart.id}`).value)});
+        
+            client.writeQuery({
+                query : UPDATE_CART,
+                variables : {
+                    id : cart.id
+                },
+                data : {
+                    cart : cart
+                }
+            });
+            triggerNotification(`added prodcut ${productTitle}`)
+
+        }
+
     }
 
 
