@@ -14,9 +14,9 @@ export const cartsSlice = createSlice({
     itemMount: (state, { payload: { price, order } }) => {
       state.prices[order] += price;
     },
-    deleteItem: (state, { payload: { order, productOrder, price } }) => {
-      state.carts[order].products.splice(productOrder, 1);
+    deleteItem: (state, { payload: { order, productOrder, price, product } }) => {
       state.prices[order] -= price;
+      document.getElementById(`product${productOrder}${product.price}`).style.display = "none";
     },
     changeItemsQuantity: (
       state,
@@ -35,11 +35,7 @@ export const cartsSlice = createSlice({
       state.carts[order].products[productIndex].quantity = quantity;
     },
     deleteStoreCart: (state, { payload: { order } }) => {
-      state.carts.splice(order, 1);
-      state.prices.splice(order, 1);
-      for (let i = 0; i < state.prices.length; i++) {
-        state.prices[i] = 0;
-      }
+      document.getElementById(`cart${order}`).style.display = "none";
     },
     addItemToCart: (state, { payload: { quantity, productId, order } }) => {
       state.carts[order].products.push({

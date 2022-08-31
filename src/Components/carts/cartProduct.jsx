@@ -9,7 +9,11 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import { Loading } from "../";
 import { useDispatch } from "react-redux";
-import { changeItemsQuantity, deleteItem, itemMount } from "../../store/features/carts/cartsSilce";
+import {
+  changeItemsQuantity,
+  deleteItem,
+  itemMount,
+} from "../../store/features/carts/cartsSilce";
 
 let CartProduct = (props) => {
   let { productId, quantity } = props.product;
@@ -17,40 +21,47 @@ let CartProduct = (props) => {
   let { cartOrder, productOrder } = props;
   let { product, loading } = useCartProduct(productId);
   let { triggerNotification } = useNotification();
-  
+
   let price = Number(product.price).toFixed(0) * Number(quantity);
   useEffect(() => {
-    dispatch(itemMount({
-      price : price,
-      order : cartOrder
-    }))
-  }, [loading])
+    if (!loading)
+      dispatch(
+        itemMount({
+          price: price,
+          order: cartOrder,
+        })
+      );
 
+  }, [loading]);
 
   let handleChangeCount = (e) => {
-    dispatch(changeItemsQuantity({
-      quantity : Number(e.target.value),
-      order : cartOrder,
-      productId : productId,
-      price : price,
-      oneProductPrice : product.price
-    }));
+    dispatch(
+      changeItemsQuantity({
+        quantity: Number(e.target.value),
+        order: cartOrder,
+        productId: productId,
+        price: price,
+        oneProductPrice: product.price,
+      })
+    );
   };
 
   let handleDeleteProduct = () => {
-
-    dispatch(deleteItem({
-      order : cartOrder,
-      productOrder : productOrder,
-      price : price
-    }))
+    dispatch(
+      deleteItem({
+        productOrder: productOrder,
+        price: price,
+        product : product,
+        order : cartOrder
+      })
+    );
     triggerNotification(`deleted product ${product.title}`);
   };
 
   if (loading) return <Loading width={100} height={10} />;
   return (
     <>
-      <Card className="cartProduct">
+      <Card className="cartProduct" id={`product${productOrder}${product.price}`}>
         <Box>
           <Grid container>
             <Grid item xs={12} sm={2} justifyContent="center" container p={1}>
@@ -76,7 +87,7 @@ let CartProduct = (props) => {
                   defaultValue={quantity}
                   onChange={handleChangeCount}
                   variant="standard"
-                  inputProps={{ min : 1 }}
+                  inputProps={{ min: 1 }}
                 />
               </Grid>
               <Grid item xs={3} sm={1} justifyContent="center" container>
