@@ -1,6 +1,6 @@
 
 let singleProductStyles = {
-    "& .image" : {
+    "& .MuiGrid-grid-md-6:nth-of-type(1)" : {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

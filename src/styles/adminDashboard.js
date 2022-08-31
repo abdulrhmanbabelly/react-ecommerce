@@ -1,20 +1,25 @@
-
-let adminDashboardStyles = {
-    display : 'flex',
-    "& a" : {
-        textDecoration : "none",
-        color : (props) => `${props.palette.mode === 'light' ? '#1976d2' : '#fff' }`
+let adminDashboardStyles = () => {
+  return {
+    direction: (props) => `${props.palette.ltr ? "ltr" : "rtl"}`,
+    "& div" : {
+      textAlign : (props) => `${props.palette.ltr ? "left !important" : "right !important"}`,
     },
-    "& .MuiListItemIcon-root" : {
-        minWidth : "0 !important",
-        marginRight : "1.5vw"
+    "& a": {
+      textDecoration: "none !important",
+      color: (props) =>
+        `${props.palette.mode === "light" ? "#1976d2" : "#fff"}`,
     },
-    form : {
-        "& > div" : {
-            marginBottom: "1vw",
-            marginTop: "1vw"
-        }
-    }
-}
+    "& .MuiListItemIcon-root": {
+      minWidth: "0 !important",
+      marginRight: "1.5vw",
+    },
+    form: {
+      "& > div": {
+        marginBottom: "1vw",
+        marginTop: "1vw",
+      },
+    },
+  };
+};
 
 export default adminDashboardStyles;

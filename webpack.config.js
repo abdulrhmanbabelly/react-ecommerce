@@ -14,6 +14,10 @@ module.exports = {
         use: ["style-loader","css-loader"]
       },
       {
+        test: /\.html$/i,
+        loader:"html-loader"
+      },
+      {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: "babel-loader",
@@ -48,5 +52,5 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
   },
-  plugins: [new webpack.HotModuleReplacementPlugin(), new CompressionPlugin()]
+  plugins: [new webpack.HotModuleReplacementPlugin(), new BundleAnalyzerPlugin(), new CompressionPlugin()]
 };

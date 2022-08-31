@@ -14,10 +14,6 @@ let storeStyles = {
             }
         }
     },
-    '& .filterButton' : {
-        marginLeft : 'auto',
-        marginRight : '1vw'
-    }
 }
 
 export default storeStyles;

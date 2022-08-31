@@ -1,24 +1,32 @@
-import React from 'react';
-import { Typography, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Box, Container, Grid, StepConnector, Stack, Step, StepLabel, Stepper, stepConnectorClasses } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { ADD_USER } from '../gql';
-import { useMutation } from '@apollo/client';
-import { Person, Email, LocationOn } from '@mui/icons-material';
-import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="/">
-        Ecommerce
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import React from "react";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import StepConnector from "@mui/material/StepConnector";
+import Stack from "@mui/material/Stack";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Stepper from "@mui/material/Stepper";
+import { stepConnectorClasses } from "@mui/material/StepConnector";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { ADD_USER } from "../gql";
+import { useMutation } from "@apollo/client";
+import Person from "@mui/icons-material/Person";
+import LocationOn from "@mui/icons-material/LocationOn";
+import Email from "@mui/icons-material/Email";
+import styled from "@emotion/styled";
+import PropTypes from "prop-types";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { rtlTextFiled } from "../styles";
+import { useTranslation } from "react-i18next";
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -27,56 +35,58 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+        "linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)",
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       backgroundImage:
-        'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+        "linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)",
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
     height: 3,
     border: 0,
     backgroundColor:
-      theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
+      theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
     borderRadius: 1,
   },
 }));
 
-const ColorlibStepIconRoot = styled('div')(({ theme, ownerState }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
+const ColorlibStepIconRoot = styled("div")(({ theme, ownerState }) => ({
+  backgroundColor:
+    theme.palette.mode === "dark" ? theme.palette.grey[700] : "#ccc",
   zIndex: 1,
-  color: '#fff',
+  color: "#fff",
   width: 50,
   height: 50,
-  display: 'flex',
-  borderRadius: '50%',
-  justifyContent: 'center',
-  alignItems: 'center',
+  display: "flex",
+  borderRadius: "50%",
+  justifyContent: "center",
+  alignItems: "center",
   ...(ownerState.active && {
     backgroundImage:
-      'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-    boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+      "linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)",
+    boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
   }),
   ...(ownerState.completed && {
     backgroundImage:
-      'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+      "linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)",
   }),
 }));
 
 function ColorlibStepIcon(props) {
   const { active, completed, className } = props;
-
-  const icons = {
+  let icons = {
     1: <Person />,
     2: <LocationOn />,
     3: <Email />,
   };
-
   return (
-    <ColorlibStepIconRoot ownerState={{ completed, active }} className={className}>
+    <ColorlibStepIconRoot
+      ownerState={{ completed, active }}
+      className={className}
+    >
       {icons[String(props.icon)]}
     </ColorlibStepIconRoot>
   );
@@ -100,252 +110,462 @@ ColorlibStepIcon.propTypes = {
   icon: PropTypes.node,
 };
 
-const steps = ['Personal info', 'Adderss', 'Password'];
-
-
-export default function SignUp() {
-
+let SignUp = () => {
   const [activeStep, setActiveStep] = React.useState(0);
-
+  let { t, i18n } = useTranslation();
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  }
+  };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-    let [addUser] = useMutation(ADD_USER);
-    let handleSubmit = async (e) => {
-        e.preventDefault();
-        await addUser({
-            variables : {
-                input : {
-                    email : document.getElementById('email').value,
-                    username : document.getElementById('username').value,
-                    password : document.getElementById('password').value,
-                    name : {
-                        firstname: document.getElementById('firstname').value,
-                        lastname: document.getElementById('lastname').value
-                    },
-                    address : {
-                    city : document.getElementById('city').value,
-                    street : document.getElementById('street').value,
-                    number : document.getElementById('number').value,
-                    zipcode : document.getElementById('zipcode').value,
-                    geolocation :{
-                        lat : document.getElementById('lat').value,
-                        long : document.getElementById('long').value
-                    }
-                },
-                phone : document.getElementById('phone').value
-            }
-        }
-    });
-    location.href = '/'
-    };
+  let [addUser] = useMutation(ADD_USER);
+
+  let formik = useFormik({
+    initialValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      city: "",
+      street: "",
+      zipcode: "",
+      username: "",
+      password: "",
+      number: undefined,
+      lat: undefined,
+      long: undefined,
+      phone: undefined,
+    },
+    validationSchema: Yup.object({
+      firstname: Yup.string()
+        .max(20, t("signUpPage.fnameErr1"))
+        .min(3, t("signUpPage.fnameErr2"))
+        .required(t("signUpPage.reqField")),
+      lastname: Yup.string()
+        .max(20, t("signUpPage.lnameErr1"))
+        .min(3, t("signUpPage.lnameErr1"))
+        .required(t("signUpPage.reqField")),
+      email: Yup.string()
+        .matches(
+          /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*$/,
+          t("signUpPage.emailErr")
+        )
+        .required(t("signUpPage.reqField")),
+      city: Yup.string()
+        .max(20, t("signUpPage.cityErr1"))
+        .min(3, t("signUpPage.cityErr2"))
+        .required(t("signUpPage.reqField")),
+      street: Yup.string()
+        .max(20, t("signUpPage.streetErr1"))
+        .min(3, t("signUpPage.streetErr2"))
+        .required(t("signUpPage.reqField")),
+      username: Yup.string()
+        .max(10, t("signUpPage.usernameErr1"))
+        .min(5, t("signUpPage.usernameErr2"))
+        .required(t("signUpPage.reqField")),
+      password: Yup.string()
+        .max(10, t("signUpPage.passwordErr1"))
+        .min(5, t("signUpPage.passwordErr2"))
+        .required(t("signUpPage.reqField")),
+      long: Yup.number().required(t("signUpPage.reqField")),
+      lat: Yup.number().required(t("signUpPage.reqField")),
+      phone: Yup.number().required(t("signUpPage.reqField")),
+      zipcode: Yup.string().required(t("signUpPage.reqField")),
+      number: Yup.number().required(t("signUpPage.reqField")),
+    }),
+    onSubmit: async (values) => {
+      await addUser({
+        variables: {
+          input: {
+            email: values.email,
+            username: values.username,
+            password: values.password,
+            name: {
+              firstname: values.firstname,
+              lastname: values.lastname,
+            },
+            address: {
+              city: values.city,
+              street: values.street,
+              number: values.number,
+              zipcode: values.zipcode,
+              geolocation: {
+                lat: values.lat,
+                long: values.long,
+              },
+            },
+            phone: values.phone,
+          },
+        },
+      });
+    },
+  });
+
+  const steps = [
+    t("signUpPage.personalInfo"),
+    t("signUpPage.address"),
+    t("signUpPage.password"),
+  ];
 
   return (
     <>
-      <Container component="main" maxWidth="xs">
+      <Stack sx={{ width: "80%", margin: "2vw auto" }} mt={3}>
+        <Stepper
+          activeStep={activeStep}
+          connector={<ColorlibConnector />}
+          dir={i18n.language == "ar" ? "rtl" : "ltr"}
+        >
+          {steps.map((label) => (
+            <Step key={label}>
+              <Grid
+                container
+                justifyContent="center"
+                alignItems="center"
+                width="10vw"
+                sx={{ "& span": { padding: "0 !important" } }}
+              >
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Grid item>
+                    <StepLabel StepIconComponent={ColorlibStepIcon}></StepLabel>
+                  </Grid>
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  width="5vw"
+                  sx={{
+                    "& > div": { textAlign: "center !important" },
+                  }}
+                >
+                  <Box>{label}</Box>
+                </Grid>
+              </Grid>
+            </Step>
+          ))}
+        </Stepper>
+      </Stack>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          direction: (props) => `${props.palette.ltr ? "ltr" : "rtl"}`,
+          "& p": {
+            textAlign: (props) =>
+              `${props.palette.ltr ? "left !important" : "right !important"}`,
+          },
+        }}
+      >
         <Box
           sx={{
             marginTop: 2,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
-          </Typography> 
-            <Box component="form" noValidate sx={{ mt: 3, display : `${activeStep === 0 ? 'block' : 'none'}` }}>
+            {t("signUpPage.title")}
+          </Typography>
+          <Box
+            component="form"
+            sx={{ mt: 3, display: `${activeStep === 0 ? "block" : "none"}` }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  sx={rtlTextFiled}
                   autoComplete="given-name"
-                  name="firstName"
+                  name="firstname"
                   required
                   fullWidth
-                  id="firstname"
-                  label="First Name"
+                  label={t("signUpPage.firstname")}
                   autoFocus
+                  defaultValue={formik.values.firstname}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.firstname && Boolean(formik.errors.firstname)
+                  }
+                  helperText={
+                    formik.touched.firstname && formik.errors.firstname
+                  }
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   fullWidth
-                  id="lastname"
-                  label="Last Name"
-                  name="lastName"
+                  label={t("signUpPage.lastname")}
+                  name="lastname"
                   autoComplete="family-name"
+                  defaultValue={formik.values.lastname}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.lastname && Boolean(formik.errors.lastname)
+                  }
+                  helperText={formik.touched.lastname && formik.errors.lastname}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   fullWidth
                   id="email"
-                  label="Email"
+                  label={t("signUpPage.email")}
                   autoComplete="email"
+                  type="email"
+                  defaultValue={formik.values.email}
+                  onChange={formik.handleChange}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
                 />
               </Grid>
             </Grid>
             <Button
               variant="contained"
-              sx={{ mt: 3, mb: 2, float : "right" }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                float: i18n.language == "ar" ? "left" : "right",
+              }}
               onClick={handleNext}
             >
-              next
+              {t("signUpPage.next")}
             </Button>
-          </Box> 
-            <Box component="form" noValidate sx={{ mt: 3, display : `${activeStep === 1 ? 'block' : 'none'}`}}>
+          </Box>
+          <Box
+            component="form"
+            noValidate
+            sx={{ mt: 3, display: `${activeStep === 1 ? "block" : "none"}` }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   fullWidth
                   id="city"
-                  label="City"
+                  name="city"
+                  label={t("signUpPage.city")}
                   autoFocus
+                  defaultValue={formik.values.city}
+                  onChange={formik.handleChange}
+                  error={formik.touched.city && Boolean(formik.errors.city)}
+                  helperText={formik.touched.city && formik.errors.city}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   fullWidth
-                  id="street"
-                  label="Street"
+                  name="street"
+                  label={t("signUpPage.street")}
+                  defaultValue={formik.values.street}
+                  onChange={formik.handleChange}
+                  error={formik.touched.street && Boolean(formik.errors.street)}
+                  helperText={formik.touched.street && formik.errors.street}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   type="number"
                   fullWidth
                   id="long"
-                  label="Long"
+                  name="long"
+                  label={t("signUpPage.long")}
+                  defaultValue={formik.values.long}
+                  onChange={formik.handleChange}
+                  error={formik.touched.long && Boolean(formik.errors.long)}
+                  helperText={formik.touched.long && formik.errors.long}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   type="number"
                   fullWidth
-                  id="lat"
-                  label="Lat"
+                  name="lat"
+                  label={t("signUpPage.lat")}
+                  defaultValue={formik.values.lat}
+                  onChange={formik.handleChange}
+                  error={formik.touched.lat && Boolean(formik.errors.lat)}
+                  helperText={formik.touched.lat && formik.errors.lat}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   fullWidth
                   type="number"
-                  id="number"
-                  label="Number"
+                  name="number"
+                  label={t("signUpPage.number")}
+                  defaultValue={formik.values.number}
+                  onChange={formik.handleChange}
+                  error={formik.touched.number && Boolean(formik.errors.number)}
+                  helperText={formik.touched.number && formik.errors.number}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   fullWidth
-                  label="Zipcode"
-                  id="zipcode"
+                  label={t("signUpPage.zipcode")}
+                  name="zipcode"
+                  defaultValue={formik.values.zipcode}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.zipcode && Boolean(formik.errors.zipcode)
+                  }
+                  helperText={formik.touched.zipcode && formik.errors.zipcode}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   fullWidth
-                  type='number'
-                  label="Phone"
-                  id="phone"
+                  type="number"
+                  label={t("signUpPage.phone")}
+                  name="phone"
+                  defaultValue={formik.values.phone}
+                  onChange={formik.handleChange}
+                  error={formik.touched.phone && Boolean(formik.errors.phone)}
+                  helperText={formik.touched.phone && formik.errors.phone}
                 />
               </Grid>
             </Grid>
             <Button
               variant="contained"
-              sx={{ mt: 3, mb: 2, float : "left" }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                float: i18n.language == "ar" ? "right" : "left",
+              }}
               onClick={handleBack}
             >
-              back
+              {t("signUpPage.back")}
             </Button>
             <Button
               variant="contained"
-              sx={{ mt: 3, mb: 2, float : "right" }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                float: i18n.language == "ar" ? "left" : "right",
+              }}
               onClick={handleNext}
             >
-              next
+              {t("signUpPage.next")}
             </Button>
-          </Box> 
-            <Box component="form" noValidate sx={{ mt: 3, display : `${activeStep === 2 ? 'block' : 'none'}`}}>
+          </Box>
+          <Box
+            component="form"
+            noValidate
+            sx={{ mt: 3, display: `${activeStep === 2 ? "block" : "none"}` }}
+          >
             <Grid container spacing={2}>
-            <Grid item xs={12}>
+              <Grid item xs={12}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   fullWidth
-                  id="username"
-                  label="Username"
-                  autoComplete="email"
+                  name="username"
+                  label={t("signUpPage.username")}
+                  defaultValue={formik.values.username}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.username && Boolean(formik.errors.username)
+                  }
+                  helperText={formik.touched.username && formik.errors.username}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  sx={rtlTextFiled}
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label={t("signUpPage.password")}
                   type="password"
-                  id="password"
                   autoComplete="new-password"
+                  defaultValue={formik.values.password}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  helperText={formik.touched.password && formik.errors.password}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I accept the condition and terms of using this app."
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label={t("signUpPage.iAccept")}
+                  sx={{ mr: 0 }}
                 />
               </Grid>
             </Grid>
             <Button
               variant="contained"
-              sx={{ mt: 3, mb: 2, float : "left" }}
+              sx={{
+                mt: 1,
+                mb: 1,
+                float: i18n.language == "ar" ? "right" : "left",
+              }}
               onClick={handleBack}
             >
-              back
+              {t("signUpPage.back")}
             </Button>
             <Button
               variant="contained"
-              sx={{ mt: 3, mb: 2, float : "right" }}
-              onClick={handleSubmit}
+              sx={{
+                mt: 1,
+                mb: 1,
+                float: i18n.language == "ar" ? "left" : "right",
+              }}
+              onClick={formik.handleSubmit}
             >
-              submit
+              {t("signUpPage.submit")}
             </Button>
           </Box>
-        <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/signIn" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link href="/signIn" variant="body2">
+                {t("signUpPage.alreadyHaveAccount")}
+              </Link>
             </Grid>
-        <Copyright sx={{ mt: 5 }} />
+          </Grid>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            mb={5}
+          >
+            {t("signUpPage.copyright")}
+            {new Date().getFullYear()}.
+          </Typography>
         </Box>
       </Container>
-      <Stack sx={{ width: '100%' }} spacing={2} mt={3}>
-      <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-    </Stack>
     </>
-
   );
-}
+};
+
+export default SignUp;

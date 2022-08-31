@@ -1,27 +1,25 @@
-import { useState } from "react"
+import { useState } from "react";
 import { GET_PRODUCT } from "../gql/products";
-import { useQuery } from '@apollo/client';
+import { useQuery } from "@apollo/client";
 
 let useSingleProduct = (id) => {
+  let [product, setProduct] = useState({
+    title: "...",
+    rating: {
+      rate: "...",
+      count: "...",
+    },
+  });
 
-    let [product, setProduct] = useState({
-        title : '...',
-        rating : {
-            rate : '...',
-            count : '...'
-        }
-    });
+  let { loading, error, data } = useQuery(GET_PRODUCT, {
+    variables: {
+      id: id,
+    },
+  });
 
-    let { loading, error, data } = useQuery(GET_PRODUCT, {
-        variables : {
-            id : id
-        }
-    });
+  if (!loading && !error && product.title === "...") setProduct(data.product);
 
-    if (!loading && !error && product.title === '...') setProduct(data.product);
-
-    return { product, loading, error };
-
-}
+  return { product, loading, error };
+};
 
 export default useSingleProduct;

@@ -1,45 +1,69 @@
-import { Route, Routes, useLocation } from 'react-router-dom'
-import React from 'react';
-import { createTheme, CssBaseline, Grid, ThemeProvider } from '@mui/material';
-import { NavigationBar, AdminNavigationBar, Notification } from './Components';
-import { useQuery } from '@apollo/client';
-import { DARK_MODE } from './gql';
-import { AdminRouter, ClientRouter } from './routers';
-
+import { Route, Routes, useLocation } from "react-router-dom";
+import React from "react";
+import Grid from "@mui/material/Grid";
+import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import { NavigationBar, AdminNavigationBar, Notification, Footer } from "./Components";
+import { AdminRouter, ClientRouter } from "./routers";
+import { useDispatch, useSelector } from "react-redux";
+import { useMemo } from "react";
+import { adminDashboardStyles } from "./styles";
+import { useEffect } from "react";
+import { setLeftToRight } from "./store/features/leftToRight/leftToRight";
+import { useTranslation } from "react-i18next";
 let App = () => {
+  let location = useLocation();
+  let darkMode = useSelector((state) => state.darkMode.on);
+  let ltr = useSelector((state) => state.leftToRight.ltr);
+  let { i18n } = useTranslation();
+  let dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setLeftToRight({ ltr: i18n.language === "ar" ? false : true }));
+  });
+  let theme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+      ltr: ltr,
+    },
+  });
 
-    let location = useLocation();
-    let darkMode = useQuery(DARK_MODE);
-    let darkTheme = createTheme({
-        palette: {
-            mode: 'dark',
-        }
-    })
+  let clientNavbar = useMemo(() => <NavigationBar />, [location.pathname]);
+  let adminNavbar = useMemo(() => <AdminNavigationBar />, [location.pathname]);
+  let footer = useMemo(() => <Footer />, [location.pathname]);
 
-    let lightTheme = createTheme({
-        palette: {
-            mode: 'light',
-        }
-    })
-
-    
-    return (
-    <ThemeProvider theme={darkMode.data?.on === "true" ? darkTheme : lightTheme}>
-        <CssBaseline />
-        {location.pathname.indexOf('adminDashboard') === -1 && <NavigationBar />}
-        <Grid container style={{ width : "auto" }}>
-            <Routes>
-                {location.pathname.indexOf('adminDashboard') > -1 && (
-                <Route path='/adminDashboard/*' element={<AdminNavigationBar routes={
-                    <AdminRouter />
-                    }/>}/>
-                )}
-                <Route path='/*' element={<ClientRouter />} />
-            </Routes>
-            <Notification />
-        </Grid> 
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      {location.pathname.indexOf("adminDashboard") === -1
+        ? clientNavbar
+        : adminNavbar}
+      <Grid container sx={adminDashboardStyles}>
+        <Routes>
+          {location.pathname.indexOf("adminDashboard") > -1 && (
+            <Route
+              path="/adminDashboard/*"
+              element={
+                <Box style={{ padding: "1vw" }}>
+                  <AdminRouter />
+                </Box>
+              }
+            />
+          )}
+          <Route
+            path="/*"
+            element={
+              <>
+                <ClientRouter />
+                {footer}
+              </>
+            }
+          />
+        </Routes>
+        <Notification />
+      </Grid>
     </ThemeProvider>
-    )
-}
+  );
+};
 
 export default App;

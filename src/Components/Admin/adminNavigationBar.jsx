@@ -1,167 +1,248 @@
-import React, { useState } from 'react';
-import { AppBar, CssBaseline, ListItemText, ListItemIcon, ListItemButton, List, ListItem, Box, Divider, Drawer, IconButton, Toolbar, Link } from '@mui/material';
-import { Store, PeopleAlt, Category, ShoppingCart, ChevronRight, ChevronLeft, Menu, DarkMode } from '@mui/icons-material';
-import { styled, useTheme } from '@mui/material/styles';
-import { toggleTheme } from '../../functions';
-import { adminDashboardStyles } from '../../styles';
-const drawerWidth = 180;
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
-  flexGrow: 1,
-  padding: theme.spacing(3),
-  transition: theme.transitions.create('margin', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginLeft: `-${drawerWidth}px`,
-  ...(open && {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  }),
-}));
-const CustomAppBar = styled(AppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
+import React, { useState } from "react";
+import IconButton from "@mui/material/IconButton";
+import Link from "@mui/material/Link";
+import { useTheme } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Store from "@mui/icons-material/Store";
+import PeopleAlt from "@mui/icons-material/PeopleAlt";
+import Category from "@mui/icons-material/Category";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
+import ChevronRight from "@mui/icons-material/ChevronRight";
+import ChevronLeft from "@mui/icons-material/ChevronLeft";
+import DarkMode from "@mui/icons-material/DarkMode";
+import Translate from "@mui/icons-material/Translate";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import { useTranslation } from "react-i18next";
+import { adminDashboardStyles } from "../../styles";
+import useToggleDarkMode from "../../hooks/useToggleDarkMode";
+import { useDispatch } from "react-redux";
+import { toggleLeftToRight } from "../../store/features/leftToRight/leftToRight";
 
-let AdminNavigationBar = (props) => {
-  
+const lngs = {
+  en: { nativeName: "English" },
+  ar: { nativeName: "Arabic" },
+};
+let AdminNavigationBar = () => {
+  let { toggle } = useToggleDarkMode();
+  const [state, setState] = React.useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+  let dispatch = useDispatch();
+  let { t, i18n } = useTranslation();
   const theme = useTheme();
-  const [open, setOpen] = useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
+
+  const [lngsAnchorEl, setLngsAnchorEl] = useState(null);
+  const isLngsMenuOpen = Boolean(lngsAnchorEl);
+  const handleLngsMenuOpen = (event) => {
+    setLngsAnchorEl(event.currentTarget);
+  };
+  const handleLngsMenuClose = () => {
+    setLngsAnchorEl(null);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
   };
 
-  window.onresize = () => {
-      if (window.innerWidth <= 786) {
-        if (!open) return;
-        if (open) setOpen(false);
-      }
-  }
-
-  return (
-    <Box sx={adminDashboardStyles}>
-        <CustomAppBar open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-          >
-            <Menu />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="end"
-            sx={{ mr: 2 }}
-            onClick={() => {
-              toggleTheme();
-          }}>
-            <DarkMode />
-          </IconButton>
-          Dashboard
-        </Toolbar>
-        </CustomAppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
+  const lngsMenuId = "primary-lngs-account-menu";
+  const renderLngsMenu = (
+    <Menu
+      anchorEl={lngsAnchorEl}
+      open={isLngsMenuOpen}
+      onClose={handleLngsMenuClose}
+      onClick={handleLngsMenuClose}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          maxHeight: "100px",
+          overflowY: "auto",
+          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+          mt: 1.5,
+          "& .MuiAvatar-root": {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
           },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-            <ListItem disablePadding>
-              <Link href='/adminDashboard/products' color='inherit' style={{ width : '100%' }}>
-                <ListItemButton>
-                    <ListItemIcon>
-                        <Store />
-                    </ListItemIcon>
-                    <ListItemText primary='Products' />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            <ListItem disablePadding>
-              <Link href='/adminDashboard/users' color='inherit' style={{ width : '100%' }}>
-                <ListItemButton>
-                    <ListItemIcon>
-                      <PeopleAlt />
-                    </ListItemIcon>
-                    <ListItemText primary='Users' />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            <ListItem disablePadding>
-              <Link href='/adminDashboard/carts' color='inherit' style={{ width : '100%' }}>
-                <ListItemButton>
-                    <ListItemIcon>
-                      <ShoppingCart />
-                    </ListItemIcon>
-                    <ListItemText primary='carts' />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            <ListItem disablePadding>
-              <Link href='/adminDashboard/categories' color='inherit' style={{ width : '100%' }}>
-                <ListItemButton>
-                    <ListItemIcon>
-                      <Category />
-                    </ListItemIcon>
-                    <ListItemText primary='categories' />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-        </List>
-      </Drawer>
-      <Main open={open} className='adminDashboard' style={{
-        marginTop : "64px"
-      }}>
-          {props.routes}
-      </Main>   
+          "& li a": {
+            textDecoration: "none",
+          },
+        },
+      }}
+      transformOrigin={{ horizontal: "right", vertical: "top" }}
+      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+    >
+      {Object.keys(lngs).map((lng) => (
+        <MenuItem
+          key={lng}
+          style={{
+            fontWeight: i18n.resolvedLanguage === lng ? "bold" : "normal",
+          }}
+          type="submit"
+          onClick={() => {
+            dispatch(toggleLeftToRight());
+            i18n.changeLanguage(lng);
+          }}
+        >
+          {lngs[lng].nativeName}
+        </MenuItem>
+      ))}
+    </Menu>
+  );
+
+  const list = (anchor) => (
+    <Box
+      sx={adminDashboardStyles}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <IconButton onClick={toggleDrawer}>
+        {theme.direction === "ltr" ? <ChevronLeft /> : <ChevronRight />}
+      </IconButton>
+      <Divider />
+      <List>
+        <ListItem disablePadding>
+          <Link
+            href="/adminDashboard/products"
+            color="inherit"
+            style={{ width: "100%" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <Store />
+              </ListItemIcon>
+              <Box mr={1} />
+              <ListItemText primary={t("adminDashboard.nav.1")} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem disablePadding>
+          <Link
+            href="/adminDashboard/users"
+            color="inherit"
+            style={{ width: "100%" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <PeopleAlt />
+              </ListItemIcon>
+              <Box mr={1} />
+              <ListItemText primary={t("adminDashboard.nav.2")} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem disablePadding>
+          <Link
+            href="/adminDashboard/carts"
+            color="inherit"
+            style={{ width: "100%" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <ShoppingCart />
+              </ListItemIcon>
+              <Box mr={1} />
+              <ListItemText primary={t("adminDashboard.nav.3")} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+        <ListItem disablePadding>
+          <Link
+            href="/adminDashboard/categories"
+            color="inherit"
+            style={{ width: "100%" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <Category />
+              </ListItemIcon>
+              <Box mr={1} />
+              <ListItemText primary={t("adminDashboard.nav.4")} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+      </List>
     </Box>
   );
-}
 
-
+  return (
+    <div>
+      {(i18n.language == "ar" ? ["right"] : ["left"]).map((anchor) => (
+        <Box
+          sx={{
+            flexGrow: 1,
+            direction: (props) => `${props.palette.ltr ? "ltr" : "rtl"}`,
+          }}
+          key={anchor}
+        >
+          <AppBar position="static" sx={{}}>
+            <Toolbar>
+              <React.Fragment>
+                <IconButton
+                  onClick={toggleDrawer(anchor, true)}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Drawer
+                  anchor={anchor}
+                  open={state[anchor]}
+                  onClose={toggleDrawer(anchor, false)}
+                >
+                  {list(anchor)}
+                </Drawer>
+              </React.Fragment>
+              <IconButton
+                size="large"
+                color="inherit"
+                onClick={() => {
+                  toggle();
+                }}
+              >
+                <DarkMode />
+              </IconButton>
+              <IconButton
+                size="large"
+                aria-controls={lngsMenuId}
+                aria-haspopup="true"
+                onClick={handleLngsMenuOpen}
+                color="inherit"
+              >
+                <Translate />
+              </IconButton>
+              {renderLngsMenu}
+              <Typography sx={{ marginRight: "1vw", marginLeft: ".5vw" }}>
+                {t("adminDashboard.title")}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        </Box>
+      ))}
+    </div>
+  );
+};
 
 export default AdminNavigationBar;

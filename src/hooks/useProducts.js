@@ -1,16 +1,20 @@
 import { useQuery } from "@apollo/client";
 import { GET_PRODUCTS } from "../gql/products";
+import { useSelector, useDispatch } from 'react-redux';
+import { setProducts } from "../store/features/products/productsSlice";
+import { useEffect } from "react";
+let useAdminProducts = () => {
+  let { loading, error, data } = useQuery(GET_PRODUCTS);
 
-let useProducts = () => {
+  let products = useSelector(state => state.products.products);
+  let dispatch = useDispatch();
+  useEffect(() => {
+    if (!loading && !error && !products[0]) {
+      dispatch(setProducts({ products : data.products }))
+    }
+  })
 
-    let { loading, error, data } = useQuery(GET_PRODUCTS);
+  return { products, loading, error };
+};
 
-    let products = [];
-
-    if (!loading && !error) products = data.products;
-    
-    return { products, loading, error };
-
-}
-
-export default useProducts;
+export default useAdminProducts;

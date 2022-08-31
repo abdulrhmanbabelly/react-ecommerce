@@ -1,38 +1,40 @@
-import React from 'react';
-import { ProductsFilter, Footer, Loading, ProductViewHorizontal } from '../Components';
-import { useProducts } from '../hooks';
-import { storeStyles } from '../styles';
-import { Divider, Grid } from '@mui/material';
+import React from "react";
+import {
+  ProductsFilter,
+  Loading,
+  ProductViewHorizontal,
+} from "../Components";
+import { useProducts } from "../hooks";
+import { storeStyles } from "../styles";
+import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
+import { setProducts } from "../store/features/products/productsSlice";
 
 let Store = () => {
+  let { loading, error, products } = useProducts();
 
-    let { loading, error, products } = useProducts();
-    
+  if (loading) return <Loading width={100} height={100} />;
+  if (error) return <h2>error</h2>;
 
-    if (loading) return <Loading width={100} height={100}/>
-    if (error) return <h2>error</h2>
-
-
-    return (
-        <Grid container sx={storeStyles}>
-            <div className='filterButton'>
-                <ProductsFilter />
-            </div>
-            <Grid item className="products">
-                <Grid container width="100vw">
-                    {
-                        products.map((product, i) => { return (
-                            <div key={i}>
-                                <ProductViewHorizontal product={product}/>
-                                <Divider />
-                            </div>
-                        )}) 
-                    }
-                </Grid>
-            </Grid>
-            <Footer/>
+  return (
+    <Grid container sx={storeStyles}>
+      <Grid item container xs={1} ml="auto" mr="1vw" justifyContent="flex-end">
+        <ProductsFilter setProducts={setProducts}/>
+      </Grid>
+      <Grid item xs={12}>
+        <Grid container width="100vw">
+          {products.map((product, i) => {
+            return (
+              <div key={i}>
+                <ProductViewHorizontal product={product} />
+                <Divider />
+              </div>
+            );
+          })}
         </Grid>
-    )
-}
+      </Grid>
+    </Grid>
+  );
+};
 
 export default Store;

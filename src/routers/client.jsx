@@ -1,20 +1,21 @@
-import { useQuery } from '@apollo/client';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
-import { LOGGED_IN } from '../gql';
 import { Store, SingleProduct, SignUp, SignIn, NotFound, Home, EditAccount, Carts } from '../Pages';
 
 let ClientRouter = () => {
 
-    let loggedIn = useQuery(LOGGED_IN).data.loggedIn;
-
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+    console.log(isLoggedIn)
     return (
         <Routes>
             <Route path='/' element={<Home/>} />
-            <Route path='/carts' element={loggedIn ? <Carts /> : <SignIn />} />
-            <Route path='/store' element={<Store />} />
-            <Route path='/products/:id' element={<SingleProduct />} />
-            <Route path='/editAccount' element={loggedIn ? <EditAccount /> : <SignIn />} />
+            <Route path='/carts' element={isLoggedIn ? <Carts /> : <SignIn />} />
+            <Route exact path='/products'>
+                <Route index element={<Store />}/>
+                <Route exact path='/products/:id' element={<SingleProduct />} />
+            </Route>
+            <Route path='/editAccount' element={isLoggedIn ? <EditAccount /> : <SignIn />} />
             <Route path='/signUp' element={<SignUp />} />
             <Route path='/signIn' element={<SignIn />} />
             <Route path='*' element={<NotFound />} />

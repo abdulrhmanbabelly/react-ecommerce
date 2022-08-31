@@ -1,29 +1,30 @@
-import { AlertTitle, Alert as MuiAlert, Box } from "@mui/material";
+import Box from "@mui/material/Box";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import React, { useContext, useEffect } from "react";
 import { AlertContext } from "../../contexts/alertContext";
 
 const styles = {
-  root: {
-    
-  },
+  root: {},
   alert: {
-    marginBottom: '2vw',
-  }
-}
+    marginBottom: "2vw",
+  },
+};
 
 export default function Notification(props) {
-
   const { state, actions } = useContext(AlertContext);
   const handleClose = (alert) => {
     actions.removeAlert(alert);
   };
   return (
-    <Box sx={{
-      position: "fixed",
-      right: '2vw',
-      bottom: '2vw',
-      zIndex: 2000
-    }}>
+    <Box
+      sx={{
+        position: "fixed",
+        right: "2vw",
+        bottom: "2vw",
+        zIndex: 2000,
+      }}
+    >
       {state?.alerts.length > 0 &&
         state.alerts.map((alert, index) => (
           <SnackbarProvider
@@ -47,9 +48,9 @@ function SnackbarProvider({ duration = 1500, alert, handleClose }) {
   }, [alert, duration, handleClose]);
 
   return (
-    <MuiAlert
+    <Alert
       sx={{
-        marginBottom: '1vw',
+        marginBottom: "1vw",
       }}
       onClose={() => handleClose(alert)}
       id={alert.id}
@@ -59,6 +60,6 @@ function SnackbarProvider({ duration = 1500, alert, handleClose }) {
     >
       <AlertTitle>{alert.title}</AlertTitle>
       {alert.text}
-    </MuiAlert>
+    </Alert>
   );
 }
