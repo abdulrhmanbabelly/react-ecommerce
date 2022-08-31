@@ -1,5 +1,6 @@
 let footerStyles = (props) => {
   return {
+    marginTop : "2vw",
     direction: (props) => `${props.palette.ltr ? "ltr" : "rtl"}`,
     width: "100vw",
     borderTop: "1px solid #ccc",
