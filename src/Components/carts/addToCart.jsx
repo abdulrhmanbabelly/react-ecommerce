@@ -66,29 +66,32 @@ let AddToCart = (props) => {
               {carts.map((cart, i) => (
                 <div key={i}>
                   <Cart cart={cart} price={prices[i]} order={i} />
-                  <div key={Math.random() * 100000}>
-                    <form className="addToCartForm">
-                      <FormGroup>
-                        <TextField
-                          type="number"
-                          id={`quantity${cart.id}`}
-                          label="quantity"
-                          variant="filled"
-                          inputProps={{ min: 1 }}
-                          defaultValue={1}
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Button
-                          variant="contained"
-                          onClick={() => {
-                            handleAddToCart(cart, i);
-                          }}
-                        >
-                          Add to cart
-                        </Button>
-                      </FormGroup>
-                    </form>
+                  <div>
+                    {document.getElementById(`cart${i}`)?.style.display !==
+                      "none" && (
+                      <form className="addToCartForm">
+                        <FormGroup>
+                          <TextField
+                            type="number"
+                            id={`quantity${cart.id}`}
+                            label="quantity"
+                            variant="filled"
+                            inputProps={{ min: 1 }}
+                            defaultValue={1}
+                          />
+                        </FormGroup>
+                        <FormGroup>
+                          <Button
+                            variant="contained"
+                            onClick={() => {
+                              handleAddToCart(cart, i);
+                            }}
+                          >
+                            Add to cart
+                          </Button>
+                        </FormGroup>
+                      </form>
+                    )}
                   </div>
                 </div>
               ))}

@@ -14,9 +14,14 @@ export const cartsSlice = createSlice({
     itemMount: (state, { payload: { price, order } }) => {
       state.prices[order] += price;
     },
-    deleteItem: (state, { payload: { order, productOrder, price, product } }) => {
+    deleteItem: (
+      state,
+      { payload: { order, productOrder, price, product } }
+    ) => {
       state.prices[order] -= price;
-      document.getElementById(`product${productOrder}${product.price}`).style.display = "none";
+      document.getElementById(
+        `product${productOrder}${product.price}`
+      ).style.display = "none";
     },
     changeItemsQuantity: (
       state,
@@ -57,7 +62,7 @@ export const {
   init,
   itemMount,
   addItemToCart,
-  addStorageNewCart
+  addStorageNewCart,
 } = cartsSlice.actions;
 
 export default cartsSlice;
