@@ -7,14 +7,14 @@ import { cartsStyles } from "../styles";
 
 let Carts = () => {
   let theme = useTheme();
-  let { carts, prices, loading, error } = useUserCarts(1);
+  let { carts, loading, error } = useUserCarts(1);
   if (loading) return <Loading width={100} height={100} />;
   if (error) return <h2>error</h2>;
 
   return (
     <Box sx={cartsStyles(theme)} width="100vw">
       {carts.map((cart, i) => (
-        <Cart cart={cart} key={i} order={i} price={prices[i]} />
+        <Cart cart={cart} key={i} order={i} price={cart.price} />
       ))}
       <AddNewCart carts={carts} />
     </Box>

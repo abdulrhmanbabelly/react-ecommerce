@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { GET_USER_CART } from "../gql";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { init } from "../store/features/carts/cartsSilce";
 import { useEffect } from "react";
 let useUserCarts = (userId) => {
@@ -15,8 +15,10 @@ let useUserCarts = (userId) => {
   let dispatch = useDispatch();
   useEffect(() => {
     if (!carts[0] && !loading && !error)
-    dispatch(init({ carts: data.carts, prices: data.carts.map((cart) => 0) }));
-  })
+      dispatch(
+        init({ carts: data.carts })
+      );
+  });
 
   return { carts, prices, loading, error };
 };

@@ -4,28 +4,29 @@ export const cartsSlice = createSlice({
   name: "carts",
   initialState: {
     carts: [],
-    prices: [],
   },
   reducers: {
-    init: (state, { payload: { prices, carts } }) => {
-      state.carts = carts;
-      state.prices = prices;
+    init: (state, { payload: { carts } }) => {
+      state.carts = carts.map((cart) => {
+        return {
+          userId: cart.userId,
+          price: 0,
+          products: cart.products,
+          id: cart.id,
+          date: cart.date,
+        };
+      });
     },
     itemMount: (state, { payload: { price, order } }) => {
-      state.prices[order] += price;
+      state.carts[order].price += price;
     },
-    deleteItem: (
-      state,
-      { payload: { order, productOrder, price, product } }
-    ) => {
-      state.prices[order] -= price;
-      document.getElementById(
-        `product${productOrder}${product.price}`
-      ).style.display = "none";
+    deleteItem: (state, { payload: { order, productOrder, price } }) => {
+      state.carts[order].products.splice(productOrder, 1);
+      state.carts[order].price -= price;
     },
     changeItemsQuantity: (
       state,
-      { payload: { order, price, quantity, oneProductPrice, productId } }
+      { payload: { quantity, productId, oneProductPrice, price, order  } }
     ) => {
       let productIndex;
       for (let i = 0; i < state.carts[order].products.length; i++) {
@@ -34,13 +35,12 @@ export const cartsSlice = createSlice({
           break;
         }
       }
-      state.prices[order] -= price;
-      state.prices[order] +=
-        Number(oneProductPrice).toFixed(0) * Number(quantity);
+      state.carts[order].price -= price;
+      state.carts[order].price += quantity * Number(oneProductPrice).toFixed(0);
       state.carts[order].products[productIndex].quantity = quantity;
     },
     deleteStoreCart: (state, { payload: { order } }) => {
-      document.getElementById(`cart${order}`).style.display = "none";
+      document.getElementById(`cart${order}`).remove();
     },
     addItemToCart: (state, { payload: { quantity, productId, order } }) => {
       state.carts[order].products.push({
@@ -49,8 +49,13 @@ export const cartsSlice = createSlice({
       });
     },
     addStorageNewCart: (state, { payload: { cart } }) => {
-      state.carts.push(cart);
-      state.prices.push(0);
+      state.carts.push({
+        userId: cart.userId,
+        price: 0,
+        products: cart.products,
+        id: cart.id,
+        date: cart.date,
+      });
     },
   },
 });

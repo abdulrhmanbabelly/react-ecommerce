@@ -62,7 +62,10 @@ let Modal = (props) => {
                 <IconButton
                   edge="start"
                   color="inherit"
-                  onClick={handleClose}
+                  onClick={() => {
+                    handleClose();
+                    if (closeFunc) closeFunc();
+                  }}
                   aria-label="close"
                 >
                   <Close />

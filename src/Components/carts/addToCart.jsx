@@ -10,16 +10,16 @@ import { AddNewCart, Cart } from "../";
 import { cartsStyles } from "../../styles";
 import { Modal } from "../";
 import { SignIn } from "../../Pages";
-import { useSelector } from "react-redux";
-import { addItemToCart } from "../../store/features/carts/cartsSilce";
+import { useSelector, useDispatch } from "react-redux";
+import { addItemToCart, init } from "../../store/features/carts/cartsSilce";
 
 let AddToCart = (props) => {
   const { productId, productTitle } = props;
   const theme = useTheme();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
+  const dispatch = useDispatch();
   const { updateCart } = useUpdateCart();
-  const { carts, prices, loading, error } = useUserCarts(1);
+  const { carts, loading, error } = useUserCarts(1);
   const { triggerNotification } = useNotification();
 
   if (loading) return <CircularProgress />;
@@ -65,10 +65,9 @@ let AddToCart = (props) => {
             <>
               {carts.map((cart, i) => (
                 <div key={i}>
-                  <Cart cart={cart} price={prices[i]} order={i} />
+                  <Cart cart={cart} price={cart.price} order={i}/>
                   <div>
-                    {document.getElementById(`cart${i}`)?.style.display !==
-                      "none" && (
+                    {document.getElementById(`cart${i}`) && (
                       <form className="addToCartForm">
                         <FormGroup>
                           <TextField
@@ -106,6 +105,9 @@ let AddToCart = (props) => {
       closeButtonContent="close"
       headerContent="add to cart"
       openButtonColor="warning"
+      closeFunc={() => {
+        dispatch(init({ carts: carts, prices: carts.map(() => 0) }));
+      }}
     />
   );
 };

@@ -52,5 +52,5 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
   },
-  plugins: [new webpack.HotModuleReplacementPlugin(), new BundleAnalyzerPlugin(), new CompressionPlugin()]
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 };

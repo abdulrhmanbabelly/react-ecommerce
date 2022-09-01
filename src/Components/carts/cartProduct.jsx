@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCartProduct, useNotification } from "../../hooks";
 import Delete from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
@@ -21,7 +21,7 @@ let CartProduct = (props) => {
   let { cartOrder, productOrder } = props;
   let { product, loading } = useCartProduct(productId);
   let { triggerNotification } = useNotification();
-
+  let [count, setCount] = useState(quantity);
   let price = Number(product.price).toFixed(0) * Number(quantity);
   useEffect(() => {
     if (!loading)
@@ -35,6 +35,7 @@ let CartProduct = (props) => {
   }, [loading]);
 
   let handleChangeCount = (e) => {
+    setCount(e.target.value)
     dispatch(
       changeItemsQuantity({
         quantity: Number(e.target.value),
@@ -61,7 +62,7 @@ let CartProduct = (props) => {
   if (loading) return <Loading width={100} height={10} />;
   return (
     <>
-      <Card className="cartProduct" id={`product${productOrder}${product.price}`}>
+      <Card className="cartProduct">
         <Box>
           <Grid container>
             <Grid item xs={12} sm={2} justifyContent="center" container p={1}>
@@ -84,7 +85,7 @@ let CartProduct = (props) => {
               <Grid item xs={6} sm={2} pr={2} pl={2}>
                 <TextField
                   type="number"
-                  defaultValue={quantity}
+                  value={quantity}
                   onChange={handleChangeCount}
                   variant="standard"
                   inputProps={{ min: 1 }}
