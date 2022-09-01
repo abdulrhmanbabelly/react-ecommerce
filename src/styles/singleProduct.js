@@ -4,9 +4,9 @@ let singleProductStyles = {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "90vh",
         "& img" : {
-            width: "50%"
+            width: "50%",
+            padding : "2vw"
         }
     },
     "& > .MuiGrid-grid-md-6:nth-of-type(2)" : {

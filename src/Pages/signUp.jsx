@@ -224,7 +224,7 @@ let SignUp = () => {
                 justifyContent="center"
                 alignItems="center"
                 width="10vw"
-                sx={{ "& span": { padding: "0 !important" } }}
+                sx={{ "& span": { padding: "0 !important"} }}
               >
                 <Grid
                   item
@@ -242,7 +242,7 @@ let SignUp = () => {
                   xs={12}
                   width="5vw"
                   sx={{
-                    "& > div": { textAlign: "center !important" },
+                    "& div.MuiBox-root": { textAlign: "center !important" },
                   }}
                 >
                   <Box>{label}</Box>
