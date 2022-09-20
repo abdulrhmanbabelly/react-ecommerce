@@ -4,7 +4,10 @@ import Grid from "@mui/material/Grid";
 import Carousel from "nuka-carousel";
 import { categorySliderStyles } from "../../styles";
 import { ProductViewVertical, Loading } from "../";
+import { Navigation, Pagination } from "swiper";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Box } from "@mui/material";
 let CategorySlider = (props) => {
   let { category } = props;
 
@@ -23,13 +26,26 @@ let CategorySlider = (props) => {
 
   return (
     <>
-      <h2 className="text-center p-2">{category}</h2>
-      <Grid className="border" sx={categorySliderStyles}>
-        <Carousel slidesToShow={slidesToShow} autoplay cellSpacing={5}>
+      <Box component="h2" sx={{ color: "#333", marginBottom : "1vw" }}>
+        {category}
+      </Box>
+      <Grid sx={categorySliderStyles}>
+        <Swiper
+          // install Swiper modules
+          modules={[Navigation, Pagination]}
+          spaceBetween={50}
+          slidesPerView={3}
+          navigation
+          pagination={{ clickable: true }}
+          onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log("slide change")}
+        >
           {categoryProducts.map((product, i) => (
-            <ProductViewVertical key={i} product={product} sm={12} md={12} />
+            <SwiperSlide>
+              <ProductViewVertical key={i} product={product} sm={12} md={12} />
+            </SwiperSlide>
           ))}
-        </Carousel>
+        </Swiper>
       </Grid>
     </>
   );

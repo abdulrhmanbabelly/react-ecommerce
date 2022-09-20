@@ -11,6 +11,7 @@ import { AddToCart, CategorySlider, Loading } from "../Components";
 import { useSingleProduct } from "../hooks";
 import { singleProductStyles } from "../styles";
 import { green } from "@mui/material/colors";
+import { Box } from "@mui/material";
 
 let SingleProduct = () => {
   let { id } = useParams();
@@ -30,26 +31,19 @@ let SingleProduct = () => {
         </Grid>
         <Grid item md={6} xs={12}>
           <h2>{product.title}</h2>
-          {product.description}
-          catagory : {product.catagory}
+          <Box component="div" sx={{ color: "#666" }}>
+            {product.description}
+          </Box>
+          <Rating readOnly value={Number(product.rating.rate)} />
           <br />
-          <List>
-            <ListItem>
-              <ListItemText>
-                <Rating readOnly value={Number(product.rating.rate)} />
-              </ListItemText>
-            </ListItem>
-            <Divider />
-            <ListItem>
-              <ListItemText style={{ color: green["700"] }}>
-                ${product.price}
-              </ListItemText>
-            </ListItem>
-            <Divider />
-            <ListItem>
-              <ListItemText>{product.rating.count} left</ListItemText>
-            </ListItem>
-          </List>
+          <Box component="span" sx={{ color: green["700"] }}>
+            {" "}
+            ${product.price}
+          </Box>{" "}
+          <br />
+          <Box component="div" sx={{ color: "#666" }}>
+            {product.rating.count} Left
+          </Box>
           <br />
           <Grid container>
             <Grid item>
@@ -63,7 +57,9 @@ let SingleProduct = () => {
           </Grid>
         </Grid>
       </Grid>
-      <h2>You Might Also Like : </h2>
+      <Box component="h1" width="100vw" sx={{ margin: 2 }}>
+        You Might Also Like :
+      </Box>{" "}
       <Grid container>
         <Grid item p={2} width="100vw" xs={12}>
           <CategorySlider category={product.category} />

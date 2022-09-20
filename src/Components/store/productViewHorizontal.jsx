@@ -6,11 +6,16 @@ import Link from "@mui/material/Link";
 import { green } from "@mui/material/colors";
 
 let ProductViewHorizontal = (props) => {
-  let { image, title, description, price, id } = props.product;
+  let { image, title, price, id } = props.product;
   let { rate, count } = props.product.rating;
 
   return (
-    <Grid item xs={12} width="100vw" className="product">
+    <Grid
+      item
+      xs={12}
+      width="100vw"
+      className="product"
+    >
       <Grid container spacing={1}>
         <Grid item md={3} xs={12} className="image">
           <img src={image} />
@@ -31,9 +36,6 @@ let ProductViewHorizontal = (props) => {
                 {title}
               </Link>
             </h2>
-            <Typography paragraph pr={2} mb={0}>
-              {description}
-            </Typography>
             <Typography variant="body2" color="text.secondary">
               <Rating name="read-only" value={rate} readOnly />
               <br />

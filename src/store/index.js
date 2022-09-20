@@ -20,6 +20,5 @@ let store = configureStore({
     adminProducts: adminProductsSlice.reducer,
   },
 });
-store.subscribe(() => console.log(store.getState()));
 
 export default store;

@@ -2,9 +2,18 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import React from "react";
 import Grid from "@mui/material/Grid";
 import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import {
+  createTheme,
+  ThemeProvider,
+  experimental_sx as sx,
+} from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { NavigationBar, AdminNavigationBar, Notification, Footer } from "./Components";
+import {
+  NavigationBar,
+  AdminNavigationBar,
+  Notification,
+  Footer,
+} from "./Components";
 import { AdminRouter, ClientRouter } from "./routers";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo } from "react";
@@ -21,10 +30,37 @@ let App = () => {
   useEffect(() => {
     dispatch(setLeftToRight({ ltr: i18n.language === "ar" ? false : true }));
   });
+
+  let colors = {
+    pink: "#D61C4E",
+    purple: "#D61C4E",
+    blue: "#1CD6CE",
+    grey: "#293462",
+  };
   let theme = createTheme({
     palette: {
       mode: darkMode ? "dark" : "light",
       ltr: ltr,
+      colors: colors,
+    },
+    components: {
+      MuiAppBar: {
+        styleOverrides: {
+          root: sx({
+            backgroundImage: (props) =>
+              `linear-gradient(-90deg, ${props.palette.colors.blue}, ${props.palette.colors.grey}) !important`,
+            color: "#fff",
+            zIndex: 10000,
+          }),
+        },
+      },
+      MuiCard: {
+        styleOverrides: {
+          root: sx({
+            boxShadow: ".1vw .1vw 1vw .1vw #ccc",
+          }),
+        },
+      },
     },
   });
 
@@ -38,20 +74,20 @@ let App = () => {
       {location.pathname.indexOf("adminDashboard") === -1
         ? clientNavbar
         : adminNavbar}
-      <Grid container sx={adminDashboardStyles}>
+      <Grid container>
         <Routes>
           {location.pathname.indexOf("adminDashboard") > -1 && (
             <Route
               path="/adminDashboard/*"
               element={
-                <Box style={{ padding: "1vw" }}>
+                <Box style={{ padding: "1vw" }} sx={adminDashboardStyles}>
                   <AdminRouter />
                 </Box>
               }
             />
           )}
           <Route
-            path="/*"
+            path="*"
             element={
               <>
                 <ClientRouter />
