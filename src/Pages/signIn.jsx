@@ -57,7 +57,11 @@ let SignIn = () => {
   });
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{ height: "90vh", display: "flex", alignItems: "center" }}
+    >
       <Box
         sx={() => {
           return {
@@ -131,11 +135,11 @@ let SignIn = () => {
             </Grid>
           </Grid>
         </Box>
+        <Typography variant="body2" color="text.secondary" align="center">
+          {t("signInPage.copyright")}
+          {new Date().getFullYear()}.
+        </Typography>
       </Box>
-      <Typography variant="body2" color="text.secondary" align="center">
-        {t("signInPage.copyright")}
-        {new Date().getFullYear()}.
-      </Typography>
     </Container>
   );
 };

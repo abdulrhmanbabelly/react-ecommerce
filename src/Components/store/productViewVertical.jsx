@@ -16,7 +16,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import Share from "@mui/icons-material/Share";
 import Favorite from "@mui/icons-material/Favorite";
 import { red, green } from "@mui/material/colors";
-import { Box, Divider, Link } from "@mui/material";
+import { Box, Button, Divider, Link } from "@mui/material";
 
 const ExpandMoreButton = styled((props) => {
   const { expand, ...other } = props;
@@ -36,34 +36,68 @@ let ProductViewVertical = (props) => {
     setExpanded(!expanded);
   };
 
-  let { image, title, price, id } = props.product;
-  let { rate, count } = props.product.rating;
+  let { image, title, price, description, id } = props.product;
+  let { rate } = props.product.rating;
 
   return (
-    <Box>
-      <Grid container spacing={2}>
-        <Grid item md={6}>
-          <Box
-            component="img"
-            style={{ width: "100%", margin: "auto", display: "block" }}
-            src={image}
-          />
-        </Grid>
-        <Grid item md={6}>
-          <Box>
-            <Typography variant="body2" color="text.secondary">
-              <Link href={`/products/${id}`}>{title.substring(0, 300)}...</Link>
-              <br />
-              <Rating readOnly value={rate} />
-              <br />
-              <span style={{ color: green["700"] }}>{price}$</span>
-              <br />
-              {count}
-            </Typography>
-          </Box>
-        </Grid>
+    <Grid
+      sx={{
+        boxShadow: "0px 14px 32px 0px rgba(0, 0, 0, 0.15)",
+        width: `${props.width}vw`,
+        margin: "1vw auto",
+      }}
+      container
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Grid item container alignItems="center" xs={12} md={6}>
+        <img
+          src={image}
+          style={{
+            width: "50%",
+            display: "block",
+            margin: "auto",
+          }}
+        />
       </Grid>
-    </Box>
+      <Grid item xs={11} md={5}>
+        {" "}
+        <div className="product-info">
+          <div className="product-text">
+            <h1>
+              <Link href={`/products/${id}`}>{title}</Link>
+            </h1>
+            <h2>
+              rating : <Rating value={rate} readOnly size="small" />
+            </h2>
+            <p>{description}</p>
+          </div>
+          <Grid
+            container
+            justifyContent="space-between"
+            className="product-price-btn"
+            sx={{ paddingLeft: "2vw" }}
+          >
+            <Grid item>
+              <p>
+                <span style={{ fontSize: "34px" }}>{price}</span>$
+              </p>
+            </Grid>
+            <Grid item>
+              <Button
+                type="button"
+                sx={{
+                  backgroundImage: (theme) =>
+                    `linear-gradient(-90deg, ${theme.palette.colors.blue}, ${theme.palette.colors.grey}) !important`,
+                }}
+              >
+                buy now
+              </Button>
+            </Grid>
+          </Grid>
+        </div>
+      </Grid>
+    </Grid>
   );
 };
 

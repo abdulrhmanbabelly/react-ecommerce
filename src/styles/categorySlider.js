@@ -1,10 +1,9 @@
 let categorySliderStyles = {
-  "& .product > div": {
-    margin: "auto",
-    "& img": {
-      width: "50% !important",
-      margin: "auto",
-    },
+  padding: "2vw",
+  "& .swiper" :{ overflow : "visible"},
+  "& .swiper-wrapper": {
+    display: "flex",
+    alignItems: "center",
   },
 };
 

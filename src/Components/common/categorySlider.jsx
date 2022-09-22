@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { useCategoryProducts } from "../../hooks";
 import Grid from "@mui/material/Grid";
-import Carousel from "nuka-carousel";
 import { categorySliderStyles } from "../../styles";
-import { ProductViewVertical, Loading } from "../";
-import { Navigation, Pagination } from "swiper";
+import { ProductViewHorizontal, Loading } from "../";
+import { Pagination } from "swiper";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box } from "@mui/material";
 let CategorySlider = (props) => {
-  let { category } = props;
+  let { category, width } = props;
 
   let { loading, categoryProducts, error } = useCategoryProducts(category);
   let [slidesToShow, setSlidesToShow] = useState(
@@ -26,27 +25,26 @@ let CategorySlider = (props) => {
 
   return (
     <>
-      <Box component="h2" sx={{ color: "#333", marginBottom : "1vw" }}>
-        {category}
+      <Box component="h2" sx={{ color: "#333", marginBottom: "1vw" }}>
+        {category} :
       </Box>
-      <Grid sx={categorySliderStyles}>
+      <Box sx={categorySliderStyles}>
         <Swiper
-          // install Swiper modules
-          modules={[Navigation, Pagination]}
+          style={{ height: "100%" }}
+          modules={[Pagination]}
           spaceBetween={50}
           slidesPerView={3}
-          navigation
           pagination={{ clickable: true }}
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log("slide change")}
         >
           {categoryProducts.map((product, i) => (
             <SwiperSlide>
-              <ProductViewVertical key={i} product={product} sm={12} md={12} />
+              <ProductViewHorizontal key={i} product={product} width={30} />
             </SwiperSlide>
           ))}
         </Swiper>
-      </Grid>
+      </Box>
     </>
   );
 };

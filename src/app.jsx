@@ -44,6 +44,11 @@ let App = () => {
       colors: colors,
     },
     components: {
+      MuiButtonBase: {
+        styleOverrides: {
+          root: sx((theme) => ({})),
+        },
+      },
       MuiAppBar: {
         styleOverrides: {
           root: sx({
@@ -57,7 +62,10 @@ let App = () => {
       MuiCard: {
         styleOverrides: {
           root: sx({
-            boxShadow: ".1vw .1vw 1vw .1vw #ccc",
+            boxShadow: (props) =>
+              props.palette.mode === "light"
+                ? ".1vw .1vw 1vw .1vw #ccc"
+                : ".1vw .1vw 1vw .1vw #000",
           }),
         },
       },

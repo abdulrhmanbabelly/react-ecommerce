@@ -156,14 +156,14 @@ let Footer = () => {
         justifyContent="center"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
-        <Grid item xs={1}>
+        <Grid item md={1} xs={12}>
           Home
         </Grid>
-        <Grid item xs={1}>
+        <Grid item md={1} xs={12}>
           Ecommerce
         </Grid>
-        <Grid item xs={6}></Grid>
-        <Grid item xs={4}>
+        <Grid item md={6} xs={12}></Grid>
+        <Grid item md={4} xs={12}>
           {t("footer.copyright")}
         </Grid>
       </Grid>

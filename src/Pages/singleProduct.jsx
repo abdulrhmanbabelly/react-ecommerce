@@ -30,8 +30,8 @@ let SingleProduct = () => {
           <img src={product.image} />
         </Grid>
         <Grid item md={6} xs={12}>
-          <h2>{product.title}</h2>
-          <Box component="div" sx={{ color: "#666" }}>
+          <h2 style={{ fontSize: "34px" }}>{product.title}</h2>
+          <Box component="div" sx={{ color: "#666", padding : "1vw 0" }}>
             {product.description}
           </Box>
           <Rating readOnly value={Number(product.rating.rate)} />

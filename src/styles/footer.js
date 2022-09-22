@@ -1,4 +1,4 @@
-let footerStyles = (props) => {
+let footerStyles = (theme) => {
   return {
     position: "relative",
     marginTop: "5vw",
@@ -16,7 +16,9 @@ let footerStyles = (props) => {
     "& a": {
       textDecoration: "none",
       color: "inherit !important",
-      fontSize: "1.2vw",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "1.2vw",
+      },
     },
     "& li": {
       textAlign: "center",

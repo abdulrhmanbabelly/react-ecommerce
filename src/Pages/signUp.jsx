@@ -132,6 +132,9 @@ let SignUp = () => {
             textAlign: (props) =>
               `${props.palette.ltr ? "left !important" : "right !important"}`,
           },  
+          height : "115vh",
+          display : "flex",
+          alignItems : "center"
         }}
       >
         <Box

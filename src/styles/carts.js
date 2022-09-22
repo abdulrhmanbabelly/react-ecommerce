@@ -29,7 +29,7 @@ let cartsStyles = (props) => {
           border: ".1px solid #fff !important",
         },
         background: (props) =>
-          `${props.palette.mode === "light" ? "#1976d2" : "#121212"}`,
+          props.palette.colors.grey,
         "& .checkoutButton": {
           width: "100% !important",
           display: "flex",

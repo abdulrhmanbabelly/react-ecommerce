@@ -49,20 +49,17 @@ let Header = () => (
       <Box component="h4" sx={{ fontWeight: 100 }}>
         You Can Buy whatever you want here!
       </Box>
-      <Box component="h1" sx={{ fontSize: "5vw", fontWeight: 100 }}>
+      <Box component="h1" sx={{ fontWeight: 800 }}>
         Get up to 30% off New Arrivals
       </Box>
       <Button
         variant="contained"
-        sx={(theme) => {
+        sx={() => {
           return {
             background: (theme) => theme.palette.colors.pink,
             color: "#fff",
             fontWeight: 300,
-            width: "20%",
-            [theme.breakpoints.down("md")]: {
-              width: "150px",
-            },
+            width: "30%",
           };
         }}
       >
@@ -156,51 +153,145 @@ let Services = () => (
   <Grid
     item
     xs={12}
-    p={2}
-    width="100vw"
-    sx={{ background: (theme) => theme.palette.colors.grey, color: "#fff" }}
+    sx={{
+      backgroundSize: "cover",
+      backgroundPosition: "center center",
+      backgroundImage: (props) =>
+        `linear-gradient(-90deg, ${props.palette.colors.blue}, ${props.palette.colors.grey}) !important`,
+      h1: {
+        textAlign: "center",
+        margin: 2,
+        color : "#fff"
+      },
+      ".wrapper": {
+        ".single-service": {
+          position: "relative",
+          background: "#fff",
+          transition: ".5s",
+          overflow: "hidden",
+          textAlign: "center",
+          "& p": {
+            color: "#444",
+            fontSize: "14px !important",
+            padding: "1vw",
+            marginTop: "0.5vw !important",
+            marginBottom: "3vh",
+          },
+          "& h3": {
+            fontSize: "25px",
+            textTransform: "uppercase",
+            letterSpacing: "1px",
+            color: "#262626",
+          },
+          ".social": {
+            width: "60px",
+            height: "60px",
+            background: "#262626",
+            borderRadius: "50%",
+            margin: "5% auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+          span: {
+            position: "absolute",
+            top: 0,
+            left: "-150%",
+            width: "100%",
+            height: "100%",
+            background: "rgba(0,0,0,0.7)",
+            transition: ".7s",
+            transform: "skewX(10deg)",
+          },
+          "&:hover span": {
+            left: "150%",
+          },
+        },
+        ".line": {
+          width: "150px",
+          height: "3px",
+          background: "#fff",
+          margin: "0 auto 60px",
+        },
+      },
+    }}
+    p={3}
+    pt={0}
   >
-    <Box component="h1" textAlign="center">
-      Services
-    </Box>
-    <Grid container>
-      <Grid item xs={12} sm={6} md={3} p={2} textAlign="center">
-        <CurrencyExchange sx={{ width: "10vw", height: "10vw" }} />
-        <br />
-        <Typography>Currncey Income</Typography>
-        <Typography>1252</Typography>
+    <h1>Our Services</h1>
+    <Grid container className="wrapper" spacing={3}>
+      <Grid item xs={12} md={4}>
+        <Box className="single-service">
+          {" "}
+          <Box className="social">
+            <CurrencyExchange
+              sx={{ width: "30px", height: "30px", color: "#fff" }}
+            />
+          </Box>
+          <span></span>
+          <Box component="h3">Currncey Income</Box>
+          <Typography component="p">
+            Aliquip tempor nulla cupidatat tempor et laborum dolore cupidatat
+            dolor. Aliqua incididunt ad fugiat laborum irure sit dolore cillum
+            laboris anim enim sunt. Labore eu fugiat id sint officia enim eu
+            duis fugiat id voluptate veniam.
+          </Typography>
+        </Box>
       </Grid>
-      <Grid item xs={12} sm={6} md={3} p={2} textAlign="center">
-        <AccountBalance sx={{ width: "10vw", height: "10vw" }} />
-        <br />
-        <Typography>Bank Accounts</Typography>
-        <Typography>241,23</Typography>
+      <Grid item xs={12} md={4}>
+        <Box className="single-service">
+          {" "}
+          <Box className="social">
+            <Map sx={{ width: "30px", height: "30px", color: "#fff" }} />
+          </Box>
+          <span></span>
+          <Box component="h3">Free shipping</Box>
+          <Typography component="p">
+            Aliquip tempor nulla cupidatat tempor et laborum dolore cupidatat
+            dolor. Aliqua incididunt ad fugiat laborum irure sit dolore cillum
+            laboris anim enim sunt. Labore eu fugiat id sint officia enim eu
+            duis fugiat id voluptate veniam.
+          </Typography>
+        </Box>
       </Grid>
-      <Grid item xs={12} sm={6} md={3} p={2} textAlign="center">
-        <Map sx={{ width: "10vw", height: "10vw" }} />
-        <br />
-        <Typography>Maps</Typography>
-        <Typography>2321,12</Typography>
-      </Grid>
-      <Grid item xs={12} sm={6} md={3} p={2} textAlign="center">
-        <People sx={{ width: "10vw", height: "10vw" }} />
-        <br />
-        <Typography>Subscribers</Typography>
-        <Typography>99,512</Typography>
+      <Grid item xs={12} md={4}>
+        <Box className="single-service">
+          {" "}
+          <Box className="social">
+            <People sx={{ width: "30px", height: "30px", color: "#fff" }} />
+          </Box>
+          <span></span>
+          <Box component="h3">People</Box>
+          <Typography component="p">
+            Aliquip tempor nulla cupidatat tempor et laborum dolore cupidatat
+            dolor. Aliqua incididunt ad fugiat laborum irure sit dolore cillum
+            laboris anim enim sunt. Labore eu fugiat id sint officia enim eu
+            duis fugiat id voluptate veniam.
+          </Typography>
+        </Box>
       </Grid>
     </Grid>
   </Grid>
 );
 let Plans = () => (
-  <>
-    <Box component="h1" textAlign="center" width="100vw" sx={{ margin: 2 }}>
-      Choose Your Plan
-    </Box>
+  <Box
+    sx={{
+      h1: {
+        textAlign: "center",
+        margin: 2,
+      },
+    }}
+    width="100vw"
+    p={3}
+    pt={0}
+  >
+    <Box component="h1">Choose Your Plan</Box>
     <Grid
       container
-      spacing={5}
+      spacing={3}
       justifyContent="space-around"
-      padding="1vw"
+      p={1}
+      pt={0}
       sx={{
         ".MuiCardHeader-title": {
           textAlign: "center",
@@ -439,7 +530,7 @@ let Plans = () => (
         </Card>
       </Grid>
     </Grid>
-  </>
+  </Box>
 );
 
 let Home = () => {
