@@ -1,11 +1,12 @@
 import Button from "@mui/material/Button";
 import React from "react";
-import { useAddNewCart, useNotification } from "../../hooks";
+import { useAddNewCart } from "../../hooks";
 import { useDispatch } from "react-redux";
 import { addStorageNewCart } from "../../store/features/carts/cartsSilce";
+import { IconButton } from "@mui/material";
+import { Add } from "@mui/icons-material";
 let AddNewCart = () => {
   let { addNewCart } = useAddNewCart();
-  let { triggerNotification } = useNotification();
   let dispatch = useDispatch();
   let handleAddNewCart = () => {
     let date = new Date();
@@ -26,7 +27,6 @@ let AddNewCart = () => {
       .then((data) => {
         let id = data.data.cart.id;
         if (!data.errors) {
-          console.log(data.data.cart);
           dispatch(
             addStorageNewCart({
               cart: {
@@ -37,19 +37,24 @@ let AddNewCart = () => {
               },
             })
           );
-          triggerNotification(`added cart ${id}`, "success");
-        } else triggerNotification(`failed to add cart ${id}`, "error");
+          swal({ title: `added cart ${id}`, icon: "success" });
+        } else swal({ title: `failed to add cart ${id}`, icon: "error" });
       })
       .catch((err) => {
-        triggerNotification(`failed to add cart ${id}`, "error");
+        swal({ title: `failed to add cart ${id}`, icon: "error" });
       });
   };
 
   return (
     <>
-      <Button color="success" variant="contained" onClick={handleAddNewCart}>
-        New cart
-      </Button>
+      <IconButton
+        color="success"
+        sx={{ margin: "2vw auto", display: "block" }}
+        onClick={handleAddNewCart}
+        size="large"
+      >
+        <Add />
+      </IconButton>
     </>
   );
 };

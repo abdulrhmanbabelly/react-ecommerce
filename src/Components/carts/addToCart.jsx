@@ -5,13 +5,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 import React from "react";
-import { useNotification, useUpdateCart, useUserCarts } from "../../hooks";
+import { useUpdateCart, useUserCarts } from "../../hooks";
 import { AddNewCart, Cart } from "../";
 import { cartsStyles } from "../../styles";
 import { Modal } from "../";
 import { SignIn } from "../../Pages";
 import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart, init } from "../../store/features/carts/cartsSilce";
+import swal from "sweetalert";
 
 let AddToCart = (props) => {
   const { productId, productTitle } = props;
@@ -20,7 +21,6 @@ let AddToCart = (props) => {
   const dispatch = useDispatch();
   const { updateCart } = useUpdateCart();
   const { carts, loading, error } = useUserCarts(1);
-  const { triggerNotification } = useNotification();
 
   if (loading) return <CircularProgress />;
   if (error) return <h2>error</h2>;
@@ -30,18 +30,18 @@ let AddToCart = (props) => {
     for (let i = 0; i < cart.products.length; i++) {
       if (cart.products[i].productId == productId) {
         found = true;
-        triggerNotification("this product is already in your cart", "error");
+        swal({ title: "this product is already in your cart", icon: "error" });
         break;
       }
     }
     if (!found) {
       updateCart({
         variables: {
+          id: cart.id,
           input: {
             cart: cart,
           },
         },
-        id: cart.id,
       }).then((data) => {
         dispatch(
           addItemToCart({
@@ -52,7 +52,7 @@ let AddToCart = (props) => {
             order: order,
           })
         );
-        triggerNotification(`added prodcut ${productTitle}`);
+        swal({ title: "added product", icon: "success" });
       });
     }
   };
@@ -65,7 +65,7 @@ let AddToCart = (props) => {
             <>
               {carts.map((cart, i) => (
                 <div key={i}>
-                  <Cart cart={cart} price={cart.price} order={i}/>
+                  <Cart cart={cart} price={cart.price} order={i} />
                   <div>
                     {document.getElementById(`cart${i}`) && (
                       <form className="addToCartForm">

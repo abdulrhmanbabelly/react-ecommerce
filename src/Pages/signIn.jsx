@@ -15,7 +15,6 @@ import { SIGN_IN } from "../gql";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
-import { rtlTextFiled } from "../styles";
 import { useDispatch } from "react-redux";
 import { login } from "../store/features/auth/authSlice";
 
@@ -87,7 +86,6 @@ let SignIn = () => {
             label={t("signInPage.username")}
             name="username"
             autoFocus
-            sx={rtlTextFiled}
             defaultValue={formik.values.username}
             onChange={formik.handleChange}
             error={formik.touched.username && Boolean(formik.errors.username)}
@@ -100,7 +98,6 @@ let SignIn = () => {
             name="password"
             label={t("signInPage.password")}
             type="password"
-            sx={rtlTextFiled}
             defaultValue={formik.values.password}
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}

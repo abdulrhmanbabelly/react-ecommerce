@@ -8,16 +8,11 @@ import {
   experimental_sx as sx,
 } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import {
-  NavigationBar,
-  AdminNavigationBar,
-  Notification,
-  Footer,
-} from "./Components";
+import { NavigationBar, AdminNavigationBar, Footer } from "./Components";
 import { AdminRouter, ClientRouter } from "./routers";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo } from "react";
-import { adminDashboardStyles } from "./styles";
+import { adminDashboardStyles, rtlTextFiled } from "./styles";
 import { useEffect } from "react";
 import { setLeftToRight } from "./store/features/leftToRight/leftToRight";
 import { useTranslation } from "react-i18next";
@@ -60,6 +55,11 @@ let App = () => {
             color: "#fff",
             zIndex: 10000,
           }),
+        },
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: sx(rtlTextFiled),
         },
       },
       MuiCard: {
@@ -114,7 +114,6 @@ let App = () => {
             }
           />
         </Routes>
-        <Notification />
       </Grid>
     </ThemeProvider>
   );

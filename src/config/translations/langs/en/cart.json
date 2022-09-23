@@ -1,0 +1,18 @@
+{
+  "date": "Date",
+  "productPage" : "Product Page",
+  "details": "Card details",
+  "type": "Card type",
+  "name": "Cardholder's Name",
+  "namePlaceholder": "Enter Cardholder's Name",
+  "number": "Card Number",
+  "numberPlaceholder": "Enter Card Number",
+  "cvv": "Cvv",
+  "cvvPlaceholder": "Enter password",
+  "expiration": "Expiration",
+  "subtotal": "Subtotal",
+  "shipping": "Shipping",
+  "total": "Total(Incl. taxes)",
+  "checkout": "checkout",
+  "save": "save changes"
+}

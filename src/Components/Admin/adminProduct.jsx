@@ -4,17 +4,18 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import { blue, green, red, yellow } from "@mui/material/colors";
 import React from "react";
-import { UpdateProduct } from "../";
-import { useDeleteProduct, useNotification } from "../../hooks";
-import { useDispatch } from 'react-redux';
+import { UpdateProduct } from "..";
+import { useDeleteProduct } from "../../hooks";
+import { useDispatch } from "react-redux";
 import { deleteStorageProduct } from "../../store/features/admin/productsSlice";
+import swal from "sweetalert";
+
 let AdminProduct = (props) => {
   let { title, price, id, category, rating } = props.product;
   let { rate, count } = rating;
   let { categories, order } = props;
   let { deleteProduct } = useDeleteProduct();
   let dispatch = useDispatch();
-  const { triggerNotification } = useNotification();
 
   let handleDeleteProduct = () => {
     deleteProduct({
@@ -24,13 +25,13 @@ let AdminProduct = (props) => {
     })
       .then((data) => {
         if (!data.errors) {
-          dispatch(deleteStorageProduct({ order : order }))
-          triggerNotification(`deleted product ${title}`, "success");
-        }
-        else triggerNotification(`failed to delete product ${title}`, "error");
+          dispatch(deleteStorageProduct({ order: order }));
+          swal({ title: `deleted product ${title}`, icon: "success" });
+        } else
+          swal({ title: `failed to delete product ${title}`, icon: "error" });
       })
       .catch((err) => {
-        triggerNotification(`failed to delete product ${title}`, "error");
+        swal({ title: `failed to delete product ${title}`, icon: "error" });
       });
   };
 
@@ -53,7 +54,11 @@ let AdminProduct = (props) => {
               delete
             </Button>
           </Box>
-          <UpdateProduct product={props.product} categories={categories} order={order} />
+          <UpdateProduct
+            product={props.product}
+            categories={categories}
+            order={order}
+          />
         </TableCell>
       </TableRow>
     </>

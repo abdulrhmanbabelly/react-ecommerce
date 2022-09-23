@@ -7,11 +7,12 @@ import Select from "@mui/material/Select";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
-import { useNotification, useUpdateProduct } from "../../hooks";
-import { Modal } from "../";
+import { useUpdateProduct } from "../../hooks";
+import { Modal } from "..";
 import { filtersStyles } from "../../styles";
 import { useDispatch } from "react-redux";
 import { updateStorageProduct } from "../../store/features/admin/productsSlice";
+import swal from "sweetalert";
 
 let UpdateProduct = (props) => {
   let { title, description, id, rating } = props.product;
@@ -20,10 +21,7 @@ let UpdateProduct = (props) => {
   let [category, setCategory] = useState(props.product.category);
   let [price, setPrice] = useState(props.product.price);
   let { updateProduct } = useUpdateProduct();
-  let { triggerNotification } = useNotification(
-    `updated product ${title}`,
-    "info"
-  );
+
 
   let handleUpdate = async () => {
     let newTitle = document.getElementById("title").value;
@@ -53,13 +51,12 @@ let UpdateProduct = (props) => {
               },
             })
           );
-          triggerNotification(`updated product ${title}`, "success");
+          swal({ title: `updated product ${title}`, icon: "success" });
         } else
-          triggerNotification(`failed to update product ${title}`, "error");
+          swal({ title: `failed to update product ${title}`, icon: "error" });
       })
       .catch((err) => {
-        console.log(err);
-        triggerNotification(`failed to update product ${title}`, "error");
+        swal({ title: `failed to update product ${title}`, icon: "error" });
       });
   };
 

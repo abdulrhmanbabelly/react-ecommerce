@@ -8,17 +8,18 @@ import Select from "@mui/material/Select";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
-import { useAddProduct, useNotification } from "../../hooks";
-import { Modal } from "../";
+import { useAddProduct } from "../../hooks";
+import { Modal } from "..";
 import { filtersStyles } from "../../styles";
 import { useDispatch } from "react-redux";
 import { addStorageProduct } from "../../store/features/admin/productsSlice";
+import swal from "sweetalert";
+
 let AddProduct = (props) => {
   let { categories } = props;
   let [category, setCategory] = useState("");
   let [price, setPrice] = useState(0);
   let { addProduct } = useAddProduct();
-  const { triggerNotification } = useNotification();
   let dispatch = useDispatch();
 
   let handleAddProduct = () => {
@@ -37,7 +38,7 @@ let AddProduct = (props) => {
     })
       .then((data) => {
         if (!data.errors) {
-          triggerNotification(`added product ${title}`, "success");
+          swal({ title: `added product ${title}`, icon: "success" });
           dispatch(
             addStorageProduct({
               product: {
@@ -54,10 +55,10 @@ let AddProduct = (props) => {
               },
             })
           );
-        } else triggerNotification(`failed to add product ${title}`, "error");
+        } else swal({ title: `failed to add product ${title}`, icon: "error" });
       })
       .catch((err) => {
-        triggerNotification(`failed to add product ${title}`, "error");
+        swal({ title: `failed to add product ${title}`, icon: "error" });
       });
   };
 

@@ -9,23 +9,11 @@ import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import StepConnector from "@mui/material/StepConnector";
-import Stack from "@mui/material/Stack";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Stepper from "@mui/material/Stepper";
-import { stepConnectorClasses } from "@mui/material/StepConnector";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { ADD_USER } from "../gql";
 import { useMutation } from "@apollo/client";
-import Person from "@mui/icons-material/Person";
-import LocationOn from "@mui/icons-material/LocationOn";
-import Email from "@mui/icons-material/Email";
-import styled from "@emotion/styled";
-import PropTypes from "prop-types";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { rtlTextFiled } from "../styles";
 import { useTranslation } from "react-i18next";
 
 let SignUp = () => {
@@ -155,7 +143,6 @@ let SignUp = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  sx={rtlTextFiled}
                   autoComplete="given-name"
                   name="firstname"
                   required
@@ -174,7 +161,6 @@ let SignUp = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   fullWidth
                   label={t("signUpPage.lastname")}
@@ -190,7 +176,6 @@ let SignUp = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   fullWidth
                   id="email"
@@ -224,7 +209,6 @@ let SignUp = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   fullWidth
                   id="city"
@@ -239,7 +223,6 @@ let SignUp = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   fullWidth
                   name="street"
@@ -252,7 +235,6 @@ let SignUp = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   type="number"
                   fullWidth
@@ -267,7 +249,6 @@ let SignUp = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   type="number"
                   fullWidth
@@ -281,7 +262,6 @@ let SignUp = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   fullWidth
                   type="number"
@@ -295,7 +275,6 @@ let SignUp = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   fullWidth
                   label={t("signUpPage.zipcode")}
@@ -310,7 +289,6 @@ let SignUp = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   fullWidth
                   type="number"
@@ -354,7 +332,6 @@ let SignUp = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   fullWidth
                   name="username"
@@ -369,7 +346,6 @@ let SignUp = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  sx={rtlTextFiled}
                   required
                   fullWidth
                   name="password"

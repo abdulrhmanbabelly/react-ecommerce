@@ -14,17 +14,20 @@ import Grid from "@mui/material/Grid";
 import FormGroup from "@mui/material/FormGroup";
 import Typography from "@mui/material/Typography";
 import { CartProduct } from "..";
-import { useDeleteCart, useNotification, useUpdateCart } from "../../hooks";
+import { useDeleteCart, useUpdateCart } from "../../hooks";
 import { useDispatch } from "react-redux";
 import { deleteStoreCart } from "../../store/features/carts/cartsSilce";
+import swal from "sweetalert";
+import { useTranslation } from "react-i18next";
+import { ArrowLeft } from "@mui/icons-material";
 
 let Cart = (props) => {
   let { cart, order, price } = props;
   let { products, date, id } = cart;
   let { deleteCart } = useDeleteCart(id);
   let { updateCart } = useUpdateCart();
-  let { triggerNotification } = useNotification();
   let dispatch = useDispatch();
+  let { t, i18n } = useTranslation();
   let handleDelete = () => {
     deleteCart({
       variables: {
@@ -34,11 +37,11 @@ let Cart = (props) => {
       .then((data) => {
         if (!data.errors) {
           dispatch(deleteStoreCart({ order: order }));
-          triggerNotification(`deleted cart ${id}`, "success");
-        } else triggerNotification(`failed to delete cart ${id}`, "error");
+          swal("deleted cart", `cart number ${id}`, "success");
+        } else swal("failed to delete cart,"`cart number ${id}`, "error");
       })
       .catch((err) => {
-        triggerNotification(`failed to delete cart ${id}`, "error");
+        swal("failed to delete cart", `cart number ${id}`, "error");
       });
   };
 
@@ -50,11 +53,11 @@ let Cart = (props) => {
       },
     })
       .then((data) => {
-        if (!data.errors) triggerNotification(`updated cart ${id}`, "success");
-        else triggerNotification(`failed to update cart ${id}`, "error");
+        if (!data.errors) swal("updated cart", `cart number ${id}`, "success");
+        else swal("failed to update cart", `cart number ${id}`, "error");
       })
       .catch((err) => {
-        triggerNotification(`failed to update cart ${id}`, "error");
+        swal("failed to update cart", `cart number ${id}`, "error");
       });
   };
   return (
@@ -63,7 +66,9 @@ let Cart = (props) => {
         <Box>
           <Grid container justifyContent="space-between">
             <Grid item>
-              <h4>Date : {date.substring(0, 10)}</h4>
+              <h4>
+                {t("cart.date")} : {date.substring(0, 10)}
+              </h4>
             </Grid>
             <Grid item>
               <IconButton onClick={handleDelete}>
@@ -89,17 +94,16 @@ let Cart = (props) => {
               <Card className="paycard">
                 <Box p={1} overflow="hidden">
                   <Grid container justifyContent="space-between" mb={4}>
-                    <h2 className="mb-0">Card details</h2>
+                    <h2 className="mb-0">{t("cart.details")}</h2>
                     <img
                       src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                      className="img-fluid rounded-3"
                       style={{ width: "45px" }}
                       alt="Avatar"
                     />
                   </Grid>
 
                   <Typography paragraph mb={2}>
-                    Card type
+                    {t("cart.type")}{" "}
                   </Typography>
                   <CreditCard />
                   <Facebook />
@@ -110,17 +114,17 @@ let Cart = (props) => {
                     <FormGroup>
                       <TextField
                         type="text"
-                        placeholder="Enter Cardholder's Name"
+                        placeholder={t("cart.namePlaceholder")}
                         variant="outlined"
-                        label="Cardholder's Name"
+                        label={t("cart.name")}
                       />
                     </FormGroup>
                     <FormGroup>
                       <TextField
                         type="text"
-                        placeholder="1234 5678 9012 3457"
+                        placeholder={t("cart.numberPlaceholder")}
                         variant="outlined"
-                        label="Card Number"
+                        label={t("cart.number")}
                       />
                     </FormGroup>
                     <FormGroup>
@@ -131,7 +135,7 @@ let Cart = (props) => {
                               type="text"
                               placeholder="MM/YYYY"
                               variant="outlined"
-                              label="Expiration"
+                              label={t("cart.expiration")}
                             />
                           </FormGroup>
                         </Grid>
@@ -139,9 +143,9 @@ let Cart = (props) => {
                           <FormGroup>
                             <TextField
                               type="password"
-                              placeholder="Enter Password"
+                              placeholder={t("cart.cvvPlaceholder")}
                               variant="outlined"
-                              label="Cvv"
+                              label={t("cart.cvv")}
                             />
                           </FormGroup>
                         </Grid>
@@ -153,7 +157,7 @@ let Cart = (props) => {
                   <br />
                   <Grid container justifyContent="space-between" mb={2}>
                     <Grid item>
-                      <p>Subtotal</p>
+                      <p>{t("cart.subtotal")}</p>
                     </Grid>
                     <Grid item>
                       <p>
@@ -164,7 +168,7 @@ let Cart = (props) => {
 
                   <Grid container justifyContent="space-between" mb={2}>
                     <Grid item>
-                      <p>Shipping</p>
+                      <p>{t("cart.shipping")}</p>
                     </Grid>
                     <Grid item>
                       <p>$20.00</p>
@@ -173,7 +177,7 @@ let Cart = (props) => {
 
                   <Grid container justifyContent="space-between" mb={2}>
                     <Grid item>
-                      <p>Total(Incl. taxes)</p>
+                      <p>{t("cart.total")}</p>
                     </Grid>
                     <Grid item>
                       <p>
@@ -190,7 +194,8 @@ let Cart = (props) => {
                       $<span>{Number(price) + 20}</span>
                     </div>
                     <span className="check">
-                      Checkout <ArrowRight />
+                      {t("cart.checkout")}{" "}
+                      {i18n.language === "ar" ? <ArrowLeft /> : <ArrowRight />}
                     </span>
                   </Button>
                 </Box>
@@ -203,7 +208,7 @@ let Cart = (props) => {
           variant="outlined"
           sx={{ float: "right", marginTop: "1vw", marginBottom: "-1vw" }}
         >
-          save changes
+          {t("cart.save")}
         </Button>
       </Card>
     </>

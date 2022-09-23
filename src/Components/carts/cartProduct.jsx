@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useCartProduct, useNotification } from "../../hooks";
+import { useCartProduct } from "../../hooks";
 import Delete from "@mui/icons-material/Delete";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -14,15 +14,17 @@ import {
   deleteItem,
   itemMount,
 } from "../../store/features/carts/cartsSilce";
+import swal from "sweetalert";
+import { useTranslation } from "react-i18next";
 
 let CartProduct = (props) => {
   let { productId, quantity } = props.product;
   let dispatch = useDispatch();
   let { cartOrder, productOrder } = props;
   let { product, loading } = useCartProduct(productId);
-  let { triggerNotification } = useNotification();
-  let [count, setCount] = useState(quantity);
+  let [, setCount] = useState(quantity);
   let price = Number(product.price).toFixed(0) * Number(quantity);
+  let { t } = useTranslation();
   useEffect(() => {
     if (!loading)
       dispatch(
@@ -31,11 +33,10 @@ let CartProduct = (props) => {
           order: cartOrder,
         })
       );
-
   }, [loading]);
 
   let handleChangeCount = (e) => {
-    setCount(e.target.value)
+    setCount(e.target.value);
     dispatch(
       changeItemsQuantity({
         quantity: Number(e.target.value),
@@ -52,11 +53,11 @@ let CartProduct = (props) => {
       deleteItem({
         productOrder: productOrder,
         price: price,
-        product : product,
-        order : cartOrder
+        product: product,
+        order: cartOrder,
       })
     );
-    triggerNotification(`deleted product ${product.title}`);
+    swal("deleted product", product.title, "success");
   };
 
   if (loading) return <Loading width={100} height={10} />;
@@ -79,7 +80,7 @@ let CartProduct = (props) => {
               <Grid item xs={12} sm={8}>
                 <h5>{product.title}</h5>
                 <Link href={`/products/${productId}`} color="inherit">
-                  product page
+                  {t("cart.productPage")}
                 </Link>
               </Grid>
               <Grid item xs={6} sm={2} pr={2} pl={2}>

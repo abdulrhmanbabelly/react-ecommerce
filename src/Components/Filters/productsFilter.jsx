@@ -11,7 +11,7 @@ import Select from "@mui/material/Select";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import { useCategories, useFilterProducts } from "../../hooks";
-import { Modal } from "../";
+import { Modal } from "..";
 import FilterAlt from "@mui/icons-material/FilterAlt";
 import { filtersStyles } from "../../styles";
 

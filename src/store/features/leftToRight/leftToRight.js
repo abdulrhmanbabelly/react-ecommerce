@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 let leftToRight = createSlice({
-  name: "darkMode",
+  name: "leftToRight",
   initialState: {
     ltr: true,
   },

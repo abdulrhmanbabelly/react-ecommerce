@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import FilterAlt from "@mui/icons-material/FilterAlt";
-import { Modal } from "../";
+import { Modal } from "..";
 import { filtersStyles } from "../../styles";
 import { useFilterUsers } from "../../hooks";
 

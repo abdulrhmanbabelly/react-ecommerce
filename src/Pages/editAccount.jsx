@@ -8,7 +8,7 @@ import React from "react";
 import { Loading } from "../Components";
 import { DELETE_USER, UPDATE_USER } from "../gql";
 import { useUser } from "../hooks";
-import { editAccountStyles, rtlTextFiled } from "../styles";
+import { editAccountStyles } from "../styles";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
@@ -101,22 +101,21 @@ let EditAccount = () => {
   if (loading) return <Loading width={100} height={100} />;
   if (error) return <h2>error</h2>;
 
-  formik.values = {
-    firstname: user.name.firstname,
-    lastname: user.name.lastname,
-    email: user.email,
-    city: user.address.city,
-    street: user.address.street,
-    long: Number(user.address.geolocation.long),
-    lat: Number(user.address.geolocation.lat),
-    number: Number(user.address.number),
-    zipcode: user.address.zipcode,
-    phone: user.phone,
-    username: user.username,
-    password: user.password,
-  };
-
-  console.log(formik.values);
+  if (formik.values.firstname === "...")
+    formik.setValues({
+      firstname: user.name.firstname,
+      lastname: user.name.lastname,
+      email: user.email,
+      city: user.address.city,
+      street: user.address.street,
+      long: Number(user.address.geolocation.long),
+      lat: Number(user.address.geolocation.lat),
+      number: Number(user.address.number),
+      zipcode: user.address.zipcode,
+      phone: user.phone,
+      username: user.username,
+      password: user.password,
+    });
 
   let handleDelete = async (e) => {
     e.preventDefault();
@@ -137,7 +136,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup className="mb-3">
               <TextField
-                sx={rtlTextFiled}
                 name="email"
                 variant="outlined"
                 label={t("signUpPage.email")}
@@ -151,7 +149,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup className="mb-3">
               <TextField
-                sx={rtlTextFiled}
                 type="text"
                 name="username"
                 variant="outlined"
@@ -168,7 +165,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup className="mb-3">
               <TextField
-                sx={rtlTextFiled}
                 type="text"
                 name="firstname"
                 variant="outlined"
@@ -185,7 +181,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup className="mb-3">
               <TextField
-                sx={rtlTextFiled}
                 type="text"
                 fullWidth
                 label={t("signUpPage.lastname")}
@@ -205,7 +200,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup>
               <TextField
-                sx={rtlTextFiled}
                 type="text"
                 fullWidth
                 id="city"
@@ -222,7 +216,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup>
               <TextField
-                sx={rtlTextFiled}
                 type="text"
                 fullWidth
                 name="street"
@@ -237,7 +230,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup>
               <TextField
-                sx={rtlTextFiled}
                 fullWidth
                 type="number"
                 name="number"
@@ -252,7 +244,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup>
               <TextField
-                sx={rtlTextFiled}
                 type="text"
                 fullWidth
                 label={t("signUpPage.zipcode")}
@@ -269,7 +260,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup>
               <TextField
-                sx={rtlTextFiled}
                 type="number"
                 fullWidth
                 name="lat"
@@ -284,7 +274,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup>
               <TextField
-                sx={rtlTextFiled}
                 type="number"
                 fullWidth
                 id="long"
@@ -300,7 +289,6 @@ let EditAccount = () => {
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormGroup className="mb-3">
               <TextField
-                sx={rtlTextFiled}
                 type="text"
                 fullWidth
                 label={t("signUpPage.phone")}
@@ -316,7 +304,6 @@ let EditAccount = () => {
         <h5>{t("signUpPage.password")}</h5>
         <FormGroup>
           <TextField
-            sx={rtlTextFiled}
             fullWidth
             name="password"
             label={t("signUpPage.password")}

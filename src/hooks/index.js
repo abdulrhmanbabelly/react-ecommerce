@@ -14,7 +14,6 @@ export { default as useUpdateCart } from './useUpdateCart';
 export { default as useDeleteProduct } from './useDeleteProduct';
 export { default as useDeleteCart } from './useDeleteCart';
 export { default as useAddNewCart } from './useAddNewCart';
-export { default as useNotification } from './useNotification';
 export { default as useToggleDarkMode } from './useToggleDarkMode';
 export { default as useFilterCarts } from './useFilterCarts';
 export { default as useFilterUsers } from './useFilterUsers';

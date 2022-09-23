@@ -3,20 +3,20 @@ import { useCategoryProducts } from "../../hooks";
 import { categorySliderStyles } from "../../styles";
 import { Loading, ProductViewVertical } from "../";
 import { Pagination } from "swiper";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 let CategorySlider = (props) => {
-  let { category, width } = props;
-
+  let { category } = props;
   let { loading, categoryProducts, error } = useCategoryProducts(category);
   let [slidesToShow, setSlidesToShow] = useState(
     window.innerWidth <= 786 ? 1 : 3
   );
-
+  let { i18n } = useTranslation();
+  if (i18n.language !== localStorage.getItem("language")) location.reload();
   window.addEventListener("resize", () => {
-    if (slidesToShow === 3 && window.innerWidth <= 786) setSlidesToShow(1);
-    if (slidesToShow === 1 && window.innerWidth >= 786) setSlidesToShow(3);
+    if (slidesToShow === 3 && window.innerWidth <= 900) setSlidesToShow(1);
+    if (slidesToShow === 1 && window.innerWidth >= 900) setSlidesToShow(3);
   });
 
   if (loading) return <Loading width={100} height={20} />;
@@ -24,22 +24,31 @@ let CategorySlider = (props) => {
 
   return (
     <>
-      <Box component="h2" sx={{ color: "#333", marginBottom: "1vw" }}>
+      <Box
+        component="h2"
+        sx={{
+          color: (props) => (props.palette.mode === "light" ? "#333" : "#eee"),
+          marginBottom: "1vw",
+        }}
+        pl={2}
+      >
         {category} :
       </Box>
-      <Box sx={categorySliderStyles}>
+      <Box sx={categorySliderStyles} p={1}>
         <Swiper
           style={{ height: "100%" }}
           modules={[Pagination]}
           spaceBetween={50}
-          slidesPerView={3}
+          slidesPerView={slidesToShow}
           pagination={{ clickable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
         >
           {categoryProducts.map((product, i) => (
             <SwiperSlide>
-              <ProductViewVertical key={i} product={product} width={30} />
+              <ProductViewVertical
+                key={i}
+                product={product}
+                width={slidesToShow === 3 ? 30 : 90}
+              />
             </SwiperSlide>
           ))}
         </Swiper>

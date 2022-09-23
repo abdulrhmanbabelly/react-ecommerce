@@ -14,7 +14,7 @@ import { DatePicker } from "@mui/x-date-pickers-pro";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import React, { useState } from "react";
-import { Modal } from "../";
+import { Modal } from "..";
 import FilterAlt from "@mui/icons-material/FilterAlt";
 import { filtersStyles } from "../../styles";
 import { useFilterCarts } from "../../hooks";
