@@ -1,0 +1,51 @@
+{
+  "aboutUs": {
+    "h1": "About Us",
+    "h4": "Learn More About Our Market",
+    "loremIpsum": "Nulla culpa esse consectetur ad esse nulla nisi officia. Excepteur sit id est elit qui occaecat fugiat Lorem duis minim. Ut officia esse aliquip Lorem occaecat non aute officia quis ea incididunt aliqua occaecat elit.",
+    "btn": "read more"
+  },
+  "createAccount": {
+    "h1": "Create Account",
+    "h4": "Sign-Up Now And Start Using Our Products!",
+    "loremIpsum": "Voluptate pariatur ut laboris reprehenderit. Ipsum anim nisi qui commodo id dolore et pariatur qui mollit. Voluptate pariatur quis reprehenderit laborum et.",
+    "btn": "sign-up"
+  },
+  "services": {
+    "h1": "Our Services",
+    "currencyIncome": "CURRENCY INCOME",
+    "freeShipping": "FREE SHIPPING",
+    "people": "PEOPLE",
+    "loremIpsum": "Aliquip tempor nulla cupidatat tempor et laborum dolore cupidatat dolor. Aliqua incididunt ad fugiat laborum irure sit dolore cillum laboris anim enim sunt. Labore eu fugiat id sint officia enim eu duis fugiat id voluptate veniam."
+  },
+  "plans": {
+    "h1": "Choose Your Plan",
+    "month": "month",
+    "buy": "buy",
+    "freemuim": {
+      "h5": "Freemuim",
+      "price": "$9.99",
+      "1": "10 Free item Every Month",
+      "2": "3% discount on Every item",
+      "3": "1 coupon Every Month"
+    },
+    "plus": {
+      "h5": "Plus+",
+      "price": "$29.99",
+      "1": "30 Free item Every Month",
+      "2": "10% discount on Every item",
+      "3": "3 coupon Every Month",
+      "4": "5 carts",
+      "5": "+3 Free charts on every Year"
+    },
+    "premium": {
+      "h5": "Premium",
+      "price": "$99.99",
+      "1": "100 Free item Every Month",
+      "2": "20% discount on Every item",
+      "3": "6 coupon Every Month",
+      "4": "multiple carts",
+      "5": "+10 Free charts on every Year"
+    }
+  }
+}

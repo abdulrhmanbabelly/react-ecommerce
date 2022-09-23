@@ -14,36 +14,33 @@ let Footer = () => {
   return (
     <Box sx={footerStyles(theme)}>
       <Card
-        sx={
-          (props) => {
-            return {
-              position: "absolute",
-              top: "-8vh",
-              left: "50%",
-              transform: "translate(-50%)",
-              padding: "2vw",
-              width: "90%",
-              boxShadow: ".1vw .1vw 1vw .1vw #111",
-              color: "#fff",
-              backgroundImage: (props) =>
-                `linear-gradient(-90deg, ${props.palette.colors.blue}, ${props.palette.colors.grey}) !important`,
-                [props.breakpoints.down('md')]: {
-                  display : "none"
-                },
-            }
-          }
-    
-        }
+        sx={(props) => {
+          return {
+            position: "absolute",
+            top: "-8vh",
+            left: "50%",
+            transform: "translate(-50%)",
+            padding: "2vw",
+            width: "90%",
+            boxShadow: ".1vw .1vw 1vw .1vw #111",
+            color: "#fff",
+            backgroundImage: (props) =>
+              `linear-gradient(-90deg, ${props.palette.colors.blue}, ${props.palette.colors.grey}) !important`,
+            [props.breakpoints.down("md")]: {
+              display: "none",
+            },
+          };
+        }}
       >
-        <Box component="h2">You Can Join Us Immediatly!</Box>
+        <Box component="h2">{t("footer.joinUs")}</Box>
         <Box component="h5" mb={1}>
-          Start with any Plan You Want And Then You Can Upgrade
+          {t("footer.start")}{" "}
         </Box>
-        <Button variant="contained">Join now</Button>
+        <Button variant="contained">{t("footer.joinNow")} </Button>
       </Card>
       <Box alignItems="center" display="flex" pl={3}>
         <ShoppingCart sx={{ width: "5vw", height: "5vw", marginRight: 1 }} />{" "}
-        E-commerce
+        {t("footer.ecommerce")}
       </Box>
       <Grid container>
         <Grid
@@ -58,10 +55,10 @@ let Footer = () => {
             },
           }}
         >
-          <Box component="h4">Geolocation</Box>
-          <Link href="/products">Store</Link>
-          <Link href="/cart">Cart</Link>
-          <Link href="/adminDashboard">Admin Dashboard</Link>
+          <Box component="h4">{t("footer.sitemap_1")}</Box>
+          <Link href="/products">{t("footer.links.1")}</Link>
+          <Link href="/cart">{t("footer.links.2")}</Link>
+          <Link href="/adminDashboard">{t("footer.links.3")}</Link>
         </Grid>
         <Grid
           item
@@ -75,10 +72,10 @@ let Footer = () => {
             },
           }}
         >
-          <Box component="h4">Programming</Box>
-          <Link href="/">Home</Link>
-          <Link href="/products">Store</Link>
-          <Link href="/adminDashboard">Admin Dashboard</Link>
+          <Box component="h4">{t("footer.sitemap_2")}</Box>
+          <Link href="/signIn">{t("footer.links.4")}</Link>
+          <Link href="/signUp">{t("footer.links.5")}</Link>
+          <Link href="/editAccount">{t("footer.links.6")}</Link>
         </Grid>
         <Grid
           item
@@ -92,10 +89,10 @@ let Footer = () => {
             },
           }}
         >
-          <Box component="h4">Github</Box>
-          <Link href="/signIn">Sign-In</Link>
-          <Link href="/signUp">Sign-Up</Link>
-          <Link href="/adminDashboard">Admin Dashboard</Link>
+          <Box component="h4">{t("footer.sitemap_3")}</Box>
+          <Link href="/">{t("footer.links.7")}</Link>
+          <Link href="/signUp">{t("footer.links.8")}</Link>
+          <Link href="/">{t("footer.links.9")}</Link>
         </Grid>
         <Grid
           item
@@ -109,10 +106,10 @@ let Footer = () => {
             },
           }}
         >
-          <Box component="h4">Facebook</Box>
-          <Link href="/">Home</Link>
-          <Link href="/signUp">Sign-Up</Link>
-          <Link href="/adminDashboard">Admin Dashboard</Link>
+          <Box component="h4">{t("footer.myProjects")}</Box>
+          <Link href="/">{t("footer.links.9")}</Link>
+          <Link href="https://get-your-weather-for-free.herokuapp.com/">{t("footer.links.10")}</Link>
+          <Link href="https://ecommerce-fake-api.herokuapp.com/">{t("footer.links.11")}</Link>
         </Grid>
         <Grid
           item
@@ -126,10 +123,10 @@ let Footer = () => {
             },
           }}
         >
-          <Box component="h4">Twitter</Box>
-          <Link href="/">Home</Link>
-          <Link href="/products">Store</Link>
-          <Link href="/cart">Cart</Link>
+          <Box component="h4">{t("footer.social")}</Box>
+          <Link href="/">{t("footer.links.12")}</Link>
+          <Link href="https://mostaql.com/u/Abdalrhman_ba">{t("footer.links.13")}</Link>
+          <Link href="https://www.facebook.com/abdalrahman.babelly">{t("footer.links.14")}</Link>
         </Grid>
         <Grid
           item
@@ -143,10 +140,10 @@ let Footer = () => {
             },
           }}
         >
-          <Box component="h4">Contribution</Box>
-          <Link href="/">Home</Link>
-          <Link href="/signUp">Sign-Up</Link>
-          <Link href="/adminDashboard">Admin Dashboard</Link>
+          <Box component="h4">{t("footer.social")}</Box>
+          <Link href="https://www.linkedin.com/in/abd-alrhman-babelly-214a16219/?lipi=urn%3Ali%3Apage%3Aprofile_common_profile_index%3Be5a183e0-df30-458e-934d-984a20fb3b08">{t("footer.links.12")}</Link>
+          <Link href="https://mostaql.com/u/Abdalrhman_ba">{t("footer.links.13")}</Link>
+          <Link href="https://www.facebook.com/abdalrahman.babelly">{t("footer.links.14")}</Link>
         </Grid>
       </Grid>
 
@@ -157,13 +154,13 @@ let Footer = () => {
         style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
         <Grid item md={1} xs={12}>
-          Home
+        {t("footer.links.1")}
         </Grid>
         <Grid item md={1} xs={12}>
-          Ecommerce
+        {t("footer.links.2")}
         </Grid>
-        <Grid item md={6} xs={12}></Grid>
-        <Grid item md={4} xs={12}>
+        <Grid item md={7} xs={12}></Grid>
+        <Grid item md={3} xs={12}>
           {t("footer.copyright")}
         </Grid>
       </Grid>

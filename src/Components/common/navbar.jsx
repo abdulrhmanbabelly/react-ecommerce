@@ -183,7 +183,7 @@ let NavigationBar = () => {
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          <span
+          <Box
             onClick={() => {
               localStorage.removeItem("token");
               dispatch(logout);
@@ -191,7 +191,7 @@ let NavigationBar = () => {
             }}
           >
             {t("header.logout")}
-          </span>
+          </Box>
         </MenuItem>
       )}
     </Menu>
@@ -288,7 +288,7 @@ let NavigationBar = () => {
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          <span
+          <Box
             onClick={() => {
               localStorage.removeItem("token");
               dispatch(logout);
@@ -296,7 +296,7 @@ let NavigationBar = () => {
             }}
           >
             {t("header.logout")}
-          </span>
+          </Box>
         </MenuItem>
       )}
       <MenuItem

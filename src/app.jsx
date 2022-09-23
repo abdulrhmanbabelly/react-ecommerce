@@ -42,6 +42,9 @@ let App = () => {
       mode: darkMode ? "dark" : "light",
       ltr: ltr,
       colors: colors,
+      boxShadow: darkMode
+        ? ".1vw .1vw 1vw .1vw #000"
+        : ".1vw .1vw 1vw .1vw #ccc",
     },
     components: {
       MuiButtonBase: {
@@ -75,14 +78,21 @@ let App = () => {
   let clientNavbar = useMemo(() => <NavigationBar />, [location.pathname]);
   let adminNavbar = useMemo(() => <AdminNavigationBar />, [location.pathname]);
   let footer = useMemo(() => <Footer />, [location.pathname]);
-
+  console.log(ltr);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {location.pathname.indexOf("adminDashboard") === -1
         ? clientNavbar
         : adminNavbar}
-      <Grid container>
+      <Grid
+        container
+        sx={{
+          direction: (props) => (props.palette.ltr ? "ltr" : "rtl"),
+          fontFamily: (props) =>
+            props.palette.ltr ? " Poppins, sans-serif" : "Cairo, sans-serif",
+        }}
+      >
         <Routes>
           {location.pathname.indexOf("adminDashboard") > -1 && (
             <Route
