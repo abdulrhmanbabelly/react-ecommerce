@@ -1,0 +1,26 @@
+{
+    
+    "signUp": "Sign up for our newsletter",
+    "sub": "subscribe",
+    "placeholder": "Email address",
+    "loremIpsum": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum repellat quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam eum harum corrupti dicta, aliquam sequi voluptate quas.",
+    "links": {
+      "1": "Home",
+      "2": "Store",
+      "3": "cart",
+      "4": "edit account",
+      "5": "sign-in",
+      "6": "sign-up",
+      "7": "admin Dashboard",
+      "8": "E-commerce",
+      "9": "Facebook",
+      "10": "Instagram",
+      "11": "LinkedIn",
+      "12": "Codepen",
+      "13": "CodeSandBox",
+      "14": "GeeksForGeeks",
+      "15": "Twitter",
+      "16": "Telegram"
+    },
+    "copyright": "© 2022 Copyright:abd alrhman babelly"
+}

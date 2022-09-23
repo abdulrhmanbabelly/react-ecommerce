@@ -60,7 +60,6 @@ let SignIn = () => {
     <Container
       component="main"
       maxWidth="xs"
-      sx={{ height: "90vh", display: "flex", alignItems: "center" }}
     >
       <Box
         sx={() => {

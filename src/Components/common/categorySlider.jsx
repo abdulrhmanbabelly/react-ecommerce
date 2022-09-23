@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useCategoryProducts } from "../../hooks";
-import Grid from "@mui/material/Grid";
 import { categorySliderStyles } from "../../styles";
-import { ProductViewHorizontal, Loading } from "../";
+import { Loading, ProductViewVertical } from "../";
 import { Pagination } from "swiper";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -40,7 +39,7 @@ let CategorySlider = (props) => {
         >
           {categoryProducts.map((product, i) => (
             <SwiperSlide>
-              <ProductViewHorizontal key={i} product={product} width={30} />
+              <ProductViewVertical key={i} product={product} width={30} />
             </SwiperSlide>
           ))}
         </Swiper>

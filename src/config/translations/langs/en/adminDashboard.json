@@ -1,0 +1,9 @@
+{
+  "title": "Dashboard",
+  "nav": {
+    "1": "Products",
+    "2": "Users",
+    "3": "Carts",
+    "4": "Categories"
+  }
+}

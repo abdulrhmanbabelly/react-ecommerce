@@ -1,9 +1,5 @@
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import Rating from "@mui/material/Rating";
 import React from "react";
 import { useParams } from "react-router-dom";
@@ -31,7 +27,10 @@ let SingleProduct = () => {
         </Grid>
         <Grid item md={6} xs={12}>
           <h2 style={{ fontSize: "34px" }}>{product.title}</h2>
-          <Box component="div" sx={{ color: "#666", padding : "1vw 0" }}>
+          <Box
+            component="div"
+            sx={{ color: "#666", padding: "1vw 0", lineHeight: "1.7em" }}
+          >
             {product.description}
           </Box>
           <Rating readOnly value={Number(product.rating.rate)} />
