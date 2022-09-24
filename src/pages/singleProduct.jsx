@@ -60,7 +60,7 @@ let SingleProduct = () => {
         You Might Also Like :
       </Box>{" "}
       <Grid container>
-        <Grid item width="100vw" xs={12}>
+        <Grid item width="100vw" sx={{ overflowX: "hidden" }} xs={12}>
           <CategorySlider category={product.category} />
         </Grid>
       </Grid>
