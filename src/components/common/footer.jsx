@@ -76,7 +76,7 @@ let Footer = () => {
         >
           <Box component="h4">{t("footer.sitemap_1")}</Box>
           <Link href="/products">{t("footer.links.1")}</Link>
-          <Link href="/cart">{t("footer.links.2")}</Link>
+          <Link href="/carts">{t("footer.links.2")}</Link>
           <Link href="/adminDashboard">{t("footer.links.3")}</Link>
         </Grid>
         <Grid
