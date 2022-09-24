@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { AddToCart, CategorySlider, Loading } from "../Components";
+import { AddToCart, CategorySlider, Loading } from "../components";
 import { useSingleProduct } from "../hooks";
 import { singleProductStyles } from "../styles";
 import { green } from "@mui/material/colors";

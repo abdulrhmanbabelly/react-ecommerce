@@ -1,6 +1,6 @@
 import React from "react";
 import { CSVLink } from "react-csv";
-import { AdminUser, UsersFilter } from "../../Components";
+import { AdminUser, UsersFilter } from "../../components";
 import { excelUsersData } from "../../functions";
 import { useUsers } from "../../hooks";
 import Grid from "@mui/material/Grid";

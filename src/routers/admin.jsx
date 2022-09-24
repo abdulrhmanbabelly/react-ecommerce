@@ -6,7 +6,7 @@ import {
   AdminCategoriesTable,
   AdminUsersTable,
   AdminProductsTable,
-} from "../Pages";
+} from "../pages";
 
 let AdminRouter = () => {
   return (

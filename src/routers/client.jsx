@@ -10,7 +10,7 @@ import {
   Home,
   EditAccount,
   Carts,
-} from "../Pages";
+} from "../pages";
 
 let ClientRouter = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);

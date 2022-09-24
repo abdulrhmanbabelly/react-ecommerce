@@ -1,6 +1,6 @@
 import { CSVLink } from "react-csv";
 import React from "react";
-import { AdminCategory } from "../../Components";
+import { AdminCategory } from "../../components";
 import { useCategories } from "../../hooks";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";

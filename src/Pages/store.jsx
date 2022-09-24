@@ -3,7 +3,7 @@ import {
   ProductsFilter,
   Loading,
   ProductViewHorizontal,
-} from "../Components";
+} from "../components";
 import { useProducts } from "../hooks";
 import { storeStyles } from "../styles";
 import Grid from "@mui/material/Grid";

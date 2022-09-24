@@ -5,7 +5,7 @@ import FormGroup from "@mui/material/FormGroup";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import React from "react";
-import { Loading } from "../Components";
+import { Loading } from "../components";
 import { DELETE_USER, UPDATE_USER } from "../gql";
 import { useUser } from "../hooks";
 import { editAccountStyles } from "../styles";

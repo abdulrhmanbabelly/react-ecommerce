@@ -1,6 +1,6 @@
 import { CSVLink } from "react-csv";
 import React from "react";
-import { CartsFilter, AdminCart } from "../../Components";
+import { CartsFilter, AdminCart } from "../../components";
 import { useCarts } from "../../hooks";
 import { excelCartsData } from "../../functions";
 import Grid from "@mui/material/Grid";

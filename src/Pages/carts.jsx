@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import React from "react";
-import { AddNewCart, Cart, Loading } from "../Components";
+import { AddNewCart, Cart, Loading } from "../components";
 import { useUserCarts } from "../hooks";
 import { cartsStyles } from "../styles";
 
