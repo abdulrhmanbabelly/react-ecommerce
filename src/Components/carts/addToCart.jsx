@@ -9,7 +9,7 @@ import { useUpdateCart, useUserCarts } from "../../hooks";
 import { AddNewCart, Cart } from "../";
 import { cartsStyles } from "../../styles";
 import { Modal } from "../";
-import { SignIn } from "../../Pages";
+import { SignIn } from "../../pages";
 import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart, init } from "../../store/features/carts/cartsSilce";
 import swal from "sweetalert";

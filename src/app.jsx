@@ -8,7 +8,7 @@ import {
   experimental_sx as sx,
 } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { NavigationBar, AdminNavigationBar, Footer } from "./Components";
+import { NavigationBar, AdminNavigationBar, Footer } from "./components";
 import { AdminRouter, ClientRouter } from "./routers";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo } from "react";
