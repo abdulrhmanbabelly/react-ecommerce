@@ -1,5 +1,7 @@
 let cartsStyles = (props) => {
   return {
+    direction: (props) => `${props.palette.ltr ? "ltr" : "rtl"}`,
+
     "& .cart": {
       padding: "2vw",
       margin: "1vw auto",
@@ -28,8 +30,7 @@ let cartsStyles = (props) => {
         "& fieldset": {
           border: ".1px solid #fff !important",
         },
-        background: (props) =>
-          props.palette.colors.grey,
+        background: (props) => props.palette.colors.grey,
         "& .checkoutButton": {
           width: "100% !important",
           display: "flex",

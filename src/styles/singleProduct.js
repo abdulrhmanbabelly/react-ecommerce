@@ -13,7 +13,8 @@ let singleProductStyles = {
   "& > .MuiGrid-grid-md-6:nth-of-type(2)": {
     padding: "2vw",
     "& button": {
-      marginRight: "1vw",
+      marginRight: (props) => (props.palette.ltr ? "1vw" : "0vw"),
+      marginLeft: (props) => (props.palette.ltr ? "0" : "1vw"),
     },
   },
 };
