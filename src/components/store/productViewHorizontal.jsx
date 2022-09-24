@@ -86,40 +86,67 @@ let ProductViewHorizontal = (props) => {
             height: "103px",
             marginTop: "17px",
             position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
           <Grid item>
-            <p
-              style={{
-                fontFamily: "Trocchi, serif",
-                fontSize: "28px",
-                fontWeight: "lighter",
-                color: "#474747",
+            <Box
+              sx={(theme) => {
+                return {
+                  fontFamily: "Trocchi, serif",
+                  fontSize: "28px",
+                  [theme.breakpoints.down("sm")]: {
+                    fontSize: "18px",
+                  },
+                  fontWeight: "lighter",
+                  color: "#474747",
+                };
               }}
             >
-              <span style={{ fontSize: "34px" }}>{price}</span>$
-            </p>
+              <Box
+                component="span"
+                sx={(theme) => {
+                  return {
+                    [theme.breakpoints.down("sm")]: {
+                      fontSize: "25px",
+                    },
+                    fontSize: "34px",
+                  };
+                }}
+              >
+                {price}
+              </Box>
+              $
+            </Box>
           </Grid>
           <Grid item>
             <Button
               type="button"
-              sx={{
-                backgroundImage: (theme) =>
-                  `linear-gradient(-90deg, ${theme.palette.colors.blue}, ${theme.palette.colors.grey}) !important`,
-                display: "inline-block",
-                height: "50px",
-                width: "176px",
-                boxSizing: "border-box",
-                border: "transparent",
-                borderRadius: "60px",
-                fontFamily: "Raleway, sans-serif",
-                fontSize: "14px",
-                fontWeight: 500,
-                textTransform: "uppercase",
-                letterSpacing: "0.2em",
-                color: "#ffffff",
-                cursor: "pointer",
-                outline: "none",
+              sx={(theme) => {
+                return {
+                  backgroundImage: (theme) =>
+                    `linear-gradient(-90deg, ${theme.palette.colors.blue}, ${theme.palette.colors.grey}) !important`,
+                  display: "inline-block",
+                  height: "50px",
+                  width: "176px",
+                  [theme.breakpoints.down("sm")]: {
+                    width: "100px",
+                    fontSize: "10px",
+                  },
+                  boxSizing: "border-box",
+                  border: "transparent",
+                  borderRadius: "60px",
+                  fontFamily: "Raleway, sans-serif",
+                  fontWeight: 500,
+                  fontSize: "14px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.2em",
+                  color: "#ffffff",
+                  cursor: "pointer",
+                  outline: "none",
+                };
               }}
             >
               buy now

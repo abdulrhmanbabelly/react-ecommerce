@@ -12,10 +12,13 @@ let ProductViewVertical = (props) => {
   return (
     <Grid
       sx={{
-        boxShadow: (props) => props.palette.mode === "light" ? "0px 14px 32px 0px rgba(0, 0, 0, 0.15)" : "0px 14px 32px 0px rgba(0, 0, 0, 1)",
+        boxShadow: (props) =>
+          props.palette.mode === "light"
+            ? "0px 14px 32px 0px rgba(0, 0, 0, 0.15)"
+            : "0px 14px 32px 0px rgba(0, 0, 0, 1)",
         width: `${props.width}vw`,
         margin: "auto",
-        paddingBottom: "2vw",
+        paddingBottom: "1vw",
       }}
       container
       alignItems="center"
@@ -71,45 +74,72 @@ let ProductViewVertical = (props) => {
         <Grid
           container
           justifyContent="space-between"
+          className="product-price-btn"
           sx={{
+            height: "103px",
             marginTop: "17px",
             position: "relative",
-            p: {
-              fontFamily: "Trocchi, serif",
-              fontSize: "28px",
-              fontWeight: "lighter",
-              color: "#474747",
-            },
-            button: {
-              display: "inline-block",
-              height: "50px",
-              width: "176px",
-              boxSizing: "border-box",
-              border: "transparent",
-              borderRadius: "60px",
-              fontFamily: " Raleway, sans-serif",
-              fontSize: "14px",
-              fontWeight: 500,
-              textTransform: "uppercase",
-              letterSpacing: "0.2em",
-              color: "#ffffff",
-              backgroundColor: "#9cebd5",
-              cursor: "pointer",
-              outline: "none",
-            },
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
           <Grid item>
-            <p>
-              <span style={{ fontSize: "34px" }}>{price}</span>$
-            </p>
+            <Box
+              sx={(theme) => {
+                return {
+                  fontFamily: "Trocchi, serif",
+                  fontSize: "28px",
+                  [theme.breakpoints.down("sm")]: {
+                    fontSize: "18px",
+                  },
+                  fontWeight: "lighter",
+                  color: "#474747",
+                };
+              }}
+            >
+              <Box
+                component="span"
+                sx={(theme) => {
+                  return {
+                    [theme.breakpoints.down("sm")]: {
+                      fontSize: "25px",
+                    },
+                    fontSize: "34px",
+                  };
+                }}
+              >
+                {price}
+              </Box>
+              $
+            </Box>
           </Grid>
           <Grid item>
             <Button
               type="button"
-              sx={{
-                backgroundImage: (theme) =>
-                  `linear-gradient(-90deg, ${theme.palette.colors.blue}, ${theme.palette.colors.grey}) !important`,
+              sx={(theme) => {
+                return {
+                  backgroundImage: (theme) =>
+                    `linear-gradient(-90deg, ${theme.palette.colors.blue}, ${theme.palette.colors.grey}) !important`,
+                  display: "inline-block",
+                  height: "50px",
+                  width: "176px",
+                  [theme.breakpoints.down("sm")]: {
+                    width: "100px",
+                    fontSize: "10px",
+                  },
+                  boxSizing: "border-box",
+                  border: "transparent",
+                  borderRadius: "60px",
+                  fontFamily: "Raleway, sans-serif",
+                  fontWeight: 500,
+                  fontSize: "14px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.2em",
+                  color: "#ffffff",
+                  cursor: "pointer",
+                  outline: "none",
+                };
               }}
             >
               buy now
