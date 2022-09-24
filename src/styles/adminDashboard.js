@@ -1,8 +1,10 @@
 let adminDashboardStyles = () => {
   return {
+    width: "100vw",
     direction: (props) => `${props.palette.ltr ? "ltr" : "rtl"}`,
-    "& div" : {
-      textAlign : (props) => `${props.palette.ltr ? "left !important" : "right !important"}`,
+    "& div": {
+      textAlign: (props) =>
+        `${props.palette.ltr ? "left !important" : "right !important"}`,
     },
     "& a": {
       textDecoration: "none !important",

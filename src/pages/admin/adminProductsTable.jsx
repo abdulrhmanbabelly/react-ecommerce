@@ -1,66 +1,146 @@
-import { CSVLink } from "react-csv";
 import React from "react";
-import { AddProduct, AdminProduct, ProductsFilter } from "../../components";
+import { AddProduct, UpdateProduct } from "../../components";
 import { useAdminProducts, useCategories } from "../../hooks";
-import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import TableHead from "@mui/material/TableHead";
-import { excelProductsData } from "../../functions";
-import { setProducts } from "../../store/features/admin/productsSlice";
+import Box from "@mui/material/Box";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useDeleteProduct } from "../../hooks";
+import { useDispatch } from "react-redux";
+import { deleteStorageProduct } from "../../store/features/admin/productsSlice";
+import swal from "sweetalert";
+import { Rating } from "@mui/material";
+import { blue, green } from "@mui/material/colors";
 
 let AdminProductsTable = () => {
   let { loading, error, products } = useAdminProducts();
   let { categories } = useCategories();
+  let { deleteProduct } = useDeleteProduct();
+  let dispatch = useDispatch();
+
+  let handleDeleteProduct = (id, order, title) => {
+    deleteProduct({
+      variables: {
+        id: id,
+      },
+    })
+      .then((data) => {
+        if (!data.errors) {
+          dispatch(deleteStorageProduct({ order: order }));
+          swal({ title: `deleted product ${title}`, icon: "success" });
+        } else
+          swal({ title: `failed to delete product ${title}`, icon: "error" });
+      })
+      .catch((err) => {
+        swal({ title: `failed to delete product ${title}`, icon: "error" });
+      });
+    console.log(products);
+  };
   if (loading) return <CircularProgress />;
   if (error) return <h2>error</h2>;
-  let excelData = excelProductsData(products);
 
   return (
     <>
-      <Grid container spacing={2} mb={1}>
-        <Grid item>
-          <Button>
-            <CSVLink data={excelData}>export to excel</CSVLink>
-          </Button>
-        </Grid>
-        <Grid item>
-          <AddProduct categories={categories} />
-        </Grid>
-        <Grid item>
-          <ProductsFilter categories={categories} setProducts={setProducts} />
-        </Grid>
-      </Grid>
-      <Grid component={Paper} sx={{ overflowX: "auto" }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>id</TableCell>
-              <TableCell>catagory</TableCell>
-              <TableCell>title</TableCell>
-              <TableCell>count</TableCell>
-              <TableCell>rate</TableCell>
-              <TableCell>price</TableCell>
-              <TableCell>update</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products.map((product, i) => (
-              <AdminProduct
-                product={product}
-                key={i}
-                categories={categories}
-                order={i}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </Grid>
+      <AddProduct categories={categories} />
+      <Box sx={{ height: 600, width: "100%", marginTop: "1vw" }}>
+        <DataGrid
+          rows={products.map((product, i) => ({
+            id: product.id,
+            category: product.category,
+            title: product.title,
+            count: product.rating.count,
+            rate: product.rating.rate,
+            price: product.price,
+            update: { order: i, product: product },
+          }))}
+          columns={[
+            {
+              field: "id",
+              headerName: "id",
+              width: 100,
+            },
+            {
+              field: "category",
+              headerName: "category",
+              type: "string",
+              sortable: false,
+              width: 140,
+            },
+            {
+              field: "title",
+              headerName: "title",
+              type: "string",
+              sortable: false,
+              width: 500,
+            },
+            {
+              field: "count",
+              headerName: "count",
+              renderCell: ({ value }) => (
+                <Box sx={{ color: blue["700"] }}>${value}</Box>
+              ),
+              type: "number",
+              width: 100,
+            },
+            {
+              field: "rate",
+              headerName: "rate",
+              renderCell: ({ value }) => <Rating readOnly value={value} />,
+              type: "number",
+              width: 150,
+            },
+            {
+              field: "price",
+              headerName: "price",
+              renderCell: ({ value }) => (
+                <Box sx={{ color: green["700"] }}>${value}</Box>
+              ),
+              type: "number",
+              width: 100,
+            },
+            {
+              field: "update",
+              headerName: "update",
+              renderCell: ({ value }) => {
+                return (
+                  <>
+                    <Box mr={2}>
+                      <Button
+                        color="error"
+                        onClick={() =>
+                          handleDeleteProduct(
+                            value.product.id,
+                            value.order,
+                            value.product.title
+                          )
+                        }
+                      >
+                        delete
+                      </Button>
+                    </Box>
+                    <UpdateProduct
+                      product={value.product}
+                      categories={categories}
+                      order={value.order}
+                    />
+                  </>
+                );
+              },
+              sortable: false,
+              width: 190,
+            },
+          ]}
+          pageSize={10}
+          sx={{ width: "100%", overflowX: "auto" }}
+          rowsPerPageOptions={[10]}
+          checkboxSelection
+          disableSelectionOnClick
+          components={{
+            Toolbar: GridToolbar,
+          }}
+          experimentalFeatures={{ newEditingApi: true }}
+        />
+      </Box>
     </>
   );
 };

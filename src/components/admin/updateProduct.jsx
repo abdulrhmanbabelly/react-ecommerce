@@ -22,7 +22,6 @@ let UpdateProduct = (props) => {
   let [price, setPrice] = useState(props.product.price);
   let { updateProduct } = useUpdateProduct();
 
-
   let handleUpdate = async () => {
     let newTitle = document.getElementById("title").value;
     let desc = document.getElementById("description").value;
@@ -48,6 +47,7 @@ let UpdateProduct = (props) => {
                 description: desc,
                 category: category,
                 rating: rating,
+                id : id
               },
             })
           );

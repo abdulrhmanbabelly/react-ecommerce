@@ -1,17 +1,9 @@
 import React from "react";
-import { CSVLink } from "react-csv";
-import { AdminUser, UsersFilter } from "../../components";
 import { excelUsersData } from "../../functions";
 import { useUsers } from "../../hooks";
-import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import TableHead from "@mui/material/TableHead";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
 
 let AdminUsersTable = () => {
   let { loading, users, error } = useUsers();
@@ -22,46 +14,111 @@ let AdminUsersTable = () => {
   if (error) return <h2 className="text-info">error...</h2>;
 
   return (
-    <>
-      <Grid container mb={1}>
-        <Grid item>
-          <Button>
-            <CSVLink color="inherit" data={excelData}>
-              export to excel
-            </CSVLink>
-          </Button>
-        </Grid>
-        <Grid item>
-          <UsersFilter users={users} />
-        </Grid>
-      </Grid>
-      <Grid component={Paper} style={{ overflowX: "auto" }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>id</TableCell>
-              <TableCell>email</TableCell>
-              <TableCell>username</TableCell>
-              <TableCell>password</TableCell>
-              <TableCell>firstname</TableCell>
-              <TableCell>lastname</TableCell>
-              <TableCell>city</TableCell>
-              <TableCell>street</TableCell>
-              <TableCell>number</TableCell>
-              <TableCell>zipcode</TableCell>
-              <TableCell>geolocation lat</TableCell>
-              <TableCell>geolocation long</TableCell>
-              <TableCell>phone</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {users.map((user) => (
-              <AdminUser user={user} key={Math.random() * 10000} />
-            ))}
-          </TableBody>
-        </Table>
-      </Grid>
-    </>
+    <Box sx={{ height: 600, width: "100%" }}>
+      <DataGrid
+        rows={excelData}
+        columns={[
+          {
+            field: "id",
+            headerName: "id",
+            width: 100,
+          },
+          {
+            field: "email",
+            headerName: "email",
+            type: "string",
+            sortable: false,
+            width: 200,
+          },
+          {
+            field: "username",
+            headerName: "username",
+            type: "string",
+            sortable: false,
+            width: 150,
+          },
+          {
+            field: "password",
+            headerName: "password",
+            type: "string",
+            sortable: false,
+            width: 150,
+          },
+          {
+            field: "firstname",
+            headerName: "firstname",
+            type: "string",
+            sortable: false,
+            width: 100,
+          },
+          {
+            field: "lastname",
+            headerName: "lastname",
+            type: "string",
+            sortable: false,
+            width: 100,
+          },
+          {
+            field: "city",
+            headerName: "city",
+            type: "string",
+            sortable: false,
+            width: 100,
+          },
+          {
+            field: "street",
+            headerName: "street",
+            type: "string",
+            sortable: false,
+            width: 150,
+          },
+          {
+            field: "number",
+            headerName: "number",
+            type: "string",
+            sortable: false,
+            width: 100,
+          },
+          {
+            field: "zipcode",
+            headerName: "zipcode",
+            type: "string",
+            sortable: false,
+            width: 150,
+          },
+          {
+            field: "lat",
+            headerName: "geolocation lat",
+            type: "string",
+            sortable: false,
+            width: 150,
+          },
+          {
+            field: "long",
+            headerName: "geolocation long",
+            type: "string",
+            sortable: false,
+            width: 150,
+          },
+          {
+            field: "phone",
+            headerName: "phone",
+            type: "string",
+            sortable: false,
+            width: 150,
+          },
+        ]}
+        pageSize={10}
+        sx={{ width: "100%", overflowX: "auto" }}
+        rowsPerPageOptions={[10]}
+        checkboxSelection
+        disableSelectionOnClick
+        components={{
+          Toolbar: GridToolbar,
+        }}
+        experimentalFeatures={{ newEditingApi: true }}
+      />
+    </Box>
   );
 };
 
