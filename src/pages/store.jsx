@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  ProductsFilter,
-  Loading,
-  ProductViewHorizontal,
-} from "../components";
+import { ProductsFilter, Loading, ProductViewHorizontal } from "../components";
 import { useProducts } from "../hooks";
 import { storeStyles } from "../styles";
 import Grid from "@mui/material/Grid";
@@ -18,7 +14,15 @@ let Store = () => {
 
   return (
     <Grid container sx={storeStyles}>
-      <Grid item container xs={1} ml="auto" mr="1vw" justifyContent="flex-end">
+      <Grid
+        item
+        container
+        xs={1}
+        p={1}
+        sx={{
+          float: (theme) => (theme.palette.ltr ? "right" : "left"),
+        }}
+      >
         <ProductsFilter setProducts={setProducts} />
       </Grid>
       <Grid item xs={12}>

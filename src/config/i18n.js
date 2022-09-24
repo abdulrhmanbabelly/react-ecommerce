@@ -12,7 +12,7 @@ import ArabicSignUpPage from "./translations/langs/ar/signUpPage.json";
 
 // english
 import EnglishAdminDashboard from "./translations/langs/en/adminDashboard.json";
-import EnglishCart from "./translations/langs/en/adminDashboard.json";
+import EnglishCart from "./translations/langs/en/cart.json";
 import EnglishFooter from "./translations/langs/en/footer.json";
 import EnglishHeader from "./translations/langs/en/header.json";
 import EnglishHome from "./translations/langs/en/home.json";

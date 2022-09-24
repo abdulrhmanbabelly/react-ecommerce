@@ -26,7 +26,7 @@ export const cartsSlice = createSlice({
     },
     changeItemsQuantity: (
       state,
-      { payload: { quantity, productId, oneProductPrice, price, order  } }
+      { payload: { quantity, productId, oneProductPrice, price, order } }
     ) => {
       let productIndex;
       for (let i = 0; i < state.carts[order].products.length; i++) {
@@ -41,6 +41,8 @@ export const cartsSlice = createSlice({
     },
     deleteStoreCart: (state, { payload: { order } }) => {
       document.getElementById(`cart${order}`).remove();
+      if (document.getElementById(`addToCartForm${order}`))
+        document.getElementById(`addToCartForm${order}`).remove();
     },
     addItemToCart: (state, { payload: { quantity, productId, order } }) => {
       state.carts[order].products.push({

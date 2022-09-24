@@ -1,6 +1,5 @@
 
 let storeStyles = {
-    paddingTop: "1vw",
     width : "100vw",
     "& .product" : {
         marginBottom: "1vw",

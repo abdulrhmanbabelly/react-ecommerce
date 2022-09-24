@@ -61,157 +61,155 @@ let Cart = (props) => {
       });
   };
   return (
-    <>
-      <Card className="cart" id={`cart${order}`}>
-        <Box>
-          <Grid container justifyContent="space-between">
-            <Grid item>
-              <h4>
-                {t("cart.date")} : {date.substring(0, 10)}
-              </h4>
-            </Grid>
-            <Grid item>
-              <IconButton onClick={handleDelete}>
-                <Delete style={{ Gridor: "#cecece", cursor: "pointer" }} />
-              </IconButton>
-            </Grid>
+    <Card className="cart" id={`cart${order}`}>
+      <Box>
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <h4>
+              {t("cart.date")} : {date.substring(0, 10)}
+            </h4>
           </Grid>
-          <Grid container>
-            <Grid item md={7} sm={12}>
-              {products.map((product, i) => {
-                return (
-                  <CartProduct
-                    key={i}
-                    product={product}
-                    cart={cart}
-                    cartOrder={order}
-                    productOrder={i}
+          <Grid item>
+            <IconButton onClick={handleDelete}>
+              <Delete style={{ Gridor: "#cecece", cursor: "pointer" }} />
+            </IconButton>
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid item md={7} sm={12}>
+            {products.map((product, i) => {
+              return (
+                <CartProduct
+                  key={i}
+                  product={product}
+                  cart={cart}
+                  cartOrder={order}
+                  productOrder={i}
+                />
+              );
+            })}
+          </Grid>
+          <Grid item md={5} sm={12}>
+            <Card className="paycard">
+              <Box p={1} overflow="hidden">
+                <Grid container justifyContent="space-between" mb={4}>
+                  <h2 className="mb-0">{t("cart.details")}</h2>
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
+                    style={{ width: "45px" }}
+                    alt="Avatar"
                   />
-                );
-              })}
-            </Grid>
-            <Grid item md={5} sm={12}>
-              <Card className="paycard">
-                <Box p={1} overflow="hidden">
-                  <Grid container justifyContent="space-between" mb={4}>
-                    <h2 className="mb-0">{t("cart.details")}</h2>
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                      style={{ width: "45px" }}
-                      alt="Avatar"
+                </Grid>
+
+                <Typography paragraph mb={2}>
+                  {t("cart.type")}{" "}
+                </Typography>
+                <CreditCard />
+                <Facebook />
+                <WhatsApp />
+                <Instagram />
+
+                <form>
+                  <FormGroup>
+                    <TextField
+                      type="text"
+                      placeholder={t("cart.namePlaceholder")}
+                      variant="outlined"
+                      label={t("cart.name")}
                     />
-                  </Grid>
-
-                  <Typography paragraph mb={2}>
-                    {t("cart.type")}{" "}
-                  </Typography>
-                  <CreditCard />
-                  <Facebook />
-                  <WhatsApp />
-                  <Instagram />
-
-                  <form>
-                    <FormGroup>
-                      <TextField
-                        type="text"
-                        placeholder={t("cart.namePlaceholder")}
-                        variant="outlined"
-                        label={t("cart.name")}
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <TextField
-                        type="text"
-                        placeholder={t("cart.numberPlaceholder")}
-                        variant="outlined"
-                        label={t("cart.number")}
-                      />
-                    </FormGroup>
-                    <FormGroup>
-                      <Grid container spacing={1}>
-                        <Grid item sm={6} xs={12}>
-                          <FormGroup>
-                            <TextField
-                              type="text"
-                              placeholder="MM/YYYY"
-                              variant="outlined"
-                              label={t("cart.expiration")}
-                            />
-                          </FormGroup>
-                        </Grid>
-                        <Grid item sm={6} xs={12}>
-                          <FormGroup>
-                            <TextField
-                              type="password"
-                              placeholder={t("cart.cvvPlaceholder")}
-                              variant="outlined"
-                              label={t("cart.cvv")}
-                            />
-                          </FormGroup>
-                        </Grid>
+                  </FormGroup>
+                  <FormGroup>
+                    <TextField
+                      type="text"
+                      placeholder={t("cart.numberPlaceholder")}
+                      variant="outlined"
+                      label={t("cart.number")}
+                    />
+                  </FormGroup>
+                  <FormGroup>
+                    <Grid container spacing={1}>
+                      <Grid item sm={6} xs={12}>
+                        <FormGroup>
+                          <TextField
+                            type="text"
+                            placeholder="MM/YYYY"
+                            variant="outlined"
+                            label={t("cart.expiration")}
+                          />
+                        </FormGroup>
                       </Grid>
-                    </FormGroup>
-                  </form>
+                      <Grid item sm={6} xs={12}>
+                        <FormGroup>
+                          <TextField
+                            type="password"
+                            placeholder={t("cart.cvvPlaceholder")}
+                            variant="outlined"
+                            label={t("cart.cvv")}
+                          />
+                        </FormGroup>
+                      </Grid>
+                    </Grid>
+                  </FormGroup>
+                </form>
 
-                  <hr />
-                  <br />
-                  <Grid container justifyContent="space-between" mb={2}>
-                    <Grid item>
-                      <p>{t("cart.subtotal")}</p>
-                    </Grid>
-                    <Grid item>
-                      <p>
-                        $<span>{Number(price)}</span>
-                      </p>
-                    </Grid>
+                <hr />
+                <br />
+                <Grid container justifyContent="space-between" mb={2}>
+                  <Grid item>
+                    <p>{t("cart.subtotal")}</p>
                   </Grid>
+                  <Grid item>
+                    <p>
+                      $<span>{Number(price)}</span>
+                    </p>
+                  </Grid>
+                </Grid>
 
-                  <Grid container justifyContent="space-between" mb={2}>
-                    <Grid item>
-                      <p>{t("cart.shipping")}</p>
-                    </Grid>
-                    <Grid item>
-                      <p>$20.00</p>
-                    </Grid>
+                <Grid container justifyContent="space-between" mb={2}>
+                  <Grid item>
+                    <p>{t("cart.shipping")}</p>
                   </Grid>
+                  <Grid item>
+                    <p>$20.00</p>
+                  </Grid>
+                </Grid>
 
-                  <Grid container justifyContent="space-between" mb={2}>
-                    <Grid item>
-                      <p>{t("cart.total")}</p>
-                    </Grid>
-                    <Grid item>
-                      <p>
-                        $<span>{Number(price) + 20}</span>
-                      </p>
-                    </Grid>
+                <Grid container justifyContent="space-between" mb={2}>
+                  <Grid item>
+                    <p>{t("cart.total")}</p>
                   </Grid>
-                  <Button
-                    color="info"
-                    className="checkoutButton"
-                    variant="contained"
-                  >
-                    <div>
+                  <Grid item>
+                    <p>
                       $<span>{Number(price) + 20}</span>
-                    </div>
-                    <span className="check">
-                      {t("cart.checkout")}{" "}
-                      {i18n.language === "ar" ? <ArrowLeft /> : <ArrowRight />}
-                    </span>
-                  </Button>
-                </Box>
-              </Card>
-            </Grid>
+                    </p>
+                  </Grid>
+                </Grid>
+                <Button
+                  color="info"
+                  className="checkoutButton"
+                  variant="contained"
+                >
+                  <div>
+                    $<span>{Number(price) + 20}</span>
+                  </div>
+                  <span className="check">
+                    {t("cart.checkout")}{" "}
+                    {i18n.language === "ar" ? <ArrowLeft /> : <ArrowRight />}
+                  </span>
+                </Button>
+              </Box>
+            </Card>
           </Grid>
-        </Box>
-        <Button
-          onClick={handleUpdateCart}
-          variant="outlined"
-          sx={{ float: "right", marginTop: "1vw", marginBottom: "-1vw" }}
-        >
-          {t("cart.save")}
-        </Button>
-      </Card>
-    </>
+        </Grid>
+      </Box>
+      <Button
+        onClick={handleUpdateCart}
+        variant="outlined"
+        sx={{ float: "right", marginTop: "1vw", marginBottom: "-1vw" }}
+      >
+        {t("cart.save")}
+      </Button>
+    </Card>
   );
 };
 

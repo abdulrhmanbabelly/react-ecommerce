@@ -1,6 +1,4 @@
 import React from "react";
-import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
 import { Box, Button, Link } from "@mui/material";
@@ -21,10 +19,9 @@ let ProductViewVertical = (props) => {
         paddingBottom: "1vw",
       }}
       container
-      alignItems="center"
       justifyContent="center"
     >
-      <Grid item container alignItems="center" xs={12}>
+      <Grid item container xs={12}>
         <img
           src={image}
           style={{

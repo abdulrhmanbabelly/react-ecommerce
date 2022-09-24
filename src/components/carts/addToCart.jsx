@@ -52,7 +52,7 @@ let AddToCart = (props) => {
             order: order,
           })
         );
-        swal({ title: "added product", icon: "success" });
+        swal({ title: `added ${productTitle} to your cart`, icon: "success" });
       });
     }
   };
@@ -66,32 +66,28 @@ let AddToCart = (props) => {
               {carts.map((cart, i) => (
                 <div key={i}>
                   <Cart cart={cart} price={cart.price} order={i} />
-                  <div>
-                    {document.getElementById(`cart${i}`) && (
-                      <form className="addToCartForm">
-                        <FormGroup>
-                          <TextField
-                            type="number"
-                            id={`quantity${cart.id}`}
-                            label="quantity"
-                            variant="filled"
-                            inputProps={{ min: 1 }}
-                            defaultValue={1}
-                          />
-                        </FormGroup>
-                        <FormGroup>
-                          <Button
-                            variant="contained"
-                            onClick={() => {
-                              handleAddToCart(cart, i);
-                            }}
-                          >
-                            Add to cart
-                          </Button>
-                        </FormGroup>
-                      </form>
-                    )}
-                  </div>
+                  <form id={`addToCartForm${i}`} className="addToCartForm">
+                    <FormGroup>
+                      <TextField
+                        type="number"
+                        id={`quantity${cart.id}`}
+                        label="quantity"
+                        variant="filled"
+                        inputProps={{ min: 1 }}
+                        defaultValue={1}
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          handleAddToCart(cart, i);
+                        }}
+                      >
+                        Add to cart
+                      </Button>
+                    </FormGroup>
+                  </form>
                 </div>
               ))}
               <AddNewCart />
@@ -103,7 +99,7 @@ let AddToCart = (props) => {
       }
       openButtonContent="add to cart"
       closeButtonContent="close"
-      headerContent="add to cart"
+      headerContent="Add To Cart"
       openButtonColor="warning"
       closeFunc={() => {
         dispatch(init({ carts: carts, prices: carts.map(() => 0) }));

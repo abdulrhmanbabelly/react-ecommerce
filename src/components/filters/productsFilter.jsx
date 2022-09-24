@@ -150,7 +150,7 @@ let ProductsFliter = (props) => {
           </form>
         </Box>
       }
-      headerContent="filter products"
+      headerContent="Filter Products"
       openIcon={<FilterAlt />}
       closeButtonContent="fliter"
       closeFunc={handleFilter}

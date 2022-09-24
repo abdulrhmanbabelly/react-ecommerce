@@ -38,14 +38,13 @@ let CategorySlider = (props) => {
         <Swiper
           style={{ height: "100%" }}
           modules={[Pagination]}
-          spaceBetween={50}
+          spaceBetween={5}
           slidesPerView={slidesToShow}
           pagination={{ clickable: true }}
         >
           {categoryProducts.map((product, i) => (
-            <SwiperSlide>
+            <SwiperSlide key={i}>
               <ProductViewVertical
-                key={i}
                 product={product}
                 width={slidesToShow === 3 ? 30 : 90}
               />
