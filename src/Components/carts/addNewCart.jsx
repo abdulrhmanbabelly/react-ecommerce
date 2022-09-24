@@ -51,7 +51,6 @@ let AddNewCart = () => {
         color="success"
         sx={{ margin: "2vw auto", display: "block" }}
         onClick={handleAddNewCart}
-        size="large"
       >
         <Add />
       </IconButton>

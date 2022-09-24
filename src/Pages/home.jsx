@@ -24,9 +24,36 @@ import {
   Telegram,
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
+import { useState } from "react";
 
 let Header = () => {
   let { t } = useTranslation();
+  let [height, setHeight] = useState(10);
+
+  useEffect(() => {
+    if (document.getElementsByClassName("MuiToolbar-root")[0]) {
+      setHeight(
+        window.innerHeight -
+          document.getElementsByClassName("MuiToolbar-root")[0].clientHeight
+      );
+    }
+
+    window.addEventListener("resize", () => {
+      setHeight(
+        window.innerHeight -
+          document.getElementsByClassName("MuiToolbar-root")[0].clientHeight
+      );
+    });
+
+    return window.removeEventListener("resize", () => {
+      setHeight(
+        window.innerHeight -
+          document.getElementsByClassName("MuiToolbar-root")[0].clientHeight
+      );
+    });
+  });
+
   return (
     <Grid
       item
@@ -35,7 +62,7 @@ let Header = () => {
         zIndex: 1,
         backgroundImage: (theme) =>
           `linear-gradient(-90deg, ${theme.palette.colors.blue}, ${theme.palette.colors.grey}) !important`,
-        height: "90vh",
+        height: height,
         color: "#fff",
       }}
     >
@@ -288,66 +315,55 @@ let Plans = () => {
           textAlign: "center",
           margin: 2,
         },
+        ".MuiCardHeader-title": {
+          textAlign: "center",
+        },
+        ".MuiPaper-root": {
+          position: "relative",
+        },
+        "ul, li": (theme) => {
+          return {
+            padding: ".3vw",
+            [theme.breakpoints.down("md")]: {
+              paddingBottom: "1vh",
+            },
+            [theme.breakpoints.down("sm")]: {
+              paddingBottom: "2vh",
+            },
+          };
+        },
+
+        ".MuiCardContent-root": {
+          paddingTop: 0,
+        },
+        ".MuiPaper-root": {
+          height: "100%",
+        },
+        ".MuiButtonBase-root": {
+          position: "absolute",
+          bottom: "2vh",
+          left: "50%",
+          transform: "translate(-50%)",
+          width: "90%",
+        },
+        ".MuiCard-root": {
+          position: "relative",
+          paddingBottom: "3vw",
+          backgroundColor: "#32C1FF",
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%230F67FF' stroke-width='0' stroke-opacity='0.06' %3E%3Ccircle fill='%2324FFE8' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%2300efe3' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%2300e0dd' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%2300d0d5' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%2300c1cd' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%2300b1c4' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%2300a2ba' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%230093af' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%230084a3' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%23007696' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%23006888' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%23005a7b' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%23004c6c' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%2300405e' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%2300334f' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%23042740' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%23041c32' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%23021024' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          color: "#fff",
+        },
       }}
       width="100vw"
-      p={3}
+      p={2}
       pt={0}
     >
       <Box component="h1">{t("home.plans.h1")}</Box>
-      <Grid
-        container
-        spacing={3}
-        justifyContent="space-around"
-        p={1}
-        pt={0}
-        sx={{
-          ".MuiCardHeader-title": {
-            textAlign: "center",
-          },
-          ".MuiPaper-root": {
-            position: "relative",
-          },
-          "ul, li": (theme) => {
-            return {
-              padding: ".3vw",
-              [theme.breakpoints.down("md")]: {
-                paddingBottom: "1vh",
-              },
-              [theme.breakpoints.down("sm")]: {
-                paddingBottom: "2vh",
-              },
-            };
-          },
-
-          ".MuiCardContent-root": {
-            paddingTop: 0,
-          },
-          ".MuiPaper-root": {
-            height: "100%",
-          },
-          ".MuiButtonBase-root": {
-            position: "absolute",
-            bottom: "2vh",
-            left: "50%",
-            transform: "translate(-50%)",
-            width: "90%",
-          },
-          ".MuiCard-root": {
-            position: "relative",
-            paddingBottom: "3vw",
-          },
-        }}
-      >
-        <Grid item xs={10} md={4}>
-          <Card
-            sx={{
-              backgroundColor: "#32C1FF",
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%230F67FF' stroke-width='0' stroke-opacity='0.06' %3E%3Ccircle fill='%2324FFE8' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%2300efe3' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%2300e0dd' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%2300d0d5' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%2300c1cd' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%2300b1c4' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%2300a2ba' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%230093af' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%230084a3' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%23007696' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%23006888' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%23005a7b' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%23004c6c' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%2300405e' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%2300334f' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%23042740' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%23041c32' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%23021024' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E")`,
-              backgroundAttachment: "fixed",
-              backgroundSize: "cover",
-              color: "#fff",
-            }}
-          >
+      <Grid container spacing={3} justifyContent="space-around" p={1} pt={0}>
+        <Grid item xs={12} md={4}>
+          <Card>
             <CardHeader title={t("home.plans.freemuim.h5")} />
             <CardMedia>
               <Telegram
@@ -397,16 +413,8 @@ let Plans = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={10} md={4}>
-          <Card
-            sx={{
-              backgroundColor: "#32C1FF",
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%230F67FF' stroke-width='0' stroke-opacity='0.06' %3E%3Ccircle fill='%2324FFE8' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%2300efe3' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%2300e0dd' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%2300d0d5' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%2300c1cd' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%2300b1c4' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%2300a2ba' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%230093af' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%230084a3' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%23007696' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%23006888' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%23005a7b' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%23004c6c' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%2300405e' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%2300334f' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%23042740' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%23041c32' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%23021024' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E")`,
-              backgroundAttachment: "fixed",
-              backgroundSize: "cover",
-              color: "#fff",
-            }}
-          >
+        <Grid item xs={12} md={4}>
+          <Card>
             <CardHeader title={t("home.plans.plus.h5")} />
             <Flight
               sx={{
@@ -467,16 +475,8 @@ let Plans = () => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={10} md={4}>
-          <Card
-            sx={{
-              backgroundColor: "#32C1FF",
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%230F67FF' stroke-width='0' stroke-opacity='0.06' %3E%3Ccircle fill='%2324FFE8' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%2300efe3' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%2300e0dd' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%2300d0d5' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%2300c1cd' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%2300b1c4' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%2300a2ba' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%230093af' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%230084a3' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%23007696' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%23006888' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%23005a7b' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%23004c6c' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%2300405e' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%2300334f' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%23042740' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%23041c32' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%23021024' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E")`,
-              backgroundAttachment: "fixed",
-              backgroundSize: "cover",
-              color: "#fff",
-            }}
-          >
+        <Grid item xs={12} md={4}>
+          <Card>
             <CardHeader title={t("home.plans.premium.h5")} />
             <Rocket
               sx={{

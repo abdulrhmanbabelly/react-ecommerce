@@ -38,10 +38,29 @@ let Footer = () => {
         </Box>
         <Button variant="contained">{t("footer.joinNow")} </Button>
       </Card>
-      <Box alignItems="center" display="flex" pl={3}>
-        <ShoppingCart sx={{ width: "5vw", height: "5vw", marginRight: 1 }} />{" "}
-        {t("footer.ecommerce")}
-      </Box>
+      <Grid container pl={3} pr={3}>
+        <Grid item>
+          {" "}
+          <Box alignItems="center" display="flex">
+            <ShoppingCart
+              sx={{
+                width: "50px",
+                height: "50px",
+                marginRight: 1,
+                backgroundColor: (props) => props.palette.colors.pink,
+                borderRadius: "50% 50%",
+                padding: "1vw",
+                margin: 0,
+              }}
+            />{" "}
+          </Box>
+        </Grid>
+        <Grid item>
+          <Box component="h1" pr={1} pl={1}>
+            {t("footer.ecommerce")}
+          </Box>
+        </Grid>
+      </Grid>
       <Grid container>
         <Grid
           item
@@ -108,8 +127,12 @@ let Footer = () => {
         >
           <Box component="h4">{t("footer.myProjects")}</Box>
           <Link href="/">{t("footer.links.9")}</Link>
-          <Link href="https://get-your-weather-for-free.herokuapp.com/">{t("footer.links.10")}</Link>
-          <Link href="https://ecommerce-fake-api.herokuapp.com/">{t("footer.links.11")}</Link>
+          <Link href="https://get-your-weather-for-free.herokuapp.com/">
+            {t("footer.links.10")}
+          </Link>
+          <Link href="https://ecommerce-fake-api.herokuapp.com/">
+            {t("footer.links.11")}
+          </Link>
         </Grid>
         <Grid
           item
@@ -125,8 +148,12 @@ let Footer = () => {
         >
           <Box component="h4">{t("footer.social")}</Box>
           <Link href="/">{t("footer.links.12")}</Link>
-          <Link href="https://mostaql.com/u/Abdalrhman_ba">{t("footer.links.13")}</Link>
-          <Link href="https://www.facebook.com/abdalrahman.babelly">{t("footer.links.14")}</Link>
+          <Link href="https://mostaql.com/u/Abdalrhman_ba">
+            {t("footer.links.13")}
+          </Link>
+          <Link href="https://www.facebook.com/abdalrahman.babelly">
+            {t("footer.links.14")}
+          </Link>
         </Grid>
         <Grid
           item
@@ -141,12 +168,17 @@ let Footer = () => {
           }}
         >
           <Box component="h4">{t("footer.social")}</Box>
-          <Link href="https://www.linkedin.com/in/abd-alrhman-babelly-214a16219/?lipi=urn%3Ali%3Apage%3Aprofile_common_profile_index%3Be5a183e0-df30-458e-934d-984a20fb3b08">{t("footer.links.12")}</Link>
-          <Link href="https://mostaql.com/u/Abdalrhman_ba">{t("footer.links.13")}</Link>
-          <Link href="https://www.facebook.com/abdalrahman.babelly">{t("footer.links.14")}</Link>
+          <Link href="https://www.linkedin.com/in/abd-alrhman-babelly-214a16219/?lipi=urn%3Ali%3Apage%3Aprofile_common_profile_index%3Be5a183e0-df30-458e-934d-984a20fb3b08">
+            {t("footer.links.12")}
+          </Link>
+          <Link href="https://mostaql.com/u/Abdalrhman_ba">
+            {t("footer.links.13")}
+          </Link>
+          <Link href="https://www.facebook.com/abdalrahman.babelly">
+            {t("footer.links.14")}
+          </Link>
         </Grid>
       </Grid>
-
       <Grid
         container
         p={3}
@@ -154,10 +186,10 @@ let Footer = () => {
         style={{ backgroundColor: "rgba(0, 0, 0, 0.2)" }}
       >
         <Grid item md={1} xs={12}>
-        {t("footer.links.1")}
+          {t("footer.links.1")}
         </Grid>
         <Grid item md={1} xs={12}>
-        {t("footer.links.2")}
+          {t("footer.links.2")}
         </Grid>
         <Grid item md={7} xs={12}></Grid>
         <Grid item md={3} xs={12}>

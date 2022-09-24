@@ -42,11 +42,6 @@ let App = () => {
         : ".1vw .1vw 1vw .1vw #ccc",
     },
     components: {
-      MuiButtonBase: {
-        styleOverrides: {
-          root: sx((theme) => ({})),
-        },
-      },
       MuiAppBar: {
         styleOverrides: {
           root: sx({
@@ -54,6 +49,17 @@ let App = () => {
               `linear-gradient(-90deg, ${props.palette.colors.blue}, ${props.palette.colors.grey}) !important`,
             color: "#fff",
             zIndex: 10000,
+          }),
+        },
+      },
+      MuiToolbar: {
+        styleOverrides: {
+          root: sx((theme) => {
+            if (theme.palette.ltr) return { paddingRight: 0 };
+            else
+              return {
+                paddingLeft: 0,
+              };
           }),
         },
       },
