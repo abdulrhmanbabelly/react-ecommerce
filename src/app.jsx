@@ -58,6 +58,7 @@ let App = () => {
             if (theme.palette.ltr) return { paddingRight: 0 };
             else
               return {
+                paddingRight: 0,
                 paddingLeft: 0,
               };
           }),
