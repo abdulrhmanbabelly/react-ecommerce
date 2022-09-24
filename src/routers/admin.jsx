@@ -1,11 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import {
-  NotFound,
   AdminCartsTable,
   AdminCategoriesTable,
-  AdminUsersTable,
   AdminProductsTable,
+  AdminUsersTable,
+  NotFound,
 } from "../pages";
 
 let AdminRouter = () => {

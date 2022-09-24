@@ -8,7 +8,6 @@ import {
   experimental_sx as sx,
 } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { NavigationBar, AdminNavigationBar, Footer } from "./components";
 import { AdminRouter, ClientRouter } from "./routers";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo } from "react";
@@ -16,6 +15,7 @@ import { adminDashboardStyles, rtlTextFiled } from "./styles";
 import { useEffect } from "react";
 import { setLeftToRight } from "./store/features/leftToRight/leftToRight";
 import { useTranslation } from "react-i18next";
+import { AdminNavigationBar, Footer, NavigationBar } from "./components";
 let App = () => {
   let location = useLocation();
   let darkMode = useSelector((state) => state.darkMode.on);
@@ -84,7 +84,6 @@ let App = () => {
   let clientNavbar = useMemo(() => <NavigationBar />, [location.pathname]);
   let adminNavbar = useMemo(() => <AdminNavigationBar />, [location.pathname]);
   let footer = useMemo(() => <Footer />, [location.pathname]);
-  console.log(ltr);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
