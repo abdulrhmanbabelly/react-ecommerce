@@ -127,7 +127,7 @@ let AddProduct = (props) => {
         openButtonContent="add product"
         closeButtonContent="add"
         headerContent="add product"
-        closeFunc={handleAddProduct}
+        func={handleAddProduct}
       />
     </>
   );

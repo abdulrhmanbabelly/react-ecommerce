@@ -106,9 +106,6 @@ let SignIn = () => {
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label={t("signInPage.rememberMe")}
-            sx={{
-              marginRight: 0,
-            }}
           />
           <Button
             type="submit"

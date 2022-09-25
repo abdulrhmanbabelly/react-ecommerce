@@ -34,7 +34,6 @@ let AdminProductsTable = () => {
       .catch((err) => {
         swal({ title: `failed to delete product ${title}`, icon: "error" });
       });
-    console.log(products);
   };
   if (loading) return <CircularProgress />;
   if (error) return <h2>error</h2>;
@@ -77,10 +76,10 @@ let AdminProductsTable = () => {
               field: "count",
               headerName: "count",
               renderCell: ({ value }) => (
-                <Box sx={{ color: blue["700"] }}>${value}</Box>
+                <Box sx={{ color: blue["700"] }}>{value}</Box>
               ),
               type: "number",
-              width: 100,
+              width: 150,
             },
             {
               field: "rate",
@@ -130,6 +129,13 @@ let AdminProductsTable = () => {
               width: 190,
             },
           ]}
+          componentsProps={{
+            toolbar: {
+              csvOptions: {
+                fields: ["id", "category", "title", "count", "rate", "price"],
+              },
+            },
+          }}
           pageSize={10}
           sx={{ width: "100%", overflowX: "auto" }}
           rowsPerPageOptions={[10]}

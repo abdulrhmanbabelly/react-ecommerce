@@ -37,11 +37,24 @@ let Cart = (props) => {
       .then((data) => {
         if (!data.errors) {
           dispatch(deleteStoreCart({ order: order }));
-          swal("deleted cart", `cart number ${id}`, "success");
-        } else swal("failed to delete cart,"`cart number ${id}`, "error");
+          swal(
+            t("cart.deletedCart"),
+            `${t("cart.cartNumber")} ${id}`,
+            "success"
+          );
+        } else
+          swal(
+            t("cart.failedToDeleteCart"),
+            `${t("cart.cartNumber")} ${id}`,
+            "error"
+          );
       })
       .catch((err) => {
-        swal("failed to delete cart", `cart number ${id}`, "error");
+        swal(
+          t("cart.failedToDeleteCart"),
+          `${t("cart.cartNumber")} ${id}`,
+          "error"
+        );
       });
   };
 
@@ -53,11 +66,25 @@ let Cart = (props) => {
       },
     })
       .then((data) => {
-        if (!data.errors) swal("updated cart", `cart number ${id}`, "success");
-        else swal("failed to update cart", `cart number ${id}`, "error");
+        if (!data.errors)
+          swal(
+            t("cart.updatedCart"),
+            `${t("cart.cartNumber")} ${id}`,
+            "success"
+          );
+        else
+          swal(
+            t("cart.failedToUpdateCart"),
+            `${t("cart.cartNumber")} ${id}`,
+            "error"
+          );
       })
       .catch((err) => {
-        swal("failed to update cart", `cart number ${id}`, "error");
+        swal(
+          t("cart.failedToUpdateCart"),
+          `${t("cart.cartNumber")} ${id}`,
+          "error"
+        );
       });
   };
   return (
@@ -93,7 +120,7 @@ let Cart = (props) => {
             <Card className="paycard">
               <Box p={1} overflow="hidden">
                 <Grid container justifyContent="space-between" mb={4}>
-                  <h2 className="mb-0">{t("cart.details")}</h2>
+                  <h2>{t("cart.details")}</h2>
                   <img
                     src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
                     style={{ width: "45px" }}

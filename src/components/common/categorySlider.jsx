@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCategoryProducts } from "../../hooks";
 import { categorySliderStyles } from "../../styles";
 import { Loading, ProductViewVertical } from "../";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
+
 let CategorySlider = (props) => {
   let { category } = props;
   let { loading, categoryProducts, error } = useCategoryProducts(category);
@@ -14,30 +15,26 @@ let CategorySlider = (props) => {
   );
   let { i18n } = useTranslation();
   if (i18n.language !== localStorage.getItem("language")) location.reload();
-  window.addEventListener("resize", () => {
-    if (slidesToShow === 3 && window.innerWidth <= 900) setSlidesToShow(1);
-    if (slidesToShow === 1 && window.innerWidth >= 900) setSlidesToShow(3);
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      if (slidesToShow === 3 && window.innerWidth <= 900) setSlidesToShow(1);
+      if (slidesToShow === 1 && window.innerWidth >= 900) setSlidesToShow(3);
+    });
+
+    return window.removeEventListener("resize", () => {
+      if (slidesToShow === 3 && window.innerWidth <= 900) setSlidesToShow(1);
+      if (slidesToShow === 1 && window.innerWidth >= 900) setSlidesToShow(3);
+    });
   });
 
   if (loading) return <Loading width={100} height={20} />;
   if (error) return <h2 className="text-info">error...</h2>;
 
   return (
-    <>
-      <Box
-        component="h2"
-        sx={{
-          color: (props) => (props.palette.mode === "light" ? "#333" : "#eee"),
-          marginBottom: "1vw",
-          paddingRight: (props) => (props.palette.ltr ? "0" : 2),
-          paddingLeft: (props) => (props.palette.ltr ? 2 : "0"),
-        }}
-      >
-        {category} :
-      </Box>
-      <Box sx={categorySliderStyles} p={1}>
+    <Grid sx={categorySliderStyles} item xs={12}>
+      <Box component="h2" className="category">{category} :</Box>
+      <Box className="slider">
         <Swiper
-          style={{ height: "100%" }}
           modules={[Pagination]}
           spaceBetween={5}
           slidesPerView={slidesToShow}
@@ -53,7 +50,7 @@ let CategorySlider = (props) => {
           ))}
         </Swiper>
       </Box>
-    </>
+    </Grid>
   );
 };
 

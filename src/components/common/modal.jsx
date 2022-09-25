@@ -56,7 +56,7 @@ let Modal = (props) => {
           onClose={handleClose}
           TransitionComponent={Transition}
         >
-          <Box style={{ overflowX: "hidden" }}>
+          <Box sx={{ overflowX: "hidden", width: "100vw" }}>
             <AppBar sx={{ position: "relative" }}>
               <Toolbar>
                 <IconButton
@@ -71,7 +71,11 @@ let Modal = (props) => {
                   <Close />
                 </IconButton>
                 <Typography
-                  sx={{ ml: 2, flex: 1 }}
+                  sx={{
+                    ml: (props) => (props.palette.ltr ? 2 : 0),
+                    mr: (props) => (props.palette.ltr ? 0 : 2),
+                    flex: 1,
+                  }}
                   variant="h6"
                   component="div"
                 >
@@ -82,7 +86,7 @@ let Modal = (props) => {
                   variant="text"
                   onClick={() => {
                     handleClose();
-                    if (closeFunc) closeFunc();
+                    props.func && props.func();
                   }}
                 >
                   {closeButtonContent}
@@ -90,7 +94,14 @@ let Modal = (props) => {
               </Toolbar>
             </AppBar>
             <List>
-              <Box style={{ position: "relative" }}>{content}</Box>
+              <Box
+                sx={{
+                  position: "relative",
+                  direction: (theme) => (theme.palette.ltr ? "ltr" : "rtl"),
+                }}
+              >
+                {content}
+              </Box>
             </List>
           </Box>
         </Dialog>

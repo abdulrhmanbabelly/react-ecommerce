@@ -1,13 +1,14 @@
-import Button from "@mui/material/Button";
 import React from "react";
 import { useAddNewCart } from "../../hooks";
 import { useDispatch } from "react-redux";
 import { addStorageNewCart } from "../../store/features/carts/cartsSilce";
 import { IconButton } from "@mui/material";
 import { Add } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 let AddNewCart = () => {
   let { addNewCart } = useAddNewCart();
   let dispatch = useDispatch();
+  let { t } = useTranslation();
   let handleAddNewCart = () => {
     let date = new Date();
     let cart = {
@@ -37,11 +38,12 @@ let AddNewCart = () => {
               },
             })
           );
-          swal({ title: `added cart ${id}`, icon: "success" });
-        } else swal({ title: `failed to add cart ${id}`, icon: "error" });
+          swal({ title: `${t("cart.addedCart")} ${id}`, icon: "success" });
+        } else
+          swal({ title: `${t("cart.failedToAddCart")} ${id}`, icon: "error" });
       })
       .catch((err) => {
-        swal({ title: `failed to add cart ${id}`, icon: "error" });
+        swal({ title: `${t("cart.failedToAddCart")} ${id}`, icon: "error" });
       });
   };
 

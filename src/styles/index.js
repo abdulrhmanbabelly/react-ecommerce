@@ -9,4 +9,4 @@ export { default as categorySliderStyles } from "./categorySlider";
 export { default as cartsStyles } from "./carts";
 export { default as filtersStyles } from "./filters";
 export { default as rtlTextFiled } from "./rtlTextFiled";
-
+export { default as signUpStyles } from "./signUp";

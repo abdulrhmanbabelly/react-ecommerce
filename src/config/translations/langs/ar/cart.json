@@ -1,6 +1,6 @@
 {
   "date": "تاريخ",
-  "productPage" : "صفحة المنتج",
+  "productPage": "صفحة المنتج",
   "details": "تفاصيل البطاقة",
   "type": "نوع البطاقة",
   "name": "اسم حامل البطاقة",
@@ -14,5 +14,13 @@
   "shipping": "شحن",
   "total": "المجموع (بما في ذلك الضرائب)",
   "checkout": "الخروج",
-  "save": "حفظ التغييرات"
+  "save": "حفظ التغييرات",
+  "deletedProduct": "تم حذف المنتج",
+  "updatedCart": "تم تحديث سلة التسوق",
+  "cartNumber": "رقم سلة التسوق",
+  "failedToUpdateCart": "فشل تحديث سلة التسوق",
+  "addedCart": "تم إضافة سلة",
+  "failedToAddCart": "فشل إضافة سلة",
+  "deletedCart": "تم حذف سلة التسوق",
+  "failedToDeleteCart": "فشل حذف سلة التسوق"
 }

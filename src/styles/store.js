@@ -1,19 +1,15 @@
-
 let storeStyles = {
-    width : "100vw",
-    "& .product" : {
-        marginBottom: "1vw",
-        "& .image" : {
-            padding : "2vw",
-            display : 'flex',
-            justifyContent : "center",
-            width : '100%',
-            '& img' : {
-                width: "50% !important",    
-                margin: "auto !important"
-            }
-        }
-    },
-}
+  width: "100vw",
+  ".filter": {
+    padding: 1,
+    float: (theme) => (theme.palette.ltr ? "right" : "left"),
+  },
+  ".productBox": {
+    margin: "1vw auto",
+  },
+  ".productsContainer": {
+    width: "100vw",
+  },
+};
 
 export default storeStyles;

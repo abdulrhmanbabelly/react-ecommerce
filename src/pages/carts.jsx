@@ -12,7 +12,7 @@ let Carts = () => {
   if (error) return <h2>error</h2>;
 
   return (
-    <Box sx={cartsStyles(theme)} width="100vw">
+    <Box sx={cartsStyles(theme)}>
       {carts.map((cart, i) => (
         <Cart cart={cart} key={i} order={i} price={cart.price} />
       ))}

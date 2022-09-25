@@ -128,7 +128,6 @@ let AdminNavigationBar = () => {
           <Link
             href="/adminDashboard/products"
             color="inherit"
-            style={{ width: "100%" }}
           >
             <ListItemButton>
               <ListItemIcon>
@@ -143,7 +142,6 @@ let AdminNavigationBar = () => {
           <Link
             href="/adminDashboard/users"
             color="inherit"
-            style={{ width: "100%" }}
           >
             <ListItemButton>
               <ListItemIcon>
@@ -158,7 +156,6 @@ let AdminNavigationBar = () => {
           <Link
             href="/adminDashboard/carts"
             color="inherit"
-            style={{ width: "100%" }}
           >
             <ListItemButton>
               <ListItemIcon>
@@ -173,7 +170,6 @@ let AdminNavigationBar = () => {
           <Link
             href="/adminDashboard/categories"
             color="inherit"
-            style={{ width: "100%" }}
           >
             <ListItemButton>
               <ListItemIcon>

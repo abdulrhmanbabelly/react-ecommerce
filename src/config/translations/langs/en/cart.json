@@ -1,6 +1,6 @@
 {
   "date": "Date",
-  "productPage" : "Product Page",
+  "productPage": "Product Page",
   "details": "Card details",
   "type": "Card type",
   "name": "Cardholder's Name",
@@ -14,5 +14,13 @@
   "shipping": "Shipping",
   "total": "Total(Incl. taxes)",
   "checkout": "checkout",
-  "save": "save changes"
+  "save": "save changes",
+  "deletedProduct": "deleted product",
+  "updatedCart": "updated cart",
+  "cartNumber": "cart number",
+  "failedToUpdateCart": "failed to update cart",
+  "addedCart": "added cart",
+  "failedToAddCart": "failed to add cart",
+  "deletedCart" : "deleted cart",
+  "failedToDeleteCart" : "failed to delete cart"
 }

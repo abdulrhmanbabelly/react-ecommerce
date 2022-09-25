@@ -57,7 +57,7 @@ let CartProduct = (props) => {
         order: cartOrder,
       })
     );
-    swal("deleted product", product.title, "success");
+    swal(t("cart.deletedProduct"), product.title, "success");
   };
 
   if (loading) return <Loading width={100} height={10} />;

@@ -1,3 +1,5 @@
+import { green } from "@mui/material/colors";
+
 let singleProductStyles = {
   width: "100vw",
   overflowX: "hidden",
@@ -9,6 +11,24 @@ let singleProductStyles = {
       width: "50%",
       padding: "2vw",
     },
+  },
+  ".title": {
+    fontSize: "34px",
+  },
+  ".description": {
+    color: "#666",
+    padding: "1vw 0",
+    lineHeight: "1.7em",
+  },
+  ".price": {
+    color: green["700"],
+  },
+  ".count": {
+    color: "#666",
+  },
+  "& .other": {
+    width: "100vw",
+    margin: 2,
   },
   "& > .MuiGrid-grid-md-6:nth-of-type(2)": {
     padding: "2vw",

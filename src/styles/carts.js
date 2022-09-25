@@ -1,7 +1,7 @@
 let cartsStyles = (props) => {
   return {
+    width: "100vw",
     direction: (props) => `${props.palette.ltr ? "ltr" : "rtl"}`,
-
     "& .cart": {
       padding: "2vw",
       margin: "1vw auto",

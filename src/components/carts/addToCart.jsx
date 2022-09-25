@@ -13,8 +13,10 @@ import { SignIn } from "../../pages";
 import { useSelector, useDispatch } from "react-redux";
 import { addItemToCart, init } from "../../store/features/carts/cartsSilce";
 import swal from "sweetalert";
+import { useTranslation } from "react-i18next";
 
 let AddToCart = (props) => {
+  let { t } = useTranslation();
   const { productId, productTitle } = props;
   const theme = useTheme();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -71,7 +73,7 @@ let AddToCart = (props) => {
                       <TextField
                         type="number"
                         id={`quantity${cart.id}`}
-                        label="quantity"
+                        label={t("addToCart.quantity")}
                         variant="filled"
                         inputProps={{ min: 1 }}
                         defaultValue={1}
@@ -84,7 +86,7 @@ let AddToCart = (props) => {
                           handleAddToCart(cart, i);
                         }}
                       >
-                        Add to cart
+                        {t("addToCart.addToCart")}
                       </Button>
                     </FormGroup>
                   </form>
@@ -97,9 +99,9 @@ let AddToCart = (props) => {
           )}
         </Box>
       }
-      openButtonContent="add to cart"
-      closeButtonContent="close"
-      headerContent="Add To Cart"
+      openButtonContent={t("addToCart.addToCart")}
+      closeButtonContent={t("addToCart.close")}
+      headerContent={t("addToCart.addToCart")}
       openButtonColor="warning"
       closeFunc={() => {
         dispatch(init({ carts: carts, prices: carts.map(() => 0) }));

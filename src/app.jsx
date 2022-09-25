@@ -49,6 +49,7 @@ let App = () => {
               `linear-gradient(-90deg, ${props.palette.colors.blue}, ${props.palette.colors.grey}) !important`,
             color: "#fff",
             zIndex: 10000,
+            direction: (props) => (props.palette.ltr ? "ltr" : "rtl"),
           }),
         },
       },
@@ -65,6 +66,11 @@ let App = () => {
         },
       },
       MuiTextField: {
+        styleOverrides: {
+          root: sx(rtlTextFiled),
+        },
+      },
+      MuiSelect: {
         styleOverrides: {
           root: sx(rtlTextFiled),
         },

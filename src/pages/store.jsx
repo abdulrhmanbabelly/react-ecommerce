@@ -14,22 +14,14 @@ let Store = () => {
 
   return (
     <Grid container sx={storeStyles}>
-      <Grid
-        item
-        container
-        xs={1}
-        p={1}
-        sx={{
-          float: (theme) => (theme.palette.ltr ? "right" : "left"),
-        }}
-      >
+      <Grid item container xs={1} className="filter">
         <ProductsFilter setProducts={setProducts} />
       </Grid>
       <Grid item xs={12}>
-        <Grid container width="100vw">
+        <Grid container className="productsContainer">
           {products.map((product, i) => {
             return (
-              <Box key={i} sx={{ margin: "1vw auto" }}>
+              <Box key={i} className="productBox">
                 <ProductViewHorizontal
                   product={product}
                   width={90}

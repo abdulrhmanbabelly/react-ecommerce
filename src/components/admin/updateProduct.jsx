@@ -47,7 +47,7 @@ let UpdateProduct = (props) => {
                 description: desc,
                 category: category,
                 rating: rating,
-                id : id
+                id: id,
               },
             })
           );
@@ -124,7 +124,7 @@ let UpdateProduct = (props) => {
         headerContent="update"
         openButtonContent="update"
         closeButtonContent="update"
-        closeFunc={handleUpdate}
+        func={handleUpdate}
       />
     </>
   );
