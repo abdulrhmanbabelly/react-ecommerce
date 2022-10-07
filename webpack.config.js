@@ -1,56 +1,49 @@
-
 const path = require("path");
 const webpack = require("webpack");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
-  entry: './src/index.js',
-  mode: "development",
+  entry: "./src/index.js",
+  mode: "production",
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        use: ["style-loader","css-loader"]
-      },
-      {
-        test: /\.html$/i,
-        loader:"html-loader"
-      },
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         loader: "babel-loader",
-        options: { presets: ["@babel/env"] }
+        options: { presets: ["@babel/env"] },
       },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [
-          "style-loader",
-          "css-loader",
-          {
-            loader: "sass-loader",
-            options: {
-              // Prefer `dart-sass`
-              implementation: require("dart-sass"),
-            },
-        }
-        
-    ]
-}
-]
+    ],
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendor",
+          chunks: "all",
+        },
+      },
+    },
   },
   resolve: { extensions: ["*", ".js", ".jsx"] },
   output: {
     path: path.resolve(__dirname, "dist/"),
-    publicPath: '/dist',
+    publicPath: "/dist",
     filename: "[name].bundle.js",
-    chunkFilename: "[name].bundle.js"
+    chunkFilename: "[name].bundle.js",
   },
   devServer: {
     static: path.join(__dirname, "public/"),
     port: 3000,
     historyApiFallback: true,
   },
-  plugins: [new webpack.HotModuleReplacementPlugin(), new CompressionPlugin()]
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new CompressionPlugin({
+      threshold: 1024,
+      minRatio: 0.8,
+    }),
+  ],
 };
