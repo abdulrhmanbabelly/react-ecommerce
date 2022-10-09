@@ -45,5 +45,6 @@ module.exports = {
       threshold: 1024,
       minRatio: 0.8,
     }),
+    new BundleAnalyzerPlugin()
   ],
 };
