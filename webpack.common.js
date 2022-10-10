@@ -5,7 +5,6 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
   entry: "./src/index.js",
-  mode: "production",
   module: {
     rules: [
       {
@@ -34,11 +33,7 @@ module.exports = {
     filename: "[name].bundle.js",
     chunkFilename: "[name].bundle.js",
   },
-  devServer: {
-    static: path.join(__dirname, "public/"),
-    port: 3000,
-    historyApiFallback: true,
-  },
+
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new CompressionPlugin({

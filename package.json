@@ -6,9 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "heroku-postbuild": "webpack --progress",
-    "build" : "webpack --progress",
-    "dev": "webpack-dev-server"
+    "build" : "webpack --config webpack.prod.js",
+    "dev": "webpack serve --open --config webpack.dev.js"
   },
   "author": "",
   "license": "ISC",
@@ -48,6 +47,7 @@
     "react-router-dom": "^6.3.0",
     "sweetalert": "^2.1.2",
     "swiper": "^8.4.2",
+    "webpack-merge": "^5.8.0",
     "yup": "^0.32.11"
   }
 }
